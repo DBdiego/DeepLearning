@@ -1,6 +1,6 @@
 from dataloader import CustomDataset
 from cnn2 import Net
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, random_split
 
 import torch
 import matplotlib.pyplot as plt
@@ -15,7 +15,7 @@ import torch.optim as optim
 
 class CNN:
 
-    def __init__(self, trainset,
+    def __init__(self, trainset, testset,
                  n_conv,
                  dim1,
                  kernel_conv,
@@ -38,6 +38,8 @@ class CNN:
         trainloader = DataLoader(dataset=trainset,
                                  batch_size=batch_size,
                                  shuffle=True)
+        testloader = DataLoader(testset, batch_size=4,
+                                             shuffle=False, num_workers=1)
         # Display image
         def imshow(img):
             npimg = img.numpy()
@@ -103,6 +105,22 @@ class CNN:
 
             self.tot_epoch = epoch
 
+        # --------------------------------
+        # Testing:
+        # Whole test data set
+        correct = 0
+        total = 0
+        with torch.no_grad():
+            for data in testloader:
+                images, labels = data
+                outputs = net(images)
+                _, predicted = torch.max(outputs.data, 1)
+                total += labels.size(0)
+                correct += (predicted == labels).sum().item()
+
+        print('Accuracy of the network on the 10000 test images: %d %%' % (
+            100 * correct / total))
+
 
         print('Finished Training')
 
@@ -125,11 +143,16 @@ stride_pool = [2, 2]
 n_layers = 3
 dim2 = [120, 84, 40]
 print('LOADING DATA...')
-image_path = 'images/'
+
+
+
+image_path = 'database/'
 normalise = True # Will transform [0, 255] to [0, 1]
 # Load data set and organise into batch size and right input for Net()
-trainset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
-trial = CNN(trainset,
+dataset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
+lengths = [10000,10778]
+train_dataset, test_dataset = random_split(dataset,lengths) # 20778
+trial = CNN(train_dataset, test_dataset,
     n_conv,
     dim1,
     kernel_conv,
