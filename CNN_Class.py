@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch.nn as nn
 import torch.optim as optim
+import matplotlib.pyplot as plt
 
 #torch.manual_seed(0)
 
@@ -28,7 +29,7 @@ class CNN:
         # --------------------------------------
 
         # Parameters:
-        nr_epochs = 100
+        nr_epochs = 20
         batch_size = 10
         lr = 0.001
         momentum = 0.9
@@ -69,16 +70,21 @@ class CNN:
 
         # --------------------------------------
         # Training:
-        running_loss_epoch = 1000000
+        # running_loss_epoch = 1000000
         losslst = []
         for epoch in range(nr_epochs):  # loop over the dataset multiple times
             print('epoch {}:'.format(epoch + 1))
-            losslst.append(running_loss_epoch)
+#            losslst.append(running_loss_epoch)
             running_loss_epoch = 0.0
             running_loss = 0.0
-            self.loss = min(losslst)/len(trainloader)
-            if epoch > 5:  # minimum number of epochs
-                if (losslst[epoch] - losslst[epoch - 1]) / losslst[epoch - 1] * 100 < 0.001:
+            #self.loss = min(losslst)/len(trainloader)
+            if epoch > 6:  # minimum number of epochs
+                rule = abs(np.mean(np.diff(losslst[-5:])))/losslst[-5:][0]
+                
+                #if abs(losslst[epoch] - losslst[epoch - 1]) / losslst[epoch - 1] * 100 < 0.001:
+                if rule < 0.001:
+#                    print(abs(losslst[epoch] - losslst[epoch - 1]) / losslst[epoch - 1] * 100)
+                    self.losslst = losslst
                     break
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
                 # get the inputs and labels
@@ -102,8 +108,10 @@ class CNN:
                           (epoch + 1, i + 1, running_loss / 200))
                     running_loss_epoch += running_loss
                     running_loss = 0.0
-
+            losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
+            self.losslst = losslst
+            print(abs(np.mean(np.diff(losslst[-5:])))/losslst[-5:][0])
 
         # --------------------------------
         # Testing:
@@ -130,16 +138,16 @@ class CNN:
 # ---------------------------------------------------------------------
 
 # Main:
-nr_epochs = 5
+nr_epochs = 'poep'
 batch_size = 10
 lr = 0.001
 momentum = 0.9
-n_conv = 2
-dim1 = [6, 16]
-kernel_conv = [3, 3]
-stride_conv = [1, 1]
-kernel_pool = [2, 2]
-stride_pool = [2, 2]
+n_conv = 3
+dim1 = [6, 16, 32]
+kernel_conv = [3, 3, 3]
+stride_conv = [1, 1, 1]
+kernel_pool = [2, 2, 2]
+stride_pool = [2, 2, 2]
 n_layers = 3
 dim2 = [120, 84, 40]
 print('LOADING DATA...')
@@ -161,5 +169,10 @@ trial = CNN(train_dataset, test_dataset,
     stride_pool,
     n_layers,
     dim2)
-print(trial.tot_epoch)
-print(trial.loss)
+print(len(trial.losslst))
+print((trial.losslst))
+#print(trial.tot_epoch)
+#print(trial.loss)
+
+plt.plot(range(len(trial.losslst)),trial.losslst)
+plt.show()
