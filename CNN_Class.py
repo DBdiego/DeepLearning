@@ -8,6 +8,7 @@ import numpy as np
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
+import time
 
 #torch.manual_seed(0)
 
@@ -29,17 +30,19 @@ class CNN:
         # --------------------------------------
 
         # Parameters:
-        nr_epochs = 20
+        maxtraintime = 20*60 # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         batch_size = 10
         lr = 0.001
         momentum = 0.9
+        convergence = 0.001 #Not sure if this is a good value (smaller change than 0.1%)
+        minepoch = 6 # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
                                  batch_size=batch_size,
                                  shuffle=True)
-        testloader = DataLoader(testset, batch_size=4,
+        testloader = DataLoader(testset, 
                                              shuffle=False, num_workers=1)
         # Display image
         def imshow(img):
@@ -70,24 +73,29 @@ class CNN:
 
         # --------------------------------------
         # Training:
-        # running_loss_epoch = 1000000
         losslst = []
-        for epoch in range(nr_epochs):  # loop over the dataset multiple times
-            print('epoch {}:'.format(epoch + 1))
-#            losslst.append(running_loss_epoch)
-            running_loss_epoch = 0.0
-            running_loss = 0.0
+        starttime = time.time()
+        traintime = time.time() - starttime
+        epoch = 0
+        #for epoch in range(nr_epochs):  # loop over the dataset multiple times
+        while traintime < maxtraintime:
+            epoch = epoch + 1
+            print('epoch %d:' %(epoch))
+#            pytorch_total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
+#            print(pytorch_total_params)
+            running_loss_epoch = 0.0 # reset running loss per epoch
+            running_loss = 0.0 # reset running loss per batch
             #self.loss = min(losslst)/len(trainloader)
-            if epoch > 6:  # minimum number of epochs
+            if epoch > minepoch:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:])))/losslst[-5:][0]
-                
-                #if abs(losslst[epoch] - losslst[epoch - 1]) / losslst[epoch - 1] * 100 < 0.001:
-                if rule < 0.001:
-#                    print(abs(losslst[epoch] - losslst[epoch - 1]) / losslst[epoch - 1] * 100)
+                if rule < convergence:
                     self.losslst = losslst
+                    self.realtime = time.time() - starttime
                     break
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
                 # get the inputs and labels
+                if traintime > maxtraintime:
+                    break
                 inputs, labels = data
                 if use_gpu:
                     inputs = inputs.cuda()
@@ -105,9 +113,14 @@ class CNN:
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
                     print('[%d, %5d] loss: %.3f' %
-                          (epoch + 1, i + 1, running_loss / 200))
+                          (epoch, i + 1, running_loss / 200))
                     running_loss_epoch += running_loss
                     running_loss = 0.0
+#                    print(traintime)
+                if epoch == 1 and i==0:
+                    batchtime = time.time() - starttime
+                traintime = time.time() - starttime + batchtime # + batchtime estimates the time for the next batch
+                self.realtime = time.time() - starttime
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
@@ -125,9 +138,10 @@ class CNN:
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
-
+                
+        self.accuracy = 100 * correct / total
         print('Accuracy of the network on the 10000 test images: %d %%' % (
-            100 * correct / total))
+            self.accuracy))
 
 
         print('Finished Training')
@@ -138,10 +152,11 @@ class CNN:
 # ---------------------------------------------------------------------
 
 # Main:
-nr_epochs = 'poep'
-batch_size = 10
-lr = 0.001
-momentum = 0.9
+# Those 3 variables are set in the class itself look # parameters
+#batch_size = 10
+#lr = 0.001
+#momentum = 0.9
+
 n_conv = 3
 dim1 = [6, 16, 32]
 kernel_conv = [3, 3, 3]
@@ -158,7 +173,7 @@ image_path = 'database/'
 normalise = True # Will transform [0, 255] to [0, 1]
 # Load data set and organise into batch size and right input for Net()
 dataset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
-lengths = [10000,10778]
+lengths = [10000,10778] #train data and test data
 train_dataset, test_dataset = random_split(dataset,lengths) # 20778
 trial = CNN(train_dataset, test_dataset,
     n_conv,
@@ -169,10 +184,10 @@ trial = CNN(train_dataset, test_dataset,
     stride_pool,
     n_layers,
     dim2)
-print(len(trial.losslst))
-print((trial.losslst))
-#print(trial.tot_epoch)
-#print(trial.loss)
+    
+# important self.variables are those three:
+#print((trial.losslst)) # list of loss after each epoch
+#print(trial.realtime)
+#print(trial.accuracy)
 
-plt.plot(range(len(trial.losslst)),trial.losslst)
-plt.show()
+
