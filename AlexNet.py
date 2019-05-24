@@ -11,18 +11,18 @@ from torch.utils.data import DataLoader, random_split
 image_path = './database/'
 
 # Parameters Geoffrey look here for parameter!!
-batch_size = 10
-maxtraintime = 20*60 # seconds note that testing time is not included this takes +- 5 minutes for AlexNet at my laptop, which is almost the same as 1 epoch
-lengths = [10000,10778] # training data, test data
-convergence = 0.001 #Not sure if this is a good value (smaller change than 0.1%)
-minepoch = 6 # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
+batch_size   = 10
+maxtraintime = 20*60         # seconds note that testing time is not included this takes +- 5 minutes for AlexNet at my laptop, which is almost the same as 1 epoch
+lengths      = [10000,10778] # training data, test data
+convergence  = 0.001         # Not sure if this is a good value (smaller change than 0.1%)
+minepoch     = 6             # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
 # Loading Data
 print('Loading Data: ...')
 dataset = CustomDataset(image_path=image_path, normalise=True, resize=(224, 224), train=True)
 train_dataset, test_dataset = random_split(dataset,lengths) # 20778
 trainloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
-testloader = DataLoader(test_dataset, shuffle=False, num_workers=1)
+testloader  = DataLoader(test_dataset, shuffle=False, num_workers=1)
 print('Loading Data: DONE\n')
 
 # Creating Network
@@ -33,10 +33,12 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
 print('Training: ...')
+
 epoch = 0
 losslst = []
 starttime = time.time()
 traintime = time.time() - starttime
+
 #for epoch in range(2):  # loop over the dataset multiple times
 while traintime < maxtraintime:
     epoch = epoch + 1   
@@ -55,8 +57,9 @@ while traintime < maxtraintime:
     for i, data in enumerate(trainloader, 0):
         # get the inputs
         if traintime > maxtraintime:
-            print( 'halooooooooooooooooooooooooooooooooooooooooo', traintime)
+            print( 'traintime:', traintime)
             break
+        
         inputs, labels = data
         
         # zero the parameter gradients
@@ -72,17 +75,22 @@ while traintime < maxtraintime:
 
         # print statistics
         running_loss += loss.item()
-        if i % 100 == 99:    # print every 2000 mini-batches # I don't think this is 2000 mini-batches
+        if i % 100 == 99:
             print('    --> [%d, %5d] loss: %.3f' %
                   (epoch, i + 1, running_loss / 100))
             running_loss_epoch += running_loss
             running_loss = 0.0
             
-        if epoch == 1 and i==0:
+        if epoch == 1 and i == 0:
             batchtime = time.time() - starttime
+            
         traintime = time.time() - starttime + batchtime # + batchtime estimates the time for the next batch
         realtime = time.time() - starttime
-    losslst.append(running_loss_epoch)        
+
+        
+    losslst.append(running_loss_epoch)
+
+    
 print('Training: DONE')
 # --------------------------------
 # Testing:
