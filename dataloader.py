@@ -20,15 +20,18 @@ class CustomDataset(Dataset):
             'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
 
     # Initialise: load images and get labels
-    def __init__(self, image_path, normalise, train=True):
+    def __init__(self, image_path, normalise, resize=(50, 50), train=True):
         imgs = os.listdir(image_path)
         n_samples = np.size(imgs)
         self.train = train
+
+            
         # if normalising (to [0, 1]...), needs to be float type
         if normalise:
             # define transforms from numpy array to pytorch tensor, and optionally normalising
-            self.transform = transforms.Compose([transforms.ToTensor(),
-                                                 transforms.Normalize((0, 0, 0), (255, 255, 255))])
+            self.transform = transforms.Compose([ transforms.Resize(resize),
+                                                  transforms.ToTensor(),
+                                                  transforms.Normalize((0, 0, 0), (255, 255, 255))])
             # transforms.Normalize((127.5, 127.5, 127.5), (127.5, 127.5, 127.5))]) # or to [-1, 1]
 
             # Load images from image to np array.
@@ -50,6 +53,7 @@ class CustomDataset(Dataset):
         img = self.images[item]
         # applying transformations...
         # if self.transform is not None:
+        img = Image.fromarray((img * 255).astype(np.uint8))
         img = self.transform(img)
         lbl = self.labels[item]
         return img, lbl
@@ -61,6 +65,7 @@ class CustomDataset(Dataset):
 '''
 ---------- INCLUDE--------------- :
 from dataloader import CustomDataset
+from torch.utils.data import DataLoader
 
 ---------- LOADING DATA---------- :
 trainset = CustomDataset(image_path=image_path, normalise=True, train=True)
