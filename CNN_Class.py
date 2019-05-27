@@ -42,7 +42,7 @@ class CNN:
         trainloader = DataLoader(dataset=trainset,
                                  batch_size=batch_size,
                                  shuffle=True)
-        testloader = DataLoader(testset, 
+        testloader = DataLoader(testset,
                                              shuffle=False, num_workers=1)
         # Display image
         def imshow(img):
@@ -60,8 +60,8 @@ class CNN:
         #--------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
-        print(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
-        print('-------------------------')
+        #print(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
+        #print('-------------------------')
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         print(net)
 
@@ -148,9 +148,7 @@ class CNN:
 
         print('Finished Training')
 
-
-
-
+'''
 # ---------------------------------------------------------------------
 
 # Main:
@@ -160,13 +158,15 @@ class CNN:
 #momentum = 0.9
 
 n_conv = 3
-dim1 = [6, 16, 32]
+dim1 = [6, 19, 32]
 kernel_conv = [3, 3, 3]
-stride_conv = [1, 1, 1]
-kernel_pool = [2, 2, 2]
+stride_conv = [2, 2, 2]
+kernel_pool = [3, 3, 3]
 stride_pool = [2, 2, 2]
-n_layers = 3
-dim2 = [120, 84, 40]
+n_layers = 10
+dim2 = [120, 111, 102, 93, 84, 75, 66, 57, 48, 40]
+
+
 print('LOADING DATA...')
 
 
@@ -186,7 +186,7 @@ trial = CNN(train_dataset, test_dataset,
     stride_pool,
     n_layers,
     dim2)
-    
+'''
 # important self.variables are those three:
 #print((trial.losslst)) # list of loss after each epoch
 #print(trial.realtime)
