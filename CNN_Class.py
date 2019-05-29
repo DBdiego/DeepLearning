@@ -82,7 +82,7 @@ class CNN:
         #for epoch in range(nr_epochs):  # loop over the dataset multiple times
         while traintime < maxtraintime:
             epoch = epoch + 1
-            print('epoch %d:' %(epoch))
+            
 #            pytorch_total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
 #            print(pytorch_total_params)
             running_loss_epoch = 0.0 # reset running loss per epoch
@@ -94,6 +94,7 @@ class CNN:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
+            print('epoch %d:' %(epoch))
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
                 # get the inputs and labels
                 if traintime > maxtraintime:

@@ -51,7 +51,7 @@ class NeuroEvolutionaryNetwork:
             test_dataset,
             *argument_input_interface(*x)
         )
-        return [session.losslst, session.realtime]
+        return [session.losslst[-1], session.realtime]
 
     def get_nobj(self):
         return 2
@@ -63,7 +63,7 @@ class NeuroEvolutionaryNetwork:
         return (
             # n_conv . kernel_conv . stride_conv . kernel_pool . stride_pool . n_layers
             [3,        3,            1,            2,            2,            4],
-            [6,        5,            1,            5,            2,            15]
+           [6,        5,            1,            5,            2,            15]
         )
 
 if __name__ == "__main__":
@@ -72,5 +72,4 @@ if __name__ == "__main__":
     algo = pg.algorithm(pg.nsga2(gen=5))
     pop = algo.evolve(pop)
     fits, vectors = pop.get_f(), pop.get_x()
-    # extract and print non-dominated fronts
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
