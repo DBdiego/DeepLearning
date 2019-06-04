@@ -58,6 +58,8 @@ class CNN:
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
+        # print(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
+        # print('-------------------------')
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         print(net)
 
@@ -84,12 +86,19 @@ class CNN:
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss = 0.0  # reset running loss per batch
             # self.loss = min(losslst)/len(trainloader)
+
+            #            pytorch_total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
+            #            print(pytorch_total_params)
+            running_loss_epoch = 0.0  # reset running loss per epoch
+            running_loss = 0.0  # reset running loss per batch
+            # self.loss = min(losslst)/len(trainloader)
             if epoch > minepoch:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
                 if rule < convergence:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
+            print('epoch %d:' % (epoch))
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
                 # get the inputs and labels
                 if traintime > maxtraintime:
@@ -144,6 +153,7 @@ class CNN:
         print('Finished Training')
 
 
+'''
 # ---------------------------------------------------------------------
 
 # Main:
@@ -179,6 +189,45 @@ class CNN:
 #             stride_pool,
 #             n_layers,
 #             dim2)
+=======
+#batch_size = 10
+#lr = 0.001
+#momentum = 0.9
+
+n_conv = 3
+dim1 = [6, 19, 32]
+kernel_conv = [3, 3, 3]
+stride_conv = [2, 2, 2]
+kernel_pool = [3, 3, 3]
+stride_pool = [2, 2, 2]
+n_layers = 10
+dim2 = [120, 111, 102, 93, 84, 75, 66, 57, 48, 40]
+
+
+print('LOADING DATA...')
+
+
+
+image_path = 'database/'
+normalise = True # Will transform [0, 255] to [0, 1]
+# Load data set and organise into batch size and right input for Net()
+dataset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
+lengths = [10000,10778] #train data and test data
+train_dataset, test_dataset = random_split(dataset,lengths) # 20778
+trial = CNN(train_dataset, test_dataset,
+    n_conv,
+    dim1,
+    kernel_conv,
+    stride_conv,
+    kernel_pool,
+    stride_pool,
+    n_layers,
+    dim2)
+'''
+# important self.variables are those three:
+# print((trial.losslst)) # list of loss after each epoch
+# print(trial.realtime)
+# print(trial.accuracy)
 
 # important self.variables are those three:
 # print((trial.losslst)) # list of loss after each epoch
