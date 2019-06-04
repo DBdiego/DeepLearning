@@ -5,8 +5,9 @@ import pygmo as pg
 NORMALIZE = True
 IMAGE_PATH = 'database/'
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, train=True)
-lengths = [10000, 10778]  # train data and test data
+lengths = [2000, 18778]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)  # 20778
+
 
 def argument_input_interface(
         n_conv,
@@ -18,7 +19,7 @@ def argument_input_interface(
         dim1=32,
         dim2=120
 ):
-    _dim1 = np.linspace(3, dim1, int(n_conv+1)).astype(int)
+    _dim1 = np.linspace(3, dim1, int(n_conv + 1)).astype(int)
     _dim1 = np.delete(_dim1, 0)
     _dim2 = np.linspace(dim2, 40, int(n_layers)).astype(int)
     _kernel_conv = [int(kernel_conv)] * int(n_conv)
@@ -32,11 +33,11 @@ def argument_input_interface(
 
     final_dim = 50
     for i in range(int(n_conv)):
-        pad = int(kernel_conv/2)
+        pad = int(kernel_conv / 2)
         final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)
         final_dim = int((final_dim - kernel_pool + 2 * 0) / stride_pool + 1)
 
-    print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
+    # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
 
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
 
@@ -46,12 +47,17 @@ class NeuroEvolutionaryNetwork:
         self.network_class = CNN
 
     def fitness(self, x):
-        session = self.network_class(
-            train_dataset,
-            test_dataset,
-            *argument_input_interface(*x)
-        )
-        return [session.losslst[-1], session.realtime]
+
+        try:
+            session = self.network_class(
+                train_dataset,
+                test_dataset,
+                *argument_input_interface(*x)
+            )
+            return [100 - np.max(session.accuracy), session.realtime]
+
+        except RuntimeError:
+            return [100, 1000]
 
     def get_nobj(self):
         return 2
@@ -62,14 +68,15 @@ class NeuroEvolutionaryNetwork:
     def get_bounds(self):
         return (
             # n_conv . kernel_conv . stride_conv . kernel_pool . stride_pool . n_layers
-            [3,        3,            1,            2,            2,            4],
-           [6,        5,            1,            5,            2,            15]
+            [3, 3, 1, 2, 2, 4],
+            [4, 5, 1, 2, 2, 15]
         )
+
 
 if __name__ == "__main__":
     problem = pg.problem(NeuroEvolutionaryNetwork())
-    pop = pg.population(problem, size=5)
-    algo = pg.algorithm(pg.nsga2(gen=5))
+    pop = pg.population(problem, size=2)
+    algo = pg.algorithm(pg.moead(gen=3))
     pop = algo.evolve(pop)
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)

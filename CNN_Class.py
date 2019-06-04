@@ -58,6 +58,7 @@ class CNN:
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
+        print("---------------- GPU IS : ", use_gpu)
         # print(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         # print('-------------------------')
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
@@ -141,6 +142,8 @@ class CNN:
         with torch.no_grad():
             for data in testloader:
                 images, labels = data
+                images = images.cuda()
+                labels = labels.cuda()
                 outputs = net(images)
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
