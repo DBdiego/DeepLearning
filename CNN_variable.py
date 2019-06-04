@@ -82,6 +82,7 @@ def main():
             for i in range(self.n_c_layers):
                 x=self.pool(F.relu(getattr(self, f"conv{i}")(x)))
 
+            print(final_dim)
             x = x.view(-1, 16 * final_dim * final_dim) # image to tensor structure ?
 
             # Neural net layers:
