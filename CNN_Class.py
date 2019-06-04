@@ -132,7 +132,6 @@ class CNN:
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
-            print(abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0])
 
         # --------------------------------
         # Testing:
