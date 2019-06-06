@@ -36,9 +36,12 @@ def argument_input_interface(
         pad = int(kernel_conv / 2)
         final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)
         final_dim = int((final_dim - kernel_pool + 2 * 0) / stride_pool + 1)
-
+        #
+        bad = True if (final_dim == 0) else False
+        #
+        if not bad:
+            raise ArithmeticError
     # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
-
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
 
 
@@ -47,7 +50,6 @@ class NeuroEvolutionaryNetwork:
         self.network_class = CNN
 
     def fitness(self, x):
-
         try:
             session = self.network_class(
                 train_dataset,
@@ -56,7 +58,7 @@ class NeuroEvolutionaryNetwork:
             )
             return [100 - np.max(session.accuracy), session.realtime]
 
-        except ZeroDivisionError:
+        except ZeroDivisionError or ArithmeticError:
             return [100, 1000]
 
     def get_nobj(self):
