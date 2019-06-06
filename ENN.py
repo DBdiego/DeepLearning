@@ -69,7 +69,7 @@ class NeuroEvolutionaryNetwork:
         return (
             # n_conv . kernel_conv . stride_conv . kernel_pool . stride_pool . n_layers
             [3, 3, 1, 2, 2, 4],
-            [4, 5, 1, 2, 2, 15]
+            [8, 8, 1, 8, 8, 15]
         )
 
 
