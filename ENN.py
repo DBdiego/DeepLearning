@@ -56,7 +56,7 @@ class NeuroEvolutionaryNetwork:
             )
             return [100 - np.max(session.accuracy), session.realtime]
 
-        except RuntimeError:
+        except ZeroDivisionError:
             return [100, 1000]
 
     def get_nobj(self):
