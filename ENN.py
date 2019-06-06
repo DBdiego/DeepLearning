@@ -68,8 +68,8 @@ class NeuroEvolutionaryNetwork:
     def get_bounds(self):
         return (
             # n_conv . kernel_conv . stride_conv . kernel_pool . stride_pool . n_layers
-            [3, 3, 1, 2, 2, 4],
-            [8, 8, 1, 8, 8, 15]
+            [2, 2, 1, 1, 2, 4],
+            [8, 3, 2, 1, 3, 15]
         )
 
 
