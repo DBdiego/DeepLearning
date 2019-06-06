@@ -75,8 +75,8 @@ class NeuroEvolutionaryNetwork:
 
 if __name__ == "__main__":
     problem = pg.problem(NeuroEvolutionaryNetwork())
-    pop = pg.population(problem, size=2)
-    algo = pg.algorithm(pg.moead(gen=3))
+    pop = pg.population(problem, size=10)
+    algo = pg.algorithm(pg.moead(gen=20))
     pop = algo.evolve(pop)
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
