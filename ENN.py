@@ -39,7 +39,7 @@ def argument_input_interface(
         #
         bad = True if (final_dim == 0) else False
         #
-        if not bad:
+        if bad:
             raise ArithmeticError
     # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
@@ -86,8 +86,8 @@ class NeuroEvolutionaryNetwork:
 
 if __name__ == "__main__":
     problem = pg.problem(NeuroEvolutionaryNetwork())
-    pop = pg.population(problem, size=10)
-    algo = pg.algorithm(pg.moead(gen=20))
+    pop = pg.population(problem, size=20)
+    algo = pg.algorithm(pg.nsga2(gen=20))
     pop = algo.evolve(pop)
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
