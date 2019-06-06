@@ -66,6 +66,9 @@ class NeuroEvolutionaryNetwork:
         except ArithmeticError:
             return [100, 1000]
 
+        except ValueError:
+            return [100, 1000]
+
 
     def get_nobj(self):
         return 2
