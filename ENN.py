@@ -51,10 +51,12 @@ class NeuroEvolutionaryNetwork:
 
     def fitness(self, x):
         try:
+            values = argument_input_interface(*x)
+
             session = self.network_class(
                 train_dataset,
                 test_dataset,
-                *argument_input_interface(*x)
+                *values
             )
             return [100 - np.max(session.accuracy), session.realtime]
 
