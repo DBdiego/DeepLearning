@@ -10,9 +10,7 @@ from torch.utils.data import DataLoader, random_split
 from cnn2 import Net
 from dataloader import CustomDataset
 
-
 # torch.manual_seed(0)
-
 
 class CNN:
 
@@ -26,6 +24,7 @@ class CNN:
                  n_layers,
                  dim2):
 
+        print("CNN __init__")
         # --------------------------------------
         # Parameters:
         maxtraintime = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
@@ -35,6 +34,7 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
+        print("CNN __init__ data loading.")
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
@@ -49,31 +49,23 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        # dataiter = iter(trainloader)
-        # images, labels = dataiter.next()
-        # imshow(torchvision.utils.make_grid(images))
-        print("DATA LOADING SUCCESSFUL")
-        # wait = input("PRESS ENTER TO START TRAINING")
-
+        print("CNN __init__ CNN.")
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
-        print("---------------- GPU IS : ", use_gpu)
-        # print(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
-        # print('-------------------------')
+        # print("---------------- GPU IS : ", use_gpu)
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
-        print(net)
 
         if use_gpu:
             net = net.cuda()
             if torch.cuda.device_count() > 1:
                 print("Let's use", torch.cuda.device_count(), "GPUs!")
-                # dim = 0 [30, xxx] -> [10, ...], [10, ...], [10, ...] on 3 GPUs
                 net = nn.DataParallel(net)
 
             device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
             net.to(device)
 
+        print("CNN __init__ Loss function.")
         # Loss function
         # with optim, can also use e.g. Adam
         criterion = nn.CrossEntropyLoss()
@@ -89,25 +81,18 @@ class CNN:
         while traintime < maxtraintime:
             epoch = epoch + 1
             print('epoch %d:' % (epoch))
-            #            pytorch_total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
-            #            print(pytorch_total_params)
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss = 0.0  # reset running loss per batch
-            # self.loss = min(losslst)/len(trainloader)
-
-            #            pytorch_total_params = sum(p.numel() for p in net.parameters() if p.requires_grad)
-            #            print(pytorch_total_params)
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss = 0.0  # reset running loss per batch
-            # self.loss = min(losslst)/len(trainloader)
             if epoch > minepoch:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
                 if rule < convergence:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
-            print('epoch %d:' % (epoch))
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
+
                 # get the inputs and labels
                 if traintime > maxtraintime:
                     break
@@ -115,6 +100,7 @@ class CNN:
                 if use_gpu:
                     inputs = inputs.cuda()
                     labels = labels.cuda()
+
                 # zero the parameter gradients
                 optimizer.zero_grad()
 
@@ -140,6 +126,7 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
+        print("CNN __init__ Loss function.")
         # --------------------------------
         # Testing:
         # Whole test data set

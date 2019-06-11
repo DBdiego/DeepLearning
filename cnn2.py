@@ -4,7 +4,7 @@ import re
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
-
+import torch
 
 '''
 n_c_layers:   int, number of convolution layers
@@ -61,3 +61,5 @@ class Net(nn.Module):
             else:
                 x = getattr(self, f"fc{i}")(x)
         return x
+
+
