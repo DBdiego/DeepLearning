@@ -5,7 +5,7 @@ import pygmo as pg
 NORMALIZE = True
 IMAGE_PATH = 'database/'
 RATIO_TRAINING = 0.1
-RATIO_DATA = 0.5
+RATIO_DATA = 0.1
 MAX_DATA = RATIO_DATA*41556
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
 I = int(RATIO_TRAINING * len(dataset))
