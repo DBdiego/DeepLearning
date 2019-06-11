@@ -31,7 +31,7 @@ def argument_input_interface(
     # Note that if the stride of the convolution and pooling is held at (1,2), then most likely final_dim will not
     # reduce to zero unless n_conv exceeds 4!
 
-    final_dim = 50
+    final_dim = 224
     for i in range(int(n_conv)):
         pad = int(kernel_conv / 2)
         final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)

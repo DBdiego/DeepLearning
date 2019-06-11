@@ -20,7 +20,7 @@ class CustomDataset(Dataset):
             'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
 
     # Initialise: load images and get labels
-    def __init__(self, image_path, normalise, resize=(50, 50), train=True):
+    def __init__(self, image_path, normalise, resize=(224, 244), train=True):
         imgs = os.listdir(image_path)
         n_samples = np.size(imgs)
         self.train = train
