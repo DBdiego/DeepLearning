@@ -21,9 +21,9 @@ class CustomDataset(Dataset):
             'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
 
     # Initialise: load images and get labels
-    def __init__(self, image_path, normalise, resize=(224, 224), train=True):
+    def __init__(self, image_path, normalise, maxx, resize=(224, 224), train=True, ):
         imgs = os.listdir(image_path)
-        n_samples = np.size(imgs)
+        n_samples = int(maxx/2) #np.size(imgs)#20778
         self.train = train
 
             
@@ -33,11 +33,10 @@ class CustomDataset(Dataset):
             self.transform = transforms.Compose([ transforms.Resize(resize),
                                                   transforms.ToTensor(),
                                                   transforms.Normalize((0, 0, 0), (255, 255, 255))])
-            # transforms.Normalize((127.5, 127.5, 127.5), (127.5, 127.5, 127.5))]) # or to [-1, 1]
 
             # Load images from image to np array.
             images_og = np.array(
-                [np.array(Image.open(image_path + img).convert("RGB")) for img in os.listdir(image_path)],
+                [np.array(Image.open(image_path + imgs[i]).convert("RGB")) for i in range(n_samples)],
                 order='F', dtype='float32')  # uint8
             images_aug = add_gaussian_noise(images_og)
             self.images = np.concatenate((images_og, images_aug))

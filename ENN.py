@@ -5,9 +5,11 @@ import pygmo as pg
 NORMALIZE = True
 IMAGE_PATH = 'database/'
 RATIO_TRAINING = 0.1
-I = int(RATIO_TRAINING * 41556)
-dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, train=True)
-lengths = [41556 - I, I]  # train data and test data
+RATIO_DATA = 0.5
+MAX_DATA = RATIO_DATA*41556
+dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
+I = int(RATIO_TRAINING * len(dataset))
+lengths = [len(dataset) - I, I]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)  # 20778x2
 # train_dataset = train_dataset[0::3]
 # test_dataset = test_dataset[0::3]
