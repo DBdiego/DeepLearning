@@ -1,6 +1,7 @@
 import numpy as np
 from CNN_Class import CNN, random_split, CustomDataset
 import pygmo as pg
+import torch
 
 NORMALIZE = True
 IMAGE_PATH = 'database/'
