@@ -24,7 +24,6 @@ class CNN:
                  n_layers,
                  dim2):
 
-        print("CNN __init__")
         # --------------------------------------
         # Parameters:
         maxtraintime = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
@@ -34,7 +33,7 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-        print("CNN __init__ data loading.")
+        print("CNN __init__: data loading")
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
@@ -49,7 +48,7 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        print("CNN __init__ CNN.")
+        print("CNN __init__: CNN")
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
@@ -58,9 +57,8 @@ class CNN:
 
         if use_gpu:
             net = net.cuda()
-            print(torch.cuda.device_count())
             if torch.cuda.device_count() > 1:
-                print("Let's use", torch.cuda.device_count(), "GPUs!")
+                print("Available GPU's: ", torch.cuda.device_count())
                 net = nn.DataParallel(net)
 
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -113,7 +111,7 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
-                    print(f'[{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                    print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
@@ -125,7 +123,7 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-        print("CNN __init__ Loss function.")
+        print("CNN __init__: Loss function.")
         # --------------------------------
         # Testing:
         # Whole test data set
@@ -142,10 +140,10 @@ class CNN:
                 correct += (predicted == labels).sum().item()
 
         self.accuracy = 100 * correct / total
-        print('Accuracy of the network on the 10000 test images: %d %%' % (
+        print('\t --> Accuracy of the network on the 10000 test images: %d %%' % (
             self.accuracy))
 
-        print('Finished Training')
+        print('\t --> Finished Training')
 
 
 '''
