@@ -96,5 +96,5 @@ if __name__ == "__main__":
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
 
-    np.savetxt('results.txt', fits, delimiter ';')
+    np.savetxt('results.txt', fits, delimiter=';')
     
