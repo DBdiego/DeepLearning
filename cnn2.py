@@ -24,14 +24,14 @@ class Net(nn.Module):
         #print(n_c_layers, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_l_layers, dim2)
 
         print('Network Characteristics: ')
-        print('# conv layers            : ', n_c_layers  )
-        print('# output channels        : ', dim1        )
-        print('kernel size conv layers  : ', kernel_conv )
-        print('stride conv layers       : ', stride_conv )
-        print('kernel size pool layers  : ', kernel_pool )
-        print('stride pool layers       : ', stride_pool )
-        print('# layers FCNN            : ', n_l_layers  )
-        print('# neurons FCNN layers    : ', dim2        , '\n')
+        print('\t # conv layers            : ', n_c_layers  )
+        print('\t # output channels        : ', dim1        )
+        print('\t kernel size conv layers  : ', kernel_conv )
+        print('\t stride conv layers       : ', stride_conv )
+        print('\t kernel size pool layers  : ', kernel_pool )
+        print('\t stride pool layers       : ', stride_pool )
+        print('\t # layers FCNN            : ', n_l_layers  )
+        print('\t # neurons FCNN layers    : ', dim2        )
         
 
         final_dim = 224 # decreases in size with each convolution and pooling layer
