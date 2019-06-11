@@ -50,7 +50,6 @@ def argument_input_interface(
     # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
 
-
 class NeuroEvolutionaryNetwork:
     def __init__(self):
         self.network_class = CNN
@@ -96,3 +95,6 @@ if __name__ == "__main__":
     pop = algo.evolve(pop)
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
+
+    np.savetxt('results.txt', fits, delimiter ';')
+    
