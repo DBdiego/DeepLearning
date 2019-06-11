@@ -9,8 +9,8 @@ I = int(RATIO_TRAINING * 41556)
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, train=True)
 lengths = [41556 - I, I]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)  # 20778x2
-train_dataset = train_dataset[0::3]
-test_dataset = test_dataset[0::3]
+# train_dataset = train_dataset[0::3]
+# test_dataset = test_dataset[0::3]
 
 
 def argument_input_interface(
