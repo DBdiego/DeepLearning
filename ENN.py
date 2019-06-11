@@ -4,9 +4,13 @@ import pygmo as pg
 
 NORMALIZE = True
 IMAGE_PATH = 'database/'
+RATIO_TRAINING = 0.1
+I = int(RATIO_TRAINING * 41556)
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, train=True)
-lengths = [2000, 41556-2000]  # train data and test data
+lengths = [41556 - I, I]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)  # 20778x2
+train_dataset = train_dataset[0::3]
+test_dataset = test_dataset[0::3]
 
 
 def argument_input_interface(
@@ -68,7 +72,6 @@ class NeuroEvolutionaryNetwork:
 
         except ValueError:
             return [100, 1000]
-
 
     def get_nobj(self):
         return 2

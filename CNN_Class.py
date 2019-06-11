@@ -81,7 +81,6 @@ class CNN:
         # for epoch in range(nr_epochs):  # loop over the dataset multiple times
         while traintime < maxtraintime:
             epoch = epoch + 1
-            print('epoch %d:' % (epoch))
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss = 0.0  # reset running loss per batch
             running_loss_epoch = 0.0  # reset running loss per epoch
@@ -114,11 +113,10 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
-                    print('[%d, %5d] loss: %.3f' %
-                          (epoch, i + 1, running_loss / 200))
+                    print(f'[{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
                     running_loss_epoch += running_loss
                     running_loss = 0.0
-                #                    print(traintime)
+
                 if epoch == 1 and i == 0:
                     batchtime = time.time() - starttime
                 traintime = time.time() - starttime + batchtime  # + batchtime estimates the time for the next batch
