@@ -33,7 +33,7 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-        print("CNN __init__: data loading")
+        print("CNN __init__: splitting data")
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
@@ -52,25 +52,25 @@ class CNN:
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
-        # print("---------------- GPU IS : ", use_gpu)
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
 
         if use_gpu:
             net = net.cuda()
             if torch.cuda.device_count() > 1:
-                print("Available GPU's: ", torch.cuda.device_count())
                 net = nn.DataParallel(net)
 
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             net.to(device)
 
-        print("CNN __init__ Loss function.")
+
+        print("CNN __init__: Loss function")
         # Loss function
         # with optim, can also use e.g. Adam
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
 
         # --------------------------------------
+        print("CNN __init__: Training")
         # Training:
         losslst = []
         starttime = time.time()
@@ -123,7 +123,7 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-        print("CNN __init__: Loss function.")
+        print("CNN __init__: testing \n")
         # --------------------------------
         # Testing:
         # Whole test data set
@@ -139,11 +139,12 @@ class CNN:
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
+
         self.accuracy = 100 * correct / total
         print('\t --> Accuracy of the network on the 10000 test images: %d %%' % (
             self.accuracy))
 
-        print('\t --> Finished Training')
+        print('\t --> Finished Training\n\n')
 
 
 '''

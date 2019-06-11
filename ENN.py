@@ -7,7 +7,12 @@ IMAGE_PATH = 'database/'
 RATIO_TRAINING = 0.1
 RATIO_DATA = 0.1
 MAX_DATA = RATIO_DATA*41556
+
+
+print('Importing data: ...')
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
+print('Importing data: DONE\n')
+
 I = int(RATIO_TRAINING * len(dataset))
 lengths = [len(dataset) - I, I]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)  # 20778x2
@@ -89,6 +94,7 @@ class NeuroEvolutionaryNetwork:
 
 
 if __name__ == "__main__":
+    print("Available GPU's: ", torch.cuda.device_count(), '\n')
     problem = pg.problem(NeuroEvolutionaryNetwork())
     pop = pg.population(problem, size=20)
     algo = pg.algorithm(pg.nsga2(gen=20))

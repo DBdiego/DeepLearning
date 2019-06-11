@@ -21,7 +21,18 @@ class Net(nn.Module):
         # first input channel is 3, followed by dim1:
         dim1.insert(0, 3)
         self.dim1 = dim1
-        print(n_c_layers, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_l_layers, dim2)
+        #print(n_c_layers, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_l_layers, dim2)
+
+        print('Network Characteristics: ')
+        print('# conv layers            : ', n_c_layers  )
+        print('# output channels        : ', dim1        )
+        print('kernel size conv layers  : ', kernel_conv )
+        print('stride conv layers       : ', stride_conv )
+        print('kernel size pool layers  : ', kernel_pool )
+        print('stride pool layers       : ', stride_pool )
+        print('# layers FCNN            : ', n_l_layers  )
+        print('# neurons FCNN layers    : ', dim2        , '\n')
+        
 
         final_dim = 224 # decreases in size with each convolution and pooling layer
         super(Net, self).__init__()
