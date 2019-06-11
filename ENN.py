@@ -5,8 +5,8 @@ import pygmo as pg
 NORMALIZE = True
 IMAGE_PATH = 'database/'
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, train=True)
-lengths = [2000, 18778]  # train data and test data
-train_dataset, test_dataset = random_split(dataset, lengths)  # 20778
+lengths = [2000, 41556-2000]  # train data and test data
+train_dataset, test_dataset = random_split(dataset, lengths)  # 20778x2
 
 
 def argument_input_interface(
@@ -31,7 +31,7 @@ def argument_input_interface(
     # Note that if the stride of the convolution and pooling is held at (1,2), then most likely final_dim will not
     # reduce to zero unless n_conv exceeds 4!
 
-    final_dim = 50
+    final_dim = 224
     for i in range(int(n_conv)):
         pad = int(kernel_conv / 2)
         final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)

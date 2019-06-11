@@ -6,6 +6,7 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
+from dataAugmentation import add_gaussian_noise
 
 
 
@@ -20,7 +21,7 @@ class CustomDataset(Dataset):
             'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
 
     # Initialise: load images and get labels
-    def __init__(self, image_path, normalise, resize=(50, 50), train=True):
+    def __init__(self, image_path, normalise, resize=(224, 224), train=True):
         imgs = os.listdir(image_path)
         n_samples = np.size(imgs)
         self.train = train
@@ -35,17 +36,19 @@ class CustomDataset(Dataset):
             # transforms.Normalize((127.5, 127.5, 127.5), (127.5, 127.5, 127.5))]) # or to [-1, 1]
 
             # Load images from image to np array.
-            self.images = np.array(
+            images_og = np.array(
                 [np.array(Image.open(image_path + img).convert("RGB")) for img in os.listdir(image_path)],
                 order='F', dtype='float32')  # uint8
+            images_aug = add_gaussian_noise(images_og)
+            self.images = np.concatenate((images_og, images_aug))
         else:  # without normalisation...
             self.transform = transforms.Compose([transforms.ToTensor()])
             self.images = np.array(
                 [np.array(Image.open(image_path + img).convert("RGB")) for img in os.listdir(image_path)],
                 order='F', dtype='uint8')  # float32
         # extracting labels from image names
-        labels = torch.from_numpy(
-            np.array([self.cars.index(re.match(r"(^\D+)", imgs[i])[0]) for i in range(n_samples)]))
+        labels = np.array([self.cars.index(re.match(r"(^\D+)", imgs[i])[0]) for i in range(n_samples)])
+        labels = torch.from_numpy(np.concatenate((labels, labels)))
         self.labels = labels.type(torch.long)  # outputs of network are also torch.long type...
         self.length = np.shape(self.images)[0]
 
