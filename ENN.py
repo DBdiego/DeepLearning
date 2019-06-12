@@ -126,7 +126,7 @@ if __name__ == "__main__":
     start_time_evovle = time.time()
     print('Evolving Population: ...')
     #pop = algo.evolve(pop)
-    pop = archi.evolve(pop)
+    pop = archi.evolve()
     print(f'Evolving Population: DONE ({round(time.time() - start_time_evovle, 5)}s)\n')
 
     start_time_results = time.time()
