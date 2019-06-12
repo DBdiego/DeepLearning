@@ -106,27 +106,27 @@ if __name__ == "__main__":
 
     start_time_pop = time.time()
     print('Generating Population: ...')
-    pop = pg.population(problem, size=8)
+    #pop = pg.population(problem, size=8)
     print(f'Generating Population: DONE ({round(time.time() - start_time_pop, 5)}s)\n')
 
     start_time_algo = time.time()
     print('Defining Algorithm: ...')
-    algo = pg.algorithm(pg.nsga2(gen=20))
+    algo = pg.algorithm(pg.nsga2(gen=2))
     print(f'Defining Algorithm: DONE ({round(time.time() - start_time_algo, 5)}s)\n')
 
     start_time_archi = time.time()
     print('Creating Archipelago: ...')
-    #archi = pg.archipelago(n=20,algo=algo, prob=problem)
-    print(f'Creating Archipelago: DONE ({round(time.time() - start_time_prob, 5)}s)\n')
+    archi = pg.archipelago(n=8,algo=algo, prob=problem, pop_size=8)
+    print(f'Creating Archipelago: DONE ({round(time.time() - start_time_archi, 5)}s)\n')
     
     print('\n===============================================')
-    #print(archi)
+    print(archi)
     print('===============================================\n')
 
     start_time_evovle = time.time()
     print('Evolving Population: ...')
-    pop = algo.evolve(pop)
-    #pop = archi.evolve(pop)
+    #pop = algo.evolve(pop)
+    pop = archi.evolve(pop)
     print(f'Evolving Population: DONE ({round(time.time() - start_time_evovle, 5)}s)\n')
 
     start_time_results = time.time()
