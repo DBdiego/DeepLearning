@@ -72,7 +72,7 @@ class CNN:
         optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
 
         # --------------------------------------
-        print("Training Network: ...")
+        print('Training Network: ...')
         # Training:
         losslst = []
         starttime = time.time()

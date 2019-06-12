@@ -57,6 +57,8 @@ def argument_input_interface(
     # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
 
+
+saved_data = []
 class NeuroEvolutionaryNetwork:
     def __init__(self):
         self.network_class = CNN
@@ -70,6 +72,7 @@ class NeuroEvolutionaryNetwork:
                 test_dataset,
                 *values
             )
+            saved_data.append([100 - np.max(session.accuracy), session.realtime])
             return [100 - np.max(session.accuracy), session.realtime]
 
         except ZeroDivisionError:
@@ -131,11 +134,12 @@ if __name__ == "__main__":
 
     start_time_results = time.time()
     print('Gathering results: ...')
-    fits, vectors = pop.get_f(), pop.get_x()
-    ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
+    print(saved_data)
+    #fits, vectors = pop.get_f(), pop.get_x()
+    #ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
     print(f'Gathering results: DONE ({round(time.time() - start_time_results, 5)}s)\n')
 
-    np.savetxt('results.txt', fits, delimiter=';')
+    np.savetxt('results.txt', np.array(saved_data), delimiter=';')
 
 
 
