@@ -49,7 +49,7 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        print('=========== NEW NETWORK ===========')
+        print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
@@ -149,11 +149,11 @@ class CNN:
         print('\t --> Accuracy of the network on the 10000 test images: %d %%' % (
             self.accuracy))
 
-        print('\t --> Finished Training\n\n')
+        print('\t --> Finished Training')
 
         print('Testing Network: DONE')
         
-        print('===================================')
+        print('===================================\n')
 
 '''
 # ---------------------------------------------------------------------
