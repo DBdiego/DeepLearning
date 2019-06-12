@@ -99,7 +99,10 @@ if __name__ == "__main__":
     problem = pg.problem(NeuroEvolutionaryNetwork())
     pop = pg.population(problem, size=20)
     algo = pg.algorithm(pg.nsga2(gen=20))
-    pop = algo.evolve(pop)
+    
+    archi = pg.archipelago(n=20,algo=algo, prob=problem)
+    pop = archi.evolve(pop)
+    
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
 
