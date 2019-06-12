@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
     start_time_archi = time.time()
     print('Creating Archipelago: ...')
-    archi = pg.archipelago(n=8,algo=algo, prob=problem, pop_size=8)
+    archi = pg.archipelago(n=8,algo=algo, prob=problem, pop_size=1)
     print(f'Creating Archipelago: DONE ({round(time.time() - start_time_archi, 5)}s)\n')
     
     print('\n===============================================')
