@@ -60,8 +60,8 @@ class CNN:
             if torch.cuda.device_count() > 1:
                 net = nn.DataParallel(net)
 
-            device = torch.device('cuda:'+str(gpu_index) if torch.cuda.is_available() else "cpu")
-            print('running on : ', 'cuda:'+str(gpu_index))
+            device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
+            print('running on : ', 'cuda')
             net.to(device)
 
 
