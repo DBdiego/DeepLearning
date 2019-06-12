@@ -21,7 +21,6 @@ class Net(nn.Module):
         # first input channel is 3, followed by dim1:
         dim1.insert(0, 3)
         self.dim1 = dim1
-        #print(n_c_layers, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_l_layers, dim2)
 
         print('Network Characteristics: ')
         print('\t # conv layers            : ', n_c_layers  )

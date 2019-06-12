@@ -33,7 +33,8 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-        print("CNN __init__: splitting data")
+        
+       
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
@@ -48,7 +49,7 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        print("CNN __init__: CNN")
+        print('=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
@@ -63,14 +64,14 @@ class CNN:
             net.to(device)
 
 
-        print("CNN __init__: Loss function")
+        
         # Loss function
         # with optim, can also use e.g. Adam
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
 
         # --------------------------------------
-        print("CNN __init__: Training")
+        print("Training Network: ...")
         # Training:
         losslst = []
         starttime = time.time()
@@ -80,15 +81,17 @@ class CNN:
         while traintime < maxtraintime:
             epoch = epoch + 1
             running_loss_epoch = 0.0  # reset running loss per epoch
-            running_loss = 0.0  # reset running loss per batch
+            running_loss       = 0.0  # reset running loss per batch
             running_loss_epoch = 0.0  # reset running loss per epoch
-            running_loss = 0.0  # reset running loss per batch
+            running_loss       = 0.0  # reset running loss per batch
+            
             if epoch > minepoch:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
                 if rule < convergence:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
+                
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
                 # get the inputs and labels
@@ -123,7 +126,9 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-        print("CNN __init__: testing \n")
+        print('Training Network: DONE')
+
+        print("Testing Network: ...")
         # --------------------------------
         # Testing:
         # Whole test data set
@@ -146,6 +151,9 @@ class CNN:
 
         print('\t --> Finished Training\n\n')
 
+        print('Testing Network: DONE')
+        
+        print('===================================')
 
 '''
 # ---------------------------------------------------------------------

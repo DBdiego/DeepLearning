@@ -106,33 +106,34 @@ if __name__ == "__main__":
 
     start_time_pop = time.time()
     print('Generating Population: ...')
-    pop = pg.population(problem, size=20)
-    print('Generating Population: DONE ({round(time.time() - start_time_pop, 5)}s)\n')
+    pop = pg.population(problem, size=8)
+    print(f'Generating Population: DONE ({round(time.time() - start_time_pop, 5)}s)\n')
 
     start_time_algo = time.time()
     print('Defining Algorithm: ...')
     algo = pg.algorithm(pg.nsga2(gen=20))
-    print('Defining Algorithm: DONE ({round(time.time() - start_time_algo, 5)}s)\n')
+    print(f'Defining Algorithm: DONE ({round(time.time() - start_time_algo, 5)}s)\n')
 
     start_time_archi = time.time()
     print('Creating Archipelago: ...')
-    archi = pg.archipelago(n=20,algo=algo, prob=problem)
-    print('Creating Archipelago: DONE ({round(time.time() - start_time_prob, 5)}s)\n')
+    #archi = pg.archipelago(n=20,algo=algo, prob=problem)
+    print(f'Creating Archipelago: DONE ({round(time.time() - start_time_prob, 5)}s)\n')
     
     print('\n===============================================')
-    print(archi)
+    #print(archi)
     print('===============================================\n')
 
     start_time_evovle = time.time()
     print('Evolving Population: ...')
-    pop = archi.evolve(pop)
-    print('Evolving Population: DONE ({round(time.time() - start_time_evovle, 5)}s)\n')
+    pop = algo.evolve(pop)
+    #pop = archi.evolve(pop)
+    print(f'Evolving Population: DONE ({round(time.time() - start_time_evovle, 5)}s)\n')
 
     start_time_results = time.time()
     print('Gathering results: ...')
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
-    print('Gathering results: DONE ({round(time.time() - start_time_results, 5)}s)\n')
+    print(f'Gathering results: DONE ({round(time.time() - start_time_results, 5)}s)\n')
 
     np.savetxt('results.txt', fits, delimiter=';')
 
