@@ -96,15 +96,47 @@ class NeuroEvolutionaryNetwork:
 
 if __name__ == "__main__":
     print("Available GPU's: ", torch.cuda.device_count(), '\n')
+
+    print('Problem Definition: ...')
     problem = pg.problem(NeuroEvolutionaryNetwork())
+    print('Problem Definition: DONE\n')
+
+    print('Generating Population: ...')
     pop = pg.population(problem, size=20)
+    print('Generating Population: DONE\n')
+
+    print('Defining Algorithm: ...')
     algo = pg.algorithm(pg.nsga2(gen=20))
-    
+    print('Defining Algorithm: DONE\n')
+
+    print('Creating Archipelago: ...')
     archi = pg.archipelago(n=20,algo=algo, prob=problem)
-    pop = archi.evolve(pop)
+    print('Creating Archipelago: DONE\n')
     
+    print('\n===============================================')
+    print(archi)
+    print('===============================================\n')
+
+    print('Evolving Population: ...')
+    pop = archi.evolve(pop)
+    print('Evolving Population: DONE\n')
+
+    print('Gathering results: ...')
     fits, vectors = pop.get_f(), pop.get_x()
     ndf, dl, dc, ndr = pg.fast_non_dominated_sorting(fits)
+    print('Gathering results: DONE\n')
 
     np.savetxt('results.txt', fits, delimiter=';')
+
+
+
+
+
+
+
+
+
+
+
+
     
