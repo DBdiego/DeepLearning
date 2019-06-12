@@ -14,7 +14,7 @@ from dataloader import CustomDataset
 
 class CNN:
 
-    def __init__(self, trainset, testset,
+    def __init__(self, gpu_index, trainset, testset,
                  n_conv,
                  dim1,
                  kernel_conv,
@@ -60,7 +60,7 @@ class CNN:
             if torch.cuda.device_count() > 1:
                 net = nn.DataParallel(net)
 
-            device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            device = torch.device('cuda:'+str(gpu_index) if torch.cuda.is_available() else "cpu")
             print('running on : ', device)
             net.to(device)
 
@@ -147,7 +147,7 @@ class CNN:
 
 
         self.accuracy = 100 * correct / total
-        print('\t --> Accuracy of the network on the 10000 test images: %d %%' % (
+        print('\t --> Accuracy of the network on the '+str(total)+' test images: %d %%' % (
             self.accuracy))
 
         print('\t --> Finished Training')

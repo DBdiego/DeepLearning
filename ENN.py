@@ -10,6 +10,7 @@ RATIO_TRAINING = 0.1
 RATIO_DATA = 0.1
 MAX_DATA = RATIO_DATA*41556
 
+print('Running ENN.py\n')
 
 print('Importing data: ...')
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
@@ -59,6 +60,11 @@ def argument_input_interface(
 
 
 saved_data = []
+if torch.cuda.is_available():
+    num_avail_gpus = torch.cuda.device_count()
+else:
+    num_avail_gpus = 1
+    
 class NeuroEvolutionaryNetwork:
     def __init__(self):
         self.network_class = CNN
@@ -66,8 +72,10 @@ class NeuroEvolutionaryNetwork:
     def fitness(self, x):
         try:
             values = argument_input_interface(*x)
-
-            session = self.network_class(
+            
+            gpu_index = np.random.randint(0, num_avail_gpus)
+            
+            session = self.network_class(gpu_index, 
                 train_dataset,
                 test_dataset,
                 *values
