@@ -27,7 +27,7 @@ class CNN:
         # --------------------------------------
         # Parameters:
         maxtraintime = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        batch_size = 100
+        batch_size = 10
         lr = 0.001
         momentum = 0.9
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
@@ -61,6 +61,7 @@ class CNN:
                 net = nn.DataParallel(net)
 
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            print('running on : ', device)
             net.to(device)
 
 
