@@ -23,7 +23,8 @@ class CustomDataset(Dataset):
     # Initialise: load images and get labels
     def __init__(self, image_path, normalise, maxx, resize=(224, 224), train=True, ):
         imgs = os.listdir(image_path)
-        n_samples = int(maxx/2) #np.size(imgs)#20778
+        n_samples = int(maxx/2)#np.size(imgs)#20778
+        imgs_red = np.random.choice(imgs, n_samples, replace=False)
         self.train = train
 
             
@@ -36,7 +37,7 @@ class CustomDataset(Dataset):
 
             # Load images from image to np array.
             images_og = np.array(
-                [np.array(Image.open(image_path + imgs[i]).convert("RGB")) for i in range(n_samples)],
+                [np.array(Image.open(image_path + img).convert("RGB")) for img in imgs_red],
                 order='F', dtype='float32')  # uint8
             images_aug = add_gaussian_noise(images_og)
             self.images = np.concatenate((images_og, images_aug))
