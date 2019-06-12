@@ -49,7 +49,7 @@ def argument_input_interface(
     for i in range(int(n_conv)):
         pad = int(kernel_conv / 2)
         final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)
-        final_dim = int((final_dim - kernel_pool + 2 * 0) / stride_pool + 1)
+        final_dim = int((final_dim - kernel_pool + 2 *   0) / stride_pool + 1)
         #
         bad = True if (final_dim == 0) else False
         #
@@ -127,7 +127,7 @@ if __name__ == "__main__":
 
     start_time_archi = time.time()
     print('Creating Archipelago: ...')
-    archi = pg.archipelago(n=2,algo=algo, prob=problem, pop_size=5)
+    archi = pg.archipelago(n=2,algo=algo, prob=problem, pop_size=5, udi=pg.ipyparallel_island())
     print(f'Creating Archipelago: DONE ({round(time.time() - start_time_archi, 5)}s)\n')
     
     print('\n===============================================')
