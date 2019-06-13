@@ -33,8 +33,7 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-        
-       
+        print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
