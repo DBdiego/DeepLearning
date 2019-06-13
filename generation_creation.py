@@ -23,9 +23,6 @@ def f(cnn_class_inputs):
 
 if __name__ == '__main__':
     #--------------------------------------------------------
-    print('alf')
-
-    print('lfa')
     NORMALIZE = True
     IMAGE_PATH = 'database/'
     RATIO_TRAINING = 0.1
@@ -50,27 +47,35 @@ if __name__ == '__main__':
                [200, 173, 146, 120, 93, 66, 40]]
     genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
-    genomes = [genome1, genome2]
+    genome3 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
+               [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
+    genomes = [genome1, genome2, genome3]
 
     args = []
-    for i in range(2):
-        print(i)
+    for i in range(len(genomes)):
+
+        gpu_index = np.random.randint(0,2)
+        print(gpu_index)
         args.append(
-            [i, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
+            [gpu_index, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
              genomes[i][5], genomes[i][6], genomes[i][7]])
 
     # --------------------------------------------------------
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
-    p = mp.Process(target=f, args=(args[0],))
-    p1 = mp.Process(target=f, args=(args[0],))
+    processes = []
+    for i in range(len(genomes)):
+        p = mp.Process(target=f, args=(args[i],))
+        p.start()
+        processes.append(p)
+
+    for i in range(len(genomes)):
+        p = processes[i]
+        p.join()
+
     #torch.multiprocessing.spawn(f, args=args[1], nprocs=2, join=True, daemon=False)
     #p = Process(target=f, args=(args[0],))
     #p1 = Process(target=f, args=(args[1],))
-    p.start()
-    p1.start()
-    p.join()
-    p1.join()
 
 
 
