@@ -6,8 +6,6 @@ import time
 import torch.multiprocessing as mp
 from torch.multiprocessing import Process
 
-
-
 def f(cnn_class_inputs, network_index,results):
     a = CNN(network_index,
             cnn_class_inputs[0],
@@ -22,6 +20,13 @@ def f(cnn_class_inputs, network_index,results):
             cnn_class_inputs[9],
             cnn_class_inputs[10])
     results[network_index] = a.accuracy
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     #--------------------------------------------------------
@@ -55,7 +60,7 @@ if __name__ == '__main__':
     args = []
     for i in range(len(genomes)):
 
-        gpu_index = i%2#np.random.randint(0,2)
+        gpu_index = i%num_avail_gpus#np.random.randint(0,2)
         #print(gpu_index)
         args.append(
             [gpu_index, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
@@ -74,16 +79,16 @@ if __name__ == '__main__':
 
         return processes
 
-    for j in range(int(len(genomes)/2)):
+    for j in range(int(len(genomes)/num_avail_gpus)):
         processes = []
         print('Beginning new cycle...')
-        for i in range(2):
-            processes = create_pocess(i,processes,j+i)
+        for i in range(num_avail_gpus):
+            processes = create_pocess(i,processes,int(str(j)+str(i),2))
 
-        for i in range(2):
+        for i in range(num_avail_gpus):
             p = processes[i][1]
             p.join()
-            print('\tNetwork',j+i,'done')
+            print('\tNetwork',int(str(j)+str(i),2),'done')
 
         print('Cycle done\n')
 
