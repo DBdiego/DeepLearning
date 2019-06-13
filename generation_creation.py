@@ -63,7 +63,6 @@ if __name__ == '__main__':
     # --------------------------------------------------------
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
-    processes = []
 
 
 
@@ -82,6 +81,7 @@ if __name__ == '__main__':
     #p0.join()
 
     for j in range(int(len(genomes)/2)):
+        processes = []
         print('beginning new cycle...')
         for i in range(2):
             processes = create_pocess(i,processes,j+i)
