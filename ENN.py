@@ -75,7 +75,7 @@ class NeuroEvolutionaryNetwork:
             
             gpu_index = np.random.randint(0, num_avail_gpus)
             
-            session = self.network_class(gpu_index, 
+            session = self.network_class(0, gpu_index,
                 train_dataset,
                 test_dataset,
                 *values
@@ -101,8 +101,8 @@ class NeuroEvolutionaryNetwork:
     def get_bounds(self):
         return (
             # n_conv . kernel_conv . stride_conv . kernel_pool . stride_pool . n_layers
-            [2, 2, 1, 1, 2,  4],
-            [8, 3, 2, 1, 3, 15]
+            [2, 2, 1, 2, 2,  4],
+            [8, 3, 2, 3, 3, 15]
         )
 
 

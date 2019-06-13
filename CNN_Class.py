@@ -14,7 +14,7 @@ from dataloader import CustomDataset
 
 class CNN:
 
-    def __init__(self, gpu_index, trainset, testset,
+    def __init__(self, network_index, gpu_index, trainset, testset,
                  n_conv,
                  dim1,
                  kernel_conv,
@@ -33,7 +33,7 @@ class CNN:
         convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-        print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
+        #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
@@ -48,7 +48,7 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        print('\n=========== NEW NETWORK ===========')
+        #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
@@ -60,7 +60,7 @@ class CNN:
                 net = nn.DataParallel(net)
 
         device = torch.device('cuda:'+str(gpu_index) if torch.cuda.is_available() else "cpu")
-        print('running on : ', 'cuda:'+str(gpu_index))
+        #print('running on : ', 'cuda:'+str(gpu_index))
         net.to(device)
 
 
@@ -71,7 +71,7 @@ class CNN:
         optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
 
         # --------------------------------------
-        print('Training Network: ...')
+        print('Training Network', network_index, 'on GPU #',gpu_index)
         # Training:
         losslst = []
         starttime = time.time()
@@ -114,7 +114,7 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
-                    print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                    #print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
@@ -126,9 +126,9 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-        print('Training Network: DONE')
-
-        print("Testing Network: ...")
+        #print('Training Network: DONE')
+        print('Testing Network', network_index, 'on GPU #', gpu_index)
+        #print("Testing Network: ...")
         # --------------------------------
         # Testing:
         # Whole test data set
@@ -146,14 +146,14 @@ class CNN:
 
 
         self.accuracy = 100 * correct / total
-        print('\t --> Accuracy of the network on the '+str(total)+' test images: %d %%' % (
+        print('\t --> Accuracy of network', network_index,'on the '+str(total)+' test images: %d %%' % (
             self.accuracy))
 
-        print('\t --> Finished Training')
+        #print('\t --> Finished Training')
 
-        print('Testing Network: DONE')
+        #print('Testing Network: DONE')
         
-        print('===================================\n')
+        #print('===================================\n')
 
 '''
 # ---------------------------------------------------------------------

@@ -8,8 +8,9 @@ from torch.multiprocessing import Process
 
 
 
-def f(cnn_class_inputs):
-    CNN(cnn_class_inputs[0],
+def f(cnn_class_inputs, network_index):
+    CNN(network_index,
+        cnn_class_inputs[0],
         cnn_class_inputs[1],
         cnn_class_inputs[2],
         cnn_class_inputs[3],
@@ -54,7 +55,7 @@ if __name__ == '__main__':
     for i in range(len(genomes)):
 
         gpu_index = i%2#np.random.randint(0,2)
-        print(gpu_index)
+        #print(gpu_index)
         args.append(
             [gpu_index, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
              genomes[i][5], genomes[i][6], genomes[i][7]])
@@ -67,8 +68,8 @@ if __name__ == '__main__':
 
 
 
-    def create_pocess(gen_index,processes):
-        p = mp.Process(target=f, args=(args[gen_index],))
+    def create_pocess(gen_index,processes,network_index):
+        p = mp.Process(target=f, args=(args[gen_index],network_index,))
         p.start()
         processes.append([gen_index,p])
 
@@ -81,13 +82,16 @@ if __name__ == '__main__':
     #p0.join()
 
     for j in range(int(len(genomes)/2)):
+        print('beginning new cycle...')
         for i in range(2):
-            processes = create_pocess(i,processes)
+            processes = create_pocess(i,processes,j+i)
 
         for i in range(2):
             p = processes[i][1]
             p.join()
-            print(j+i,' done')
+            print('network',j+i,'done')
+
+        print('cycle done\n')
             #processes.pop(i)
 
 
