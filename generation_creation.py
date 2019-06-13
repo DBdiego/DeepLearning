@@ -63,6 +63,16 @@ if __name__ == '__main__':
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
     processes = []
+
+
+
+
+    def create_pocess(gen_index,processes):
+        p = mp.Process(target=f, args=(args[gen_index],))
+        p.start()
+        processes.append([gen_index,p])
+
+        return processes
     #p0 = mp.Process(target=f, args=(args[i],))
     #p1 = mp.Process(target=f, args=(args[i],))
     #p0.start()
@@ -70,18 +80,17 @@ if __name__ == '__main__':
     #processes.append(p)
     #p0.join()
 
+    for j in range(int(len(genomes)/2)):
+        for i in range(2):
+            processes = create_pocess(i,processes)
 
-    for i in range(2):
+        for i in range(2):
+            p = processes[i][1]
+            p.join()
+            print(j+i,' done')
+            #processes.pop(i)
 
-        #len(genomes)):
-        p = mp.Process(target=f, args=(args[i],))
-        p.start()
-        processes.append(p)
 
-    for i in range(len(genomes)):
-        p = processes[i]
-        p.join()
-        print(i,' done')
 
     #torch.multiprocessing.spawn(f, args=args[1], nprocs=2, join=True, daemon=False)
     #p = Process(target=f, args=(args[0],))
