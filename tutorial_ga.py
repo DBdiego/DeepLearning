@@ -1,8 +1,8 @@
-from ga.population import *
-from ga.strategy import *
-from ga.operators import *
-from ga.gene import *
-from ga.chromosome import *
+from external.sga.population import *
+from external.sga.strategy import *
+from external.sga.operators import *
+from external.sga.gene import *
+from external.sga.chromosome import *
 import matplotlib.pyplot as plt
 
 VAR1_LIMS = (3, 10)
