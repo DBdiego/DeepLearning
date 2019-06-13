@@ -60,9 +60,9 @@ class CNN:
             if torch.cuda.device_count() > 1:
                 net = nn.DataParallel(net)
 
-            device = torch.device('cuda' if torch.cuda.is_available() else "cpu")
-            print('running on : ', 'cuda')
-            net.to(device)
+        device = torch.device('cuda:'+str(gpu_index) if torch.cuda.is_available() else "cpu")
+        print('running on : ', 'cuda:'+str(gpu_index))
+        net.to(device)
 
 
         
@@ -99,9 +99,9 @@ class CNN:
                 if traintime > maxtraintime:
                     break
                 inputs, labels = data
-                if use_gpu:
-                    inputs = inputs.cuda()
-                    labels = labels.cuda()
+                
+                inputs = inputs.to(device)#cuda()
+                labels = labels.to(device)#cuda()
 
                 # zero the parameter gradients
                 optimizer.zero_grad()
@@ -138,8 +138,8 @@ class CNN:
         with torch.no_grad():
             for data in testloader:
                 images, labels = data
-                images = images.cuda()
-                labels = labels.cuda()
+                images = images.to(device)#.cuda()
+                labels = labels.to(device)#.cuda()
                 outputs = net(images)
                 _, predicted = torch.max(outputs.data, 1)
                 total += labels.size(0)
