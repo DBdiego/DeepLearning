@@ -48,14 +48,12 @@ if __name__ == '__main__':
                [200, 173, 146, 120, 93, 66, 40]]
     genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
-    genome3 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
-               [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
-    genomes = [genome1, genome2, genome3]
+    genomes = [genome1, genome2, genome2, genome1]
 
     args = []
     for i in range(len(genomes)):
 
-        gpu_index = np.random.randint(0,2)
+        gpu_index = i%2#np.random.randint(0,2)
         print(gpu_index)
         args.append(
             [gpu_index, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
@@ -64,8 +62,19 @@ if __name__ == '__main__':
     # --------------------------------------------------------
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
-    processes = []
-    for i in range(len(genomes)):
+    #processes = []
+    p0 = mp.Process(target=f, args=(args[i],))
+    #p1 = mp.Process(target=f, args=(args[i],))
+    p0.start()
+    #p1.start()
+    #processes.append(p)
+    a = p0.join()
+    print(a)
+    '''
+    for j in range(len(genomes)/num_avail_gpus):
+        for i in range(num_avail_gpus):
+
+        #len(genomes)):
         p = mp.Process(target=f, args=(args[i],))
         p.start()
         processes.append(p)
@@ -73,7 +82,7 @@ if __name__ == '__main__':
     for i in range(len(genomes)):
         p = processes[i]
         p.join()
-
+    '''
     #torch.multiprocessing.spawn(f, args=args[1], nprocs=2, join=True, daemon=False)
     #p = Process(target=f, args=(args[0],))
     #p1 = Process(target=f, args=(args[1],))
