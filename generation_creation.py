@@ -8,19 +8,20 @@ from torch.multiprocessing import Process
 
 
 
-def f(cnn_class_inputs, network_index):
-    CNN(network_index,
-        cnn_class_inputs[0],
-        cnn_class_inputs[1],
-        cnn_class_inputs[2],
-        cnn_class_inputs[3],
-        cnn_class_inputs[4],
-        cnn_class_inputs[5],
-        cnn_class_inputs[6],
-        cnn_class_inputs[7],
-        cnn_class_inputs[8],
-        cnn_class_inputs[9],
-        cnn_class_inputs[10])
+def f(cnn_class_inputs, network_index,results):
+    a = CNN(network_index,
+            cnn_class_inputs[0],
+            cnn_class_inputs[1],
+            cnn_class_inputs[2],
+            cnn_class_inputs[3],
+            cnn_class_inputs[4],
+            cnn_class_inputs[5],
+            cnn_class_inputs[6],
+            cnn_class_inputs[7],
+            cnn_class_inputs[8],
+            cnn_class_inputs[9],
+            cnn_class_inputs[10])
+    results[network_index] = a.accuracy
 
 if __name__ == '__main__':
     #--------------------------------------------------------
@@ -63,9 +64,11 @@ if __name__ == '__main__':
     # --------------------------------------------------------
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
+    manager = mp.Manager()
+    results = manager.dict()
 
     def create_pocess(gen_index,processes,network_index):
-        p = mp.Process(target=f, args=(args[gen_index],network_index,))
+        p = mp.Process(target=f, args=(args[gen_index],network_index,results))
         p.start()
         processes.append([gen_index,p])
 
@@ -83,6 +86,8 @@ if __name__ == '__main__':
             print('\tNetwork',j+i,'done')
 
         print('Cycle done\n')
+
+    print(results)
             #processes.pop(i)
 
 

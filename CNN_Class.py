@@ -125,7 +125,7 @@ class CNN:
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
-        print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE (',round(time.time()-starttime,3),')')
+        print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(time.time()-starttime,1))+'s)')
         #print('Training Network: DONE')
         print('\tTesting Network', network_index, 'on GPU #', gpu_index)
         #print("Testing Network: ...")
