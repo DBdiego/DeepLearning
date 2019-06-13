@@ -71,7 +71,7 @@ class CNN:
         optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
 
         # --------------------------------------
-        print('Training Network', network_index, 'on GPU #',gpu_index)
+        print('\tTraining Network', network_index, 'on GPU #',gpu_index)
         # Training:
         losslst = []
         starttime = time.time()
@@ -125,9 +125,9 @@ class CNN:
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
-
+        print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE (',round(time.time()-starttime,3),')')
         #print('Training Network: DONE')
-        print('Testing Network', network_index, 'on GPU #', gpu_index)
+        print('\tTesting Network', network_index, 'on GPU #', gpu_index)
         #print("Testing Network: ...")
         # --------------------------------
         # Testing:

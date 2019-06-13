@@ -64,41 +64,27 @@ if __name__ == '__main__':
     #mp.get_context('spawn')
     mp.set_start_method('spawn',force=True)
 
-
-
-
     def create_pocess(gen_index,processes,network_index):
         p = mp.Process(target=f, args=(args[gen_index],network_index,))
         p.start()
         processes.append([gen_index,p])
 
         return processes
-    #p0 = mp.Process(target=f, args=(args[i],))
-    #p1 = mp.Process(target=f, args=(args[i],))
-    #p0.start()
-    #p1.start()
-    #processes.append(p)
-    #p0.join()
 
     for j in range(int(len(genomes)/2)):
         processes = []
-        print('beginning new cycle...')
+        print('Beginning new cycle...')
         for i in range(2):
             processes = create_pocess(i,processes,j+i)
 
         for i in range(2):
             p = processes[i][1]
             p.join()
-            print('network',j+i,'done')
+            print('\tNetwork',j+i,'done')
 
-        print('cycle done\n')
+        print('Cycle done\n')
             #processes.pop(i)
 
-
-
-    #torch.multiprocessing.spawn(f, args=args[1], nprocs=2, join=True, daemon=False)
-    #p = Process(target=f, args=(args[0],))
-    #p1 = Process(target=f, args=(args[1],))
 
 
 
