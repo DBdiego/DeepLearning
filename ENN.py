@@ -117,7 +117,7 @@ if __name__ == "__main__":
 
     start_time_pop = time.time()
     print('Generating Population: ...')
-    #pop = pg.population(problem, size=8)
+    pop = pg.population(problem, size=8)
     print(f'Generating Population: DONE ({round(time.time() - start_time_pop, 5)}s)\n')
 
     start_time_algo = time.time()
@@ -127,17 +127,17 @@ if __name__ == "__main__":
 
     start_time_archi = time.time()
     print('Creating Archipelago: ...')
-    archi = pg.archipelago(n=2,algo=algo, prob=problem, pop_size=5, udi=pg.ipyparallel_island())
+    #archi = pg.archipelago(n=2,algo=algo, prob=problem, pop_size=5, udi=pg.ipyparallel_island())
     print(f'Creating Archipelago: DONE ({round(time.time() - start_time_archi, 5)}s)\n')
     
     print('\n===============================================')
-    print(archi)
+    #print(archi)
     print('===============================================\n')
 
     start_time_evovle = time.time()
     print('Evolving Population: ...')
-    #pop = algo.evolve(pop)
-    pop = archi.evolve()
+    pop = algo.evolve(pop)
+    #pop = archi.evolve()
     print(f'Evolving Population: DONE ({round(time.time() - start_time_evovle, 5)}s)\n')
 
     start_time_results = time.time()
