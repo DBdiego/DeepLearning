@@ -56,7 +56,7 @@ class CNN:
 
         if use_gpu:
             net = net.cuda()
-            if torch.cuda.device_count() > 1:
+            if 0 and torch.cuda.device_count() > 1:
                 net = nn.DataParallel(net)
 
         device = torch.device('cuda:'+str(gpu_index) if torch.cuda.is_available() else "cpu")
