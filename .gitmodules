@@ -1,0 +1,3 @@
+[submodule "genetic-algorithm-example"]
+	path = genetic-algorithm-example
+	url = https://github.com/ggarrett13/genetic-algorithm-example.git
