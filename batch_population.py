@@ -1,4 +1,5 @@
 from external.sga.population import *
+import fitness_func from paralleliser
 
 
 class BatchPopulation(Population):
@@ -12,17 +13,19 @@ class BatchPopulation(Population):
         return children_population
 
     def calculate_fitness(self, fitness_function, *args, **kwargs):
-        result = []
-        for member in self._population:
-            # print(kwargs["archive"])
-
-            if kwargs["archive"]["chromosome"].str.contains(member).any():  # Get from archive if present.
-                # print(kwargs["archive"]["fitness"][kwargs["archive"]["chromosome"] == member].iloc[0])
-                result.append(kwargs["archive"]["fitness"][kwargs["archive"]["chromosome"] == member].iloc[0])
+        result = [None for i in self._population]
+        genomes = []
+        for index, member in enumerate(self._population):
+            
+            # If already computed previously
+            if kwargs["archive"]["chromosome"].str.contains(member).any():
+                result[index] = kwargs["archive"]["fitness"][kwargs["archive"]["chromosome"] == member].iloc[0]
 
 
             else:
-                result.append(fitness_function(*self._chromosome.parameters(member), *args))
+                genomes.append(self._chromosome.parameters(member))
 
-        # print(result)
+        
+        result = fitness_func(genomes, kwargs['train_dataset'], kwargs['test_dataset'], result)
+        print(result)
         return result
