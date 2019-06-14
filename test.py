@@ -3,7 +3,7 @@ from CNN_Class import random_split, CustomDataset
 import torch
 
 
-def main():
+def poep():
     NORMALIZE = True
     IMAGE_PATH = 'database/'
     RATIO_TRAINING = 0.1
@@ -30,5 +30,7 @@ def main():
 
 if __name__ == '__main__':
     torch.multiprocessing.freeze_support()
-    main()
+    poep()
+
+
 
