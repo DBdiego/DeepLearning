@@ -27,26 +27,19 @@ class CustomDataset(Dataset):
         imgs_red = np.random.choice(imgs, n_samples, replace=False)
         self.train = train
 
-            
-        # if normalising (to [0, 1]...), needs to be float type
-        if normalise:
-            # define transforms from numpy array to pytorch tensor, and optionally normalising
-            self.transform = transforms.Compose([ transforms.Resize(resize),
-                                                  transforms.ToTensor(),
-                                                  transforms.Normalize((0, 0, 0), (255, 255, 255))])
+        # Transforms: resize t0 224, torch tensor, normalise
+        self.transform = transforms.Compose([ transforms.Resize(resize),
+                                              transforms.ToTensor(),
+                                              transforms.Normalize((0, 0, 0), (255, 255, 255))])
 
-            # Load images from image to np array.
-            images_og = np.array(
-                [np.array(Image.open(image_path + img).convert("RGB")) for img in imgs_red],
-                order='F', dtype='float32')  # uint8
-            images_aug = add_gaussian_noise(images_og)
-            self.images = np.concatenate((images_og, images_aug))
-        else:  # without normalisation...
-            self.transform = transforms.Compose([transforms.ToTensor()])
-            self.images = np.array(
-                [np.array(Image.open(image_path + img).convert("RGB")) for img in os.listdir(image_path)],
-                order='F', dtype='uint8')  # float32
-        # extracting labels from image names
+        # Load images from image to np array -------------------
+        images_og = np.array(
+            [np.array(Image.open(image_path + img).convert("RGB")) for img in imgs_red],
+            order='F', dtype='float32')  # uint8
+        images_aug = add_gaussian_noise(images_og)
+        self.images = np.concatenate((images_og, images_aug))
+
+        # extracting labels from image names -------------------
         labels = np.array([self.cars.index(re.match(r"(^\D+)", img)[0]) for img in imgs_red])
         labels = torch.from_numpy(np.concatenate((labels, labels)))
         self.labels = labels.type(torch.long)  # outputs of network are also torch.long type...
@@ -54,9 +47,7 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, item):
         img = self.images[item]
-        # applying transformations...
-        # if self.transform is not None:
-        img = Image.fromarray((img * 255).astype(np.uint8))
+        img = Image.fromarray((img * 255).astype(np.uint8)) # Need to be ints
         img = self.transform(img)
         lbl = self.labels[item]
         return img, lbl

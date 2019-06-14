@@ -26,18 +26,18 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        maxtraintime = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        batch_size = 10
-        lr = 0.001
-        momentum = 0.9
-        convergence = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
-        minepoch = 6  # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
+        MAXTRAINTIME = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        BATCH_SIZE = 10
+        LR = 0.001
+        MOMENTUM = 0.9
+        CONVERGENCE = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
+        MIN_EPOCH = 6  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
         # Data loading:
         trainloader = DataLoader(dataset=trainset,
-                                 batch_size=batch_size,
+                                 batch_size=BATCH_SIZE,
                                  shuffle=True)
         testloader = DataLoader(testset,
                                 shuffle=False, num_workers=1)
@@ -68,7 +68,7 @@ class CNN:
         # Loss function
         # with optim, can also use e.g. Adam
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.SGD(net.parameters(), lr=lr, momentum=momentum)
+        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
 
         # --------------------------------------
         print('\tTraining Network', network_index, 'on GPU #',gpu_index)
@@ -78,16 +78,16 @@ class CNN:
         traintime = time.time() - starttime
         epoch = 0
         # for epoch in range(nr_epochs):  # loop over the dataset multiple times
-        while traintime < maxtraintime:
+        while traintime < MAXTRAINTIME:
             epoch = epoch + 1
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
             
-            if epoch > minepoch:  # minimum number of epochs
+            if epoch > MIN_EPOCH:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
-                if rule < convergence:
+                if rule < CONVERGENCE:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
@@ -95,7 +95,7 @@ class CNN:
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
                 # get the inputs and labels
-                if traintime > maxtraintime:
+                if traintime > MAXTRAINTIME:
                     break
                 inputs, labels = data
                 
@@ -160,9 +160,9 @@ class CNN:
 
 # Main:
 # Those 3 variables are set in the class itself look # parameters
-# batch_size = 10
-# lr = 0.001
-# momentum = 0.9
+# BATCH_SIZE = 10
+# LR = 0.001
+# MOMENTUM = 0.9
 
 
 # n_conv = 3
@@ -192,9 +192,9 @@ class CNN:
 #             n_layers,
 #             dim2)
 =======
-#batch_size = 10
-#lr = 0.001
-#momentum = 0.9
+#BATCH_SIZE = 10
+#LR = 0.001
+#MOMENTUM = 0.9
 
 n_conv = 3
 dim1 = [6, 19, 32]
