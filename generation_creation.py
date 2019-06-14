@@ -74,7 +74,8 @@ def paralalala(genomes,train_dataset, test_dataset):
             if j!=num_cycles-1:
                 num_used_gpus = num_avail_gpus
             else:
-                num_used_gpus = len(genomes)%num_avail_gpus
+                num_used_gpus = len(genomes)-j*num_avail_gpus
+
             for i in range(num_used_gpus):
                 processes = create_pocess(processes,int(str(j)+str(i),2))
 
