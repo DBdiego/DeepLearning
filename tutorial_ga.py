@@ -9,19 +9,18 @@ from generation_creation import paralalala
 from CNN_Class import random_split, CustomDataset
 import torch
 
+
+NORMALIZE = True
+IMAGE_PATH = 'database/'
+RATIO_TRAINING = 0.1
+RATIO_DATA = 0.8
+MAX_DATA = RATIO_DATA * 41556
+
+POP_SIZE = 40
+NUM_GENERATIONS = 20
+
+
 def load_data():
-    NORMALIZE = True
-    IMAGE_PATH = 'database/'
-    RATIO_TRAINING = 0.1
-    RATIO_DATA = 0.8
-    MAX_DATA = RATIO_DATA * 41556
-    
-    POP_SIZE = 40
-    NUM_GENERATIONS = 20
-
-
-    
-
 
     print('Importing data: ...')
     dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
