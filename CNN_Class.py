@@ -26,7 +26,7 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 20 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 5 * 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 10
         LR = 0.001
         MOMENTUM = 0.9
@@ -82,8 +82,6 @@ class CNN:
             epoch = epoch + 1
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
-            running_loss_epoch = 0.0  # reset running loss per epoch
-            running_loss       = 0.0  # reset running loss per batch
             
             if epoch > MIN_EPOCH:  # minimum number of epochs
                 rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
@@ -113,8 +111,8 @@ class CNN:
 
                 # print statistics
                 running_loss += loss.item()
-                if i % 200 == 199:  # print every 200 mini-batches
-                    #print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                if i % 100 == 99:  # print every 200 mini-batches
+                    print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 100,2)}')
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
