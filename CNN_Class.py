@@ -105,7 +105,7 @@ class CNN:
 
                 # forward + backward + optimize
                 outputs = net(inputs)
-                print(outputs, labels)
+                
                 loss = criterion(outputs, labels)  # labels need to be of type: torch.long
                 loss.backward()
                 optimizer.step()
@@ -113,7 +113,10 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
-                    #print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                    
+                    print(f'\t {network_index} --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                    print(outputs, labels)
+                    
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
