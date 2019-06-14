@@ -73,10 +73,10 @@ if __name__ == '__main__':
     train_dataset, test_dataset = load_data()
 
     # Evolve for solution.
-    EvolutionaryStrategyTest.evolve(True, {
-        "training_dataset": train_dataset,
-        "test_dataset": test_dataset
-    })
+    EvolutionaryStrategyTest.evolve(True, 
+        training_dataset= train_dataset,
+        test_dataset= test_dataset
+    )
 
     sol = EvolutionaryStrategyTest.get_fittest_solution()[0]
     print(sol)
