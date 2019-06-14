@@ -1,5 +1,5 @@
 from external.sga.population import *
-import fitness_func from paralleliser
+from paralleliser import fitness_func 
 
 
 class BatchPopulation(Population):
