@@ -32,11 +32,11 @@ def load_data():
 ChromosomePart2 = Chromosome(
     [
         # LinearRangeGene(-1, 1, 100),  # k2
-        DenaryGeneFloat(limits=(2, 8), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # k2
+        DenaryGeneFloat(limits=(2, 6), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
-        DenaryGeneFloat(limits=(1, 2), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
+        DenaryGeneFloat(limits=(1, 1), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
-        DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
+        DenaryGeneFloat(limits=(2, 2), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(4, 16), n_bits_exponent=5, n_bits_fraction=None, signed=False),  # k2
     ],
 )
