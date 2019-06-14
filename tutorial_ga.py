@@ -13,7 +13,7 @@ def load_data():
     NORMALIZE = True
     IMAGE_PATH = 'database/'
     RATIO_TRAINING = 0.1
-    RATIO_DATA = 0.05
+    RATIO_DATA = 0.1
     MAX_DATA = RATIO_DATA * 41556
 
     print('Running gen_creat.py\n')
@@ -32,7 +32,7 @@ def load_data():
 ChromosomePart2 = Chromosome(
     [
         # LinearRangeGene(-1, 1, 100),  # k2
-        DenaryGeneFloat(limits=(2, 6), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # k2
+        DenaryGeneFloat(limits=(3, 6), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(1, 1), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # k2
