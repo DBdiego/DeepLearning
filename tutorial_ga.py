@@ -1,4 +1,5 @@
-from external.sga.population import *
+# from external.sga.population import *
+from batch_population import *
 from external.sga.strategy import *
 from external.sga.operators import *
 from external.sga.gene import *
