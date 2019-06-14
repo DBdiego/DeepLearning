@@ -78,13 +78,14 @@ def paralalala(genomes,train_dataset, test_dataset):
 
             for i in range(num_used_gpus):
                 processes = create_pocess(processes,counter)
-                counter += 1
+                counter+=1
 
             for i in range(num_used_gpus):
                 p = processes[i][1]
+                network_id = processes[i][0]
                 p.join()
 
-                print('\tNetwork',counter,'done')
+                print('\tNetwork',network_id,'done')
 
             print('Cycle done\n')
 
