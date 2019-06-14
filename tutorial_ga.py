@@ -42,7 +42,7 @@ ChromosomePart2 = Chromosome(
 )
 
 # Create population.
-population = BatchPopulation(100, 100, ChromosomePart2)
+population = BatchPopulation(6, 6, ChromosomePart2)
 
 # Define termination class
 TerminationCriteria = TerminationCriteria()
