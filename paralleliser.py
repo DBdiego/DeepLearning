@@ -98,7 +98,7 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
     results_final = results.copy()
     for i in range(len(results_HL)):
         if results_HL[i] == None:
-            print([results_final],[j])
+            #print([results_final],[j])
             results_HL[i] = results_final[j]
             j += 1
 
