@@ -105,6 +105,7 @@ class CNN:
 
                 # forward + backward + optimize
                 outputs = net(inputs)
+                print(outputs, labels)
                 loss = criterion(outputs, labels)  # labels need to be of type: torch.long
                 loss.backward()
                 optimizer.step()
@@ -113,7 +114,6 @@ class CNN:
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
                     #print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
-                    #print('\t',losslst[-5:])
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
@@ -124,10 +124,10 @@ class CNN:
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
+            
         print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(time.time()-starttime,1))+'s)')
-        #print('Training Network: DONE')
         print('\tTesting Network', network_index, 'on GPU #', gpu_index)
-        #print("Testing Network: ...")
+
         # --------------------------------
         # Testing:
         # Whole test data set
