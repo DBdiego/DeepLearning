@@ -77,6 +77,8 @@ class CNN:
         starttime = time.time()
         traintime = time.time() - starttime
         epoch = 0
+
+        basis = [[0 for i in range(40)] for j in range(BATCH_SIZE)]
         # for epoch in range(nr_epochs):  # loop over the dataset multiple times
         while traintime < MAXTRAINTIME:
             epoch = epoch + 1
@@ -95,7 +97,14 @@ class CNN:
                 # get the inputs and labels
                 if traintime > MAXTRAINTIME:
                     break
+                
+                norm_labels = [i for i in basis]
                 inputs, labels = data
+                
+                for i, label in enumerate(lables):
+                    norm_labels[i][label] = 1
+
+                labels = torch.FloatTensor(norm_labels)
                 
                 inputs = inputs.to(device)#cuda()
                 labels = labels.to(device)#cuda()
