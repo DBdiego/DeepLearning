@@ -60,7 +60,8 @@ class BatchPopulation(Population):
 
 
             else:
-                genomes.append(argument_input_interface(self._chromosome.parameters(member)))
+                
+                genomes.append(argument_input_interface(*self._chromosome.parameters(member)))
 
         result = fitness_func(genomes, kwargs['train_dataset'], kwargs['test_dataset'], result)
         print(result)
