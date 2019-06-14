@@ -13,10 +13,15 @@ def load_data():
     NORMALIZE = True
     IMAGE_PATH = 'database/'
     RATIO_TRAINING = 0.1
-    RATIO_DATA = 0.5
+    RATIO_DATA = 0.8
     MAX_DATA = RATIO_DATA * 41556
+    
+    POP_SIZE = 40
+    NUM_GENERATIONS = 20
 
-    print('Running gen_creat.py\n')
+
+    
+
 
     print('Importing data: ...')
     dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
@@ -42,12 +47,12 @@ ChromosomePart2 = Chromosome(
 )
 
 # Create population.
-population = BatchPopulation(6, 6, ChromosomePart2)
+population = BatchPopulation(POP_SIZE, POP_SIZE+1, ChromosomePart2)
 
 # Define termination class
 TerminationCriteria = TerminationCriteria()
 # TerminationCriteria.add_convergence_limit()  # Limit to 0.1% convergence in population.
-TerminationCriteria.add_generation_limit(20)
+TerminationCriteria.add_generation_limit(NUM_GENERATIONS)
 
 
 def fitness_function(*args):
