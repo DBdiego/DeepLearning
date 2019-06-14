@@ -8,20 +8,25 @@ import torch.multiprocessing as mp
 # Runs the CNN and passes the accuracy to results in paralalala
 def f(cnn_class_inputs, network_index, results):
     print(cnn_class_inputs[3:])
-    a = CNN(network_index,
-            cnn_class_inputs[0],
-            cnn_class_inputs[1],
-            cnn_class_inputs[2],
-            cnn_class_inputs[3],
-            cnn_class_inputs[4],
-            cnn_class_inputs[5],
-            cnn_class_inputs[6],
-            cnn_class_inputs[7],
-            cnn_class_inputs[8],
-            cnn_class_inputs[9],
-            cnn_class_inputs[10])
+    try:
+        a = CNN(network_index,
+                cnn_class_inputs[0],
+                cnn_class_inputs[1],
+                cnn_class_inputs[2],
+                cnn_class_inputs[3],
+                cnn_class_inputs[4],
+                cnn_class_inputs[5],
+                cnn_class_inputs[6],
+                cnn_class_inputs[7],
+                cnn_class_inputs[8],
+                cnn_class_inputs[9],
+                cnn_class_inputs[10])
 
-    results[network_index] = a.accuracy
+        results[network_index] = a.accuracy
+    except RuntimeError:
+        results[network_index] = 0
+
+
 
 '''
 Trains each network on a different GPU
