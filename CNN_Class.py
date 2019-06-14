@@ -101,7 +101,7 @@ class CNN:
                 norm_labels = [i for i in basis]
                 inputs, labels = data
                 
-                for i, label in enumerate(lables):
+                for i, label in enumerate(labels):
                     norm_labels[i][label] = 1
 
                 labels = torch.FloatTensor(norm_labels)
