@@ -2,6 +2,43 @@ from external.sga.population import *
 from paralleliser import fitness_func 
 
 
+
+def argument_input_interface(
+        n_conv,
+        kernel_conv,
+        stride_conv,
+        kernel_pool,
+        stride_pool,
+        n_layers,
+        dim1=400,
+        dim2=200
+):
+    _dim1 = np.linspace(3, dim1, int(n_conv + 1)).astype(int)
+    _dim1 = np.delete(_dim1, 0)
+    _dim2 = np.linspace(dim2, 40, int(n_layers)).astype(int)
+    _kernel_conv = [int(kernel_conv)] * int(n_conv)
+    _stride_conv = [int(stride_conv)] * int(n_conv)
+    _kernel_pool = [int(kernel_pool)] * int(n_conv)
+    _stride_pool = [int(stride_pool)] * int(n_conv)
+
+    # !!!!!!! final_dim has to be checked that it does not reduce to zero
+    # Note that if the stride of the convolution and pooling is held at (1,2), then most likely final_dim will not
+    # reduce to zero unless n_conv exceeds 4!
+
+    final_dim = 224
+    for i in range(int(n_conv)):
+        pad = int(kernel_conv / 2)
+        final_dim = int((final_dim - kernel_conv + 2 * pad) / stride_conv + 1)
+        final_dim = int((final_dim - kernel_pool + 2 *   0) / stride_pool + 1)
+        #
+        bad = True if (final_dim == 0) else False
+        #
+        if bad:
+            raise ArithmeticError
+    # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
+    return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
+
+
 class BatchPopulation(Population):
 
     def __init__(self, m: int, n: int, chromosome_class: Chromosome):
@@ -23,9 +60,8 @@ class BatchPopulation(Population):
 
 
             else:
-                genomes.append(self._chromosome.parameters(member))
+                genomes.append(argument_input_interface(self._chromosome.parameters(member)))
 
-        
         result = fitness_func(genomes, kwargs['train_dataset'], kwargs['test_dataset'], result)
         print(result)
         return result
