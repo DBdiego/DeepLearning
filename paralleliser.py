@@ -24,7 +24,7 @@ def f(cnn_class_inputs, network_index, results):
 
         results[network_index] = a.accuracy
     except RuntimeError:
-        print('Fuck off')
+        print('\t!!! GPU Memory Overload !!!')
         results[network_index] = 0
 
 
@@ -56,9 +56,17 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
     for i in range(len(genomes)):
 
         gpu_index = i%num_avail_gpus
-        args.append(
-            [gpu_index, train_dataset, test_dataset, genomes[i][0], genomes[i][1], genomes[i][2], genomes[i][3], genomes[i][4],
-             genomes[i][5], genomes[i][6], genomes[i][7]])
+        args.append([gpu_index,
+                     train_dataset,
+                     test_dataset,
+                     genomes[i][0],
+                     genomes[i][1],
+                     genomes[i][2],
+                     genomes[i][3],
+                     genomes[i][4],
+                     genomes[i][5],
+                     genomes[i][6],
+                     genomes[i][7]])
 
     # --------------------------------------------------------
     mp.set_start_method('spawn',force=True)
@@ -72,6 +80,7 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
         processes.append([network_index,p])
 
         return processes
+    
     counter = 0
     for j in range(num_cycles):
         processes = []
@@ -94,11 +103,12 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
 
         print('Cycle done\n')
 
+
+
     j = 0
     results_final = results.copy()
     for i in range(len(results_HL)):
         if results_HL[i] == None:
-            #print([results_final],[j])
             results_HL[i] = results_final[j]
             j += 1
 

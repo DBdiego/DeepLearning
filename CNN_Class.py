@@ -114,11 +114,11 @@ class CNN:
 
                 # print statistics
                 running_loss += loss.item()
-                if i % 200 == 199:  # print every 200 mini-batches
-                    
-                    print(f'\t {network_index} --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
-                    print(outputs, labels)
-                    
+                
+                every_x_minibatches = 200 # print every X mini-batches
+                if i % every_x_minibatches == every_x_minibatches-1:  
+                    print(f'\t {network_index} --> [{epoch}, {i + 1}] loss: {np.round(running_loss / every_x_minibatches, 4)}')
+                    #print(outputs, labels)
                     running_loss_epoch += running_loss
                     running_loss = 0.0
 
@@ -126,12 +126,13 @@ class CNN:
                     batchtime = time.time() - starttime
                 traintime = time.time() - starttime + batchtime  # + batchtime estimates the time for the next batch
                 self.realtime = time.time() - starttime
+                
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
             
         print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(time.time()-starttime,1))+'s)')
-        print('\tTesting Network', network_index, 'on GPU #', gpu_index)
+        print('\tTesting Network' , network_index, 'on GPU #', gpu_index)
 
         # --------------------------------
         # Testing:
