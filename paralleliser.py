@@ -7,7 +7,7 @@ import torch.multiprocessing as mp
 
 # Runs the CNN and passes the accuracy to results in paralalala
 def f(cnn_class_inputs, network_index, results):
-    print(cnn_class_inputs)
+    print(cnn_class_inputs[3:])
     a = CNN(network_index,
             cnn_class_inputs[0],
             cnn_class_inputs[1],
