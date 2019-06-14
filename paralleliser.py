@@ -24,6 +24,7 @@ def f(cnn_class_inputs, network_index, results):
 
         results[network_index] = a.accuracy
     except RuntimeError:
+        print('Fuck off')
         results[network_index] = 0
 
 
