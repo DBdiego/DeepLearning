@@ -2,6 +2,8 @@ import numpy as np
 from CNN_Class import CNN, random_split, CustomDataset
 import torch
 import time
+import datetime
+from LogCreator import Add_to_Log
 
 import torch.multiprocessing as mp
 
@@ -77,10 +79,11 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
     def create_pocess(processes,network_index):
         p = mp.Process(target=f, args=(args[network_index],network_index,results))
         p.start()
-        processes.append([network_index,p])
+        processes.append([network_index,p, datetime.datetime.now()])
 
         return processes
-    
+
+    log_dict = {}
     counter = 0
     for j in range(num_cycles):
         processes = []
@@ -91,6 +94,17 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
             num_used_gpus = len(genomes)-j*num_avail_gpus
 
         for i in range(num_used_gpus):
+            log_dict.update({counter:{'time'        : datetime.datetime.now() ,
+                                      'gpu'         : args[counter][ 0]       ,
+                                      'n_conv'      : args[counter][ 3]       ,
+                                      'dim1'        : args[counter][ 4]       ,
+                                      'kernel_conv' : args[counter][ 5]       ,
+                                      'stride_conv' : args[counter][ 6]       ,
+                                      'kernel_pool' : args[counter][ 7]       ,
+                                      'stride_pool' : args[counter][ 8]       ,
+                                      'n_layers'    : args[counter][ 9]       ,
+                                      'dim2'        : args[counter][10]       ,}})
+
             processes = create_pocess(processes,counter)
             counter+=1
 
@@ -98,20 +112,23 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
             p = processes[i][1]
             network_id = processes[i][0]
             p.join()
-
+        
             print('\tNetwork',network_id,'done')
 
         print('Cycle done\n')
 
 
 
+    log_dict = {}
     j = 0
     results_final = results.copy()
     for i in range(len(results_HL)):
         if results_HL[i] == None:
             results_HL[i] = results_final[j]
+            log_dict[j].update({'accuracy':results_final[j]})
             j += 1
 
+    Add_to_Log(log_dict, './Logs/ResultsLog.csv')
 
     return results_HL
 
