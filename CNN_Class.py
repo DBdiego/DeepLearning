@@ -30,8 +30,8 @@ class CNN:
         BATCH_SIZE = 20
         LR = 1E-3
         MOMENTUM = 0.9
-        CONVERGENCE = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
-        MIN_EPOCH = 6  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
+        CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
+        MIN_EPOCH = 10  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
