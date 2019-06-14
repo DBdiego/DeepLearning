@@ -7,6 +7,7 @@ import torch.multiprocessing as mp
 
 # Runs the CNN and passes the accuracy to results in paralalala
 def f(cnn_class_inputs, network_index, results):
+    print(cnn_class_inputs)
     a = CNN(network_index,
             cnn_class_inputs[0],
             cnn_class_inputs[1],
@@ -19,6 +20,7 @@ def f(cnn_class_inputs, network_index, results):
             cnn_class_inputs[8],
             cnn_class_inputs[9],
             cnn_class_inputs[10])
+
     results[network_index] = a.accuracy
 
 '''
@@ -67,7 +69,7 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
     counter = 0
     for j in range(num_cycles):
         processes = []
-        print('Beginning new cycle...')
+        print('Loading GPUs...')
         if j!=num_cycles-1:
             num_used_gpus = num_avail_gpus
         else:
