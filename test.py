@@ -23,7 +23,7 @@ def main():
                [200, 173, 146, 120, 93, 66, 40]]
     genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
-    genomes = [genome1, genome2, genome2, genome1]
+    genomes = [genome1, genome2, genome2, genome1,genome2]
 
     result = paralalala(genomes,train_dataset,test_dataset)
     print(result)
