@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
     # Evolve for solution.
     EvolutionaryStrategyTest.evolve(True, 
-        training_dataset= train_dataset,
+        train_dataset= train_dataset,
         test_dataset= test_dataset
     )
 
