@@ -11,7 +11,7 @@ def argument_input_interface(
         stride_pool,
         n_layers,
         dim1=400,
-        dim2=6000
+        dim2=4056
 ):
     _dim1 = np.linspace(3, dim1, int(n_conv + 1)).astype(int)
     _dim1 = np.delete(_dim1, 0)
