@@ -112,7 +112,7 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 if i % 200 == 199:  # print every 200 mini-batches
-                    print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
+                    #print(f'\t --> [{epoch}, {i + 1}] loss: {np.round(running_loss / 200,2)}')
                     #print('\t',losslst[-5:])
                     running_loss_epoch += running_loss
                     running_loss = 0.0
