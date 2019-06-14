@@ -43,8 +43,9 @@ def paralalala(genomes,train_dataset, test_dataset):
         else:
             num_avail_gpus = 1
 
+        num_cycles = int(len(genomes) / num_avail_gpus)
         if len(genomes) % num_avail_gpus != 0:
-            raise ValueError
+            num_cycles += 1
 
         args = []
         for i in range(len(genomes)):
@@ -60,20 +61,24 @@ def paralalala(genomes,train_dataset, test_dataset):
         results = manager.dict()
 
         # Creates, starts process and appends it to list processes
-        def create_pocess(gen_index,processes,network_index):
-            p = mp.Process(target=f, args=(args[gen_index],network_index,results))
+        def create_pocess(processes,network_index):
+            p = mp.Process(target=f, args=(args[network_index],network_index,results))
             p.start()
-            processes.append([gen_index,p])
+            processes.append([network_index,p])
 
             return processes
 
-        for j in range(int(len(genomes)/num_avail_gpus)):
+        for j in range(num_cycles):
             processes = []
             print('Beginning new cycle...')
-            for i in range(num_avail_gpus):
-                processes = create_pocess(i,processes,int(str(j)+str(i),2))
+            if j!=num_cycles-1:
+                num_used_gpus = num_avail_gpus
+            else:
+                num_used_gpus = len(genomes)%num_avail_gpus
+            for i in range(num_used_gpus):
+                processes = create_pocess(processes,int(str(j)+str(i),2))
 
-            for i in range(num_avail_gpus):
+            for i in range(num_used_gpus):
                 p = processes[i][1]
                 p.join()
                 print('\tNetwork',int(str(j)+str(i),2),'done')
