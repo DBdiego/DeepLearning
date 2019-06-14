@@ -13,7 +13,7 @@ def load_data():
     NORMALIZE = True
     IMAGE_PATH = 'database/'
     RATIO_TRAINING = 0.1
-    RATIO_DATA = 0.01
+    RATIO_DATA = 0.02
     MAX_DATA = RATIO_DATA * 41556
 
     print('Running gen_creat.py\n')
