@@ -1,6 +1,7 @@
 from generation_creation import paralalala
-from CNN_Class import CNN, random_split, CustomDataset
+from CNN_Class import random_split, CustomDataset
 import torch
+
 
 def main():
     NORMALIZE = True
@@ -23,8 +24,9 @@ def main():
     genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
     genomes = [genome1, genome2, genome2, genome1]
-    tit = paralalala(genomes,train_dataset, test_dataset)
-    print(tit)
+
+    result = paralalala(genomes,train_dataset,test_dataset)
+    print(result)
 
 if __name__ == '__main__':
     torch.multiprocessing.freeze_support()

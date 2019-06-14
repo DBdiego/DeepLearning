@@ -4,33 +4,8 @@ import torch
 import time
 
 import torch.multiprocessing as mp
-from torch.multiprocessing import Process
-'''
-NORMALIZE = True
-IMAGE_PATH = 'database/'
-RATIO_TRAINING = 0.1
-RATIO_DATA = 0.1
-MAX_DATA = RATIO_DATA * 41556
 
-print('Running gen_creat.py\n')
-
-print('Importing data: ...')
-dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
-print('Importing data: DONE\n')
-
-I = int(RATIO_TRAINING * len(dataset))
-lengths = [len(dataset) - I, I]  # train data and test data
-train_dataset, test_dataset = random_split(dataset, lengths)
-genome1 = [5, [82, 161, 241, 320, 400], [2, 2, 2, 2, 2], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [2, 2, 2, 2, 2], 7,
-           [200, 173, 146, 120, 93, 66, 40]]
-genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
-           [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
-genomes = [genome1, genome2, genome2, genome1]
-
-
-'''
-
-
+# Runs the CNN and passes the accuracy to results in paralalala
 def f(cnn_class_inputs, network_index, results):
     a = CNN(network_index,
             cnn_class_inputs[0],
@@ -46,18 +21,30 @@ def f(cnn_class_inputs, network_index, results):
             cnn_class_inputs[10])
     results[network_index] = a.accuracy
 
+'''
+Trains each network on a different GPU
+note: number of genomes passed has to be a multiple of number of available GPUs
+else will raise ValueError
+Inputs:
+    genomes:         list of genomes
+    train_dataset:   CustomDataset training data
+    test_dataset:    CustomDataset training data
+Outputs:
+    results:         list of accuracies of the CNN with the genomes given
+'''
 def paralalala(genomes,train_dataset, test_dataset):
-    print(__name__)
-
 
     if __name__ == 'generation_creation':#''__main__':
 
 
-        #--------------------------------------------------------
+        # Set up variables and proper input layout -------------------------------------------------------
         if torch.cuda.is_available():
             num_avail_gpus = torch.cuda.device_count()
         else:
             num_avail_gpus = 1
+
+        if len(genomes) % num_avail_gpus != 0:
+            raise ValueError
 
         args = []
         for i in range(len(genomes)):
@@ -68,11 +55,11 @@ def paralalala(genomes,train_dataset, test_dataset):
                  genomes[i][5], genomes[i][6], genomes[i][7]])
 
         # --------------------------------------------------------
-        #mp.get_context('spawn')
         mp.set_start_method('spawn',force=True)
         manager = mp.Manager()
         results = manager.dict()
 
+        # Creates, starts process and appends it to list processes
         def create_pocess(gen_index,processes,network_index):
             p = mp.Process(target=f, args=(args[gen_index],network_index,results))
             p.start()
