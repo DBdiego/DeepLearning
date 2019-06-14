@@ -27,8 +27,8 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 4*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 40
-        LR = 1E-3
+        BATCH_SIZE = 20
+        LR = 5E-3
         MOMENTUM = 0.9
         CONVERGENCE = 0.001  # Not sure if this is a good value (smaller change than 0.1%)
         MIN_EPOCH = 6  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
