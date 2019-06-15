@@ -20,8 +20,6 @@ class CustomDataset(Dataset):
             'Nissan', 'Opel', 'Peugeot', 'Porsche', 'Renault', 'Rover', 'Saab', 'Seat',
             'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
             
-    cars = ['Alfa Romeo', 'Audi', 'BMW', 'Chevrolet', 'Citroen']
-
     # Initialise: load images and get labels
     def __init__(self, image_path, normalise, maxx, tot_imgs, resize=(224, 224), train=True, ):
         imgs = os.listdir(image_path)
