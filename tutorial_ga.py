@@ -12,9 +12,12 @@ import torch
 
 NORMALIZE = True
 IMAGE_PATH = 'database/'
-RATIO_TRAINING = 0.1
-RATIO_DATA = 0.8
-MAX_DATA = RATIO_DATA * 41556
+no_classes = [5,8,10,20,40]
+imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of classes above
+CLASSES_INDEX = 1 # NOTE: have to change line 18 in batch_population as well
+RATIO_TRAINING = 0.5
+RATIO_DATA = 1
+MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
 POP_SIZE = 40
 NUM_GENERATIONS = 20
@@ -23,7 +26,7 @@ NUM_GENERATIONS = 20
 def load_data():
 
     print('Importing data: ...')
-    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, train=True)
+    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
     print('Importing data: DONE\n')
 
     I = int(RATIO_TRAINING * len(dataset))
