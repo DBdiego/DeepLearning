@@ -85,7 +85,8 @@ class CNN:
         #criterion = nn.BCEWithLogitsLoss()
         
         # with optim, can also use e.g. Adam
-        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+        #optimizer = optim.Adam(net.parameters(), lr=LR, momentum=MOMENTUM)
+        optimizer = optim.adam(net.parameters(), lr=LR)
 
         # --------------------------------------
         print('\tTraining Network', network_index, 'on GPU #',gpu_index)
@@ -173,11 +174,8 @@ class CNN:
                 labels = labels.to(device)#.cuda()
                 outputs = net(images)
                 a, predicted = torch.max(outputs.data, 1)
-                #print(outputs.data, a, predicted)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
-
-                print((predicted == labels).sum().item())
 
 
         self.accuracy = 100 * correct / total
