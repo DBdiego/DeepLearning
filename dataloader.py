@@ -14,12 +14,11 @@ class CustomDataset(Dataset):
     """ Custom car logo Dataset loader"""
 
     # Labels:
-    cars = ['Alfa Romeo', 'Audi', 'BMW', 'Chevrolet', 'Citroen']
-    ''', 'Dacia', 'Daewoo', 'Dodge',
+    cars = ['Alfa Romeo', 'Audi', 'BMW', 'Chevrolet', 'Citroen','Dacia', 'Daewoo', 'Dodge',
             'Ferrari', 'Fiat', 'Ford', 'Honda', 'Hyundai', 'Jaguar', 'Jeep', 'Kia', 'Lada',
             'Lancia', 'Land Rover', 'Lexus', 'Maserati', 'Mazda', 'Mercedes', 'Mitsubishi',
             'Nissan', 'Opel', 'Peugeot', 'Porsche', 'Renault', 'Rover', 'Saab', 'Seat',
-            'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']'''
+            'Skoda', 'Subaru', 'Suzuki', 'Tata', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo']
             
     # Initialise: load images and get labels
     def __init__(self, image_path, normalise, maxx, tot_imgs, resize=(224, 224), train=True, ):
