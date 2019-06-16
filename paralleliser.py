@@ -8,10 +8,11 @@ from LogCreator import Add_to_Log
 import torch.multiprocessing as mp
 
 # Runs the CNN and passes the accuracy to results in paralalala
-def f(cnn_class_inputs, network_index, results):
+def f(cnn_class_inputs, network_index, generation_index, results):
     print(cnn_class_inputs[3:])
     try:
         a = CNN(network_index,
+                generation_index,
                 cnn_class_inputs[0],
                 cnn_class_inputs[1],
                 cnn_class_inputs[2],
@@ -42,7 +43,7 @@ Inputs:
 Outputs:
     results:         list of accuracies of the CNN with the genomes given
 '''
-def fitness_func(genomes,train_dataset, test_dataset, results_HL):
+def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_HL):
 
     # Set up variables and proper input layout -------------------------------------------------------
     if torch.cuda.is_available():
@@ -76,8 +77,8 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
     results = manager.dict()
 
     # Creates, starts process and appends it to list processes
-    def create_pocess(processes,network_index):
-        p = mp.Process(target=f, args=(args[network_index],network_index,results))
+    def create_pocess(processes,network_index, generation_index):
+        p = mp.Process(target=f, args=(args[network_index],network_index,generation_index, results))
         p.start()
         processes.append([network_index,p, datetime.datetime.now()])
 
@@ -105,7 +106,7 @@ def fitness_func(genomes,train_dataset, test_dataset, results_HL):
                                       'n_layers'    : args[counter][ 9]       ,
                                       'dim2'        : args[counter][10]       ,}})
 
-            processes = create_pocess(processes,counter)
+            processes = create_pocess(processes, counter, generation_index)
             counter+=1
 
         for i in range(num_used_gpus):

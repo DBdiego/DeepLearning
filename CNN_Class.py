@@ -1,4 +1,5 @@
 import time
+import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,12 +10,13 @@ from torch.utils.data import DataLoader, random_split
 
 from cnn2 import Net
 from dataloader import CustomDataset
+from LogCreator import Add_to_Log
 
 # torch.manual_seed(0)
 
 class CNN:
 
-    def __init__(self, network_index, gpu_index, trainset, testset,
+    def __init__(self, network_index, generation_index, gpu_index, trainset, testset,
                  n_conv,
                  dim1,
                  kernel_conv,
@@ -24,13 +26,26 @@ class CNN:
                  n_layers,
                  dim2):
 
+        log_dict = {'start_time'  : datetime.datetime.now()   ,
+                    'gpu'         : 'cuda:'+str(gpu_index)    ,
+                    'generation'  : generation_index          ,
+                    'network'     : 'Net_'+str(network_index) , 
+                    'n_conv'      : n_conv                    ,
+                    'dim1'        : dim1                      ,
+                    'kernel_conv' : kernel_conv               ,
+                    'stride_conv' : stride_conv               ,
+                    'kernel_pool' : kernel_pool               ,
+                    'stride_pool' : stride_pool               ,
+                    'n_layers'    : n_layers                  ,
+                    'dim2'        : dim2                      } 
+
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 60*10  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 10
+        MAXTRAINTIME = 20*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        BATCH_SIZE = 20
         LR = 1E-3
         MOMENTUM = 0.9
-#        CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
+        CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
         MIN_EPOCH = 10  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
@@ -84,12 +99,12 @@ class CNN:
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
             
-#            if epoch > MIN_EPOCH:  # minimum number of epochs
-#                rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
-#                if rule < CONVERGENCE:
-#                    self.losslst = losslst
-#                    self.realtime = time.time() - starttime
-#                    break
+            if epoch > MIN_EPOCH:  # minimum number of epochs
+                rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
+                if rule < CONVERGENCE:
+                    self.losslst = losslst
+                    self.realtime = time.time() - starttime
+                    break
                 
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
@@ -115,8 +130,8 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 
-                every_x_minibatches = 50 # print every X mini-batches
-                if i % every_x_minibatches == (every_x_minibatches-1):
+                every_x_minibatches = 200 # print every X mini-batches
+                if i % every_x_minibatches == every_x_minibatches-1:  
                     print(f'\t N{network_index}:   [{epoch}, {i + 1}] loss: {np.round(running_loss / every_x_minibatches, 4)}')
                     #print(outputs, labels)
                     running_loss_epoch += running_loss
@@ -130,8 +145,11 @@ class CNN:
             losslst.append(running_loss_epoch)
             self.tot_epoch = epoch
             self.losslst = losslst
+
+        train_time = round(time.time()-starttime, 5)
+        log_dict.update({'train_time':train_time})
             
-        print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(time.time()-starttime,1))+'s)')
+        print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(train_time, 1))+'s)')
         print('\tTesting Network' , network_index, 'on GPU #', gpu_index)
 
         # --------------------------------
@@ -153,6 +171,45 @@ class CNN:
         self.accuracy = 100 * correct / total
         print('\t --> Accuracy of network', network_index,'on the '+str(total)+' test images: %d %%' % (
             self.accuracy))
+
+        
+        # Filling Logging Information and Saving the log
+        log_dict.update({'train_time' : train_time,
+                         'end_time'   : datetime.datetime.now(),
+                         'accuracy'   : self.accuracy          ,
+                         'epochs'     : epoch                  ,
+                         'test_imgs'  : total                  })
+
+        Add_to_Log(log_dict, './Logs/GPU_Logs/Logs_Cuda_'+str(gpu_index)+'.txt')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         #print('\t --> Finished Training')
 

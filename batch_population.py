@@ -52,6 +52,7 @@ class BatchPopulation(Population):
     def calculate_fitness(self, fitness_function, *args, **kwargs):
         result = [None for i in self._population]
         genomes = []
+        generation_index = int(kwargs['archive'].index.tolist()/len(result)) + 1
         for index, member in enumerate(self._population):
             
             # If already computed previously
@@ -60,9 +61,8 @@ class BatchPopulation(Population):
 
 
             else:
-                
                 genomes.append(argument_input_interface(*self._chromosome.parameters(member)))
-
-        result = fitness_func(genomes, kwargs['train_dataset'], kwargs['test_dataset'], result)
+        
+        result = fitness_func(genomes, generation_index, kwargs['train_dataset'], kwargs['test_dataset'], result)
         print(result)
         return result
