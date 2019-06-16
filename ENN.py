@@ -8,12 +8,12 @@ NORMALIZE = True
 IMAGE_PATH = 'database/'
 RATIO_TRAINING = 0.1
 RATIO_DATA = 0.5
-MAX_DATA = RATIO_DATA*2*3299#41556
+MAX_DATA = RATIO_DATA*41556
 
 print('Running ENN.py\n')
 
 print('Importing data: ...')
-dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=3299, train=True)
+dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=41556, train=True)
 print('Importing data: DONE\n')
 
 I = int(RATIO_TRAINING * len(dataset))
