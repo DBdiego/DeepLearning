@@ -26,7 +26,7 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 20*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 10
         LR = 1E-3
         MOMENTUM = 0.9
