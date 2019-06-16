@@ -85,8 +85,8 @@ class CNN:
         #criterion = nn.BCEWithLogitsLoss()
         
         # with optim, can also use e.g. Adam
-        #optimizer = optim.Adam(net.parameters(), lr=LR, momentum=MOMENTUM)
-        optimizer = optim.adam(net.parameters(), lr=LR)
+        #optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+        optimizer = optim.Adam(net.parameters(), lr=LR)
 
         # --------------------------------------
         print('\tTraining Network', network_index, 'on GPU #',gpu_index)
