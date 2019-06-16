@@ -42,10 +42,10 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 15*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 20
-        LR = 1*1E-5
+        BATCH_SIZE = 10
+        LR = 1*1E-6
         MOMENTUM = 0.5
-        CONVERGENCE = 1E-4  # Not sure if this is a good value (smaller change than 0.001%)
+        CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
         MIN_EPOCH = 10  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
