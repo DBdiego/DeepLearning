@@ -25,6 +25,7 @@ class CustomDataset(Dataset):
     def __init__(self, image_path, normalise, maxx, tot_imgs, resize=(224, 224), train=True, ):
         imgs = os.listdir(image_path)
         imgs = imgs[0:tot_imgs]
+        print(imgs[0],imgs[-1])
         n_samples = int(maxx/2)
         imgs_red = np.random.choice(imgs, n_samples, replace=False)
         self.train = train
