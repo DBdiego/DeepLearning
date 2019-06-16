@@ -18,7 +18,7 @@ RATIO_TRAINING = 0.5
 RATIO_DATA = 1
 MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
-POP_SIZE = 40
+POP_SIZE = 6
 NUM_GENERATIONS = 20
 
 
@@ -48,7 +48,7 @@ ChromosomePart2 = Chromosome(
 )
 
 # Create population.
-population = BatchPopulation(POP_SIZE, POP_SIZE+1, ChromosomePart2)
+population = BatchPopulation(POP_SIZE, POP_SIZE, ChromosomePart2)
 
 # Define termination class
 TerminationCriteria = TerminationCriteria()
