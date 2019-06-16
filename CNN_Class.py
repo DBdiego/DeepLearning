@@ -156,9 +156,10 @@ class CNN:
             self.losslst = losslst
 
             print(np.array(losslst))
-            print(np.diff(np.array(losslst)))
-            print(np.average(np.diff(np.array(losslst))), 0.01*np.average(np.array(losslst)))
-            if np.average(np.diff(np.array(losslst))) < 0.01*np.average(np.array(losslst)):
+            if len(losslst) > 5:
+                print(np.diff(np.array(losslst)))
+                print(np.average(np.diff(np.array(losslst))), 0.01*np.average(np.array(losslst)))
+            if len(losslst) > 5 and np.average(np.diff(np.array(losslst))) < 0.01*np.average(np.array(losslst)):
                 LR = LR/10
                 optimizer = optim.Adam(net.parameters(), lr=LR)
                 
