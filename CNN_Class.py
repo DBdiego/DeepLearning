@@ -157,8 +157,9 @@ class CNN:
 
             if len(losslst) > 5:
                 print(losslst[-5:], np.diff(np.array(losslst)))
-                print(abs(np.average(np.diff(np.array(losslst)))), 0.01*np.average(np.array(losslst)))
+                print(abs(np.average(np.diff(np.array(losslst[-5:])))), 0.01*np.average(np.array(losslst[-5:])))
             if len(losslst) > 5 and abs(np.average(np.diff(np.array(losslst[-5:])))) < 0.01*np.average(np.array(losslst[-5:])):
+                print(f'\t N{network_index}: epoch {epoch} reducing LR from {LR} to {LR/10}')
                 LR = LR/10
                 optimizer = optim.Adam(net.parameters(), lr=LR)
                 
