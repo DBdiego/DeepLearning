@@ -52,6 +52,8 @@ class BatchPopulation(Population):
     def calculate_fitness(self, fitness_function, *args, **kwargs):
         result = [None for i in self._population]
         genomes = []
+        print(kwargs['archive'].index)
+        print(kwargs['archive'].index.tolist())
         generation_index = int(np.array(kwargs['archive'].index.tolist())/len(result)) + 1
         for index, member in enumerate(self._population):
             
