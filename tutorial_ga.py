@@ -16,7 +16,7 @@ imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of cla
 CLASSES_INDEX = 0 # NOTE: have to change line 18 in batch_population as well
 RATIO_TRAINING = 0.5
 RATIO_DATA = 1
-MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
+MAX_DATA = RATIO_DATA * 41556#2 * imgs_classes[CLASSES_INDEX]#41556
 
 POP_SIZE = 40
 NUM_GENERATIONS = 20
@@ -25,7 +25,7 @@ NUM_GENERATIONS = 20
 def load_data():
 
     print('Importing data: ...')
-    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
+    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA,)
     print('Importing data: DONE\n')
 
     I = int(RATIO_TRAINING * len(dataset))
