@@ -4,16 +4,10 @@ import datetime
 
 def dict_to_csv(log_dict):
 
-    lines = []
+    line = []
     for key in log_dict:
-        info = log_dict[key]
-        
-        line = []
-        for parameter in info:
-            line.append(str(info[parameter]))
-        lines.append(';'.join(line))
-
-    return '\n'.join(lines)+'\n'
+        line.append(str(log_dict[key]))
+    return ';'.join(line)+'\n'
 
 
 def Add_to_Log(log_dict, file_path):

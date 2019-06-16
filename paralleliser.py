@@ -11,19 +11,19 @@ import torch.multiprocessing as mp
 def f(cnn_class_inputs, network_index, generation_index, results):
     print(cnn_class_inputs[3:])
     try:
-        a = CNN(network_index,
-                generation_index,
-                cnn_class_inputs[0],
-                cnn_class_inputs[1],
-                cnn_class_inputs[2],
-                cnn_class_inputs[3],
-                cnn_class_inputs[4],
-                cnn_class_inputs[5],
-                cnn_class_inputs[6],
-                cnn_class_inputs[7],
-                cnn_class_inputs[8],
-                cnn_class_inputs[9],
-                cnn_class_inputs[10])
+        a = CNN(network_index        ,
+                generation_index     ,
+                cnn_class_inputs[ 0] ,
+                cnn_class_inputs[ 1] ,
+                cnn_class_inputs[ 2] ,
+                cnn_class_inputs[ 3] ,
+                cnn_class_inputs[ 4] ,
+                cnn_class_inputs[ 5] ,
+                cnn_class_inputs[ 6] ,
+                cnn_class_inputs[ 7] ,
+                cnn_class_inputs[ 8] ,
+                cnn_class_inputs[ 9] ,
+                cnn_class_inputs[10] )
 
         results[network_index] = a.accuracy
     except RuntimeError:
@@ -95,17 +95,6 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
             num_used_gpus = len(genomes)-j*num_avail_gpus
 
         for i in range(num_used_gpus):
-            log_dict.update({counter:{'time'        : datetime.datetime.now() ,
-                                      'gpu'         : args[counter][ 0]       ,
-                                      'n_conv'      : args[counter][ 3]       ,
-                                      'dim1'        : args[counter][ 4]       ,
-                                      'kernel_conv' : args[counter][ 5]       ,
-                                      'stride_conv' : args[counter][ 6]       ,
-                                      'kernel_pool' : args[counter][ 7]       ,
-                                      'stride_pool' : args[counter][ 8]       ,
-                                      'n_layers'    : args[counter][ 9]       ,
-                                      'dim2'        : args[counter][10]       ,}})
-
             processes = create_pocess(processes, counter, generation_index)
             counter+=1
 
@@ -126,10 +115,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
     for i in range(len(results_HL)):
         if results_HL[i] == None:
             results_HL[i] = results_final[j]
-            log_dict[j].update({'accuracy':results_final[j]})
             j += 1
-
-    Add_to_Log(log_dict, './Logs/ResultsLog.csv')
 
     return results_HL
 
