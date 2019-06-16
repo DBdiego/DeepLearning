@@ -139,7 +139,7 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 
-                every_x_minibatches = 100 # print every X mini-batches
+                every_x_minibatches = 20 # print every X mini-batches
                 if i % every_x_minibatches == (every_x_minibatches-1):  
                     print(f'\t N{network_index}:   [{epoch}, {i + 1}] avg. loss: {np.round(running_loss / every_x_minibatches, 4)}')
                     #print(outputs, labels)
