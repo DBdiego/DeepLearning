@@ -30,7 +30,7 @@ class CNN:
         BATCH_SIZE = 10
         LR = 1E-3
         MOMENTUM = 0.9
-        CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
+#        CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
         MIN_EPOCH = 10  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
@@ -84,12 +84,12 @@ class CNN:
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
             
-            if epoch > MIN_EPOCH:  # minimum number of epochs
-                rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
-                if rule < CONVERGENCE:
-                    self.losslst = losslst
-                    self.realtime = time.time() - starttime
-                    break
+#            if epoch > MIN_EPOCH:  # minimum number of epochs
+#                rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
+#                if rule < CONVERGENCE:
+#                    self.losslst = losslst
+#                    self.realtime = time.time() - starttime
+#                    break
                 
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
