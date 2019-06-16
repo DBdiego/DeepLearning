@@ -81,8 +81,10 @@ class CNN:
 
         
         # Loss function
+        #criterion = nn.CrossEntropyLoss()
+        criterion = nn.BCEWithLogitsLoss()
+        
         # with optim, can also use e.g. Adam
-        criterion = nn.CrossEntropyLoss()
         optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
 
         # --------------------------------------
