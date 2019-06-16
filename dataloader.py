@@ -23,6 +23,7 @@ class CustomDataset(Dataset):
     # Initialise: load images and get labels
     def __init__(self, image_path, normalise, maxx, tot_imgs, resize=(224, 224), train=True, ):
         imgs = os.listdir(image_path)
+        imgs.sort()
         print(imgs[0],imgs[-1])
         imgs = imgs[0:tot_imgs]
         print(imgs[0],imgs[-1])
