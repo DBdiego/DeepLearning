@@ -155,10 +155,8 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-            print(np.array(losslst))
             if len(losslst) > 5:
-                print(np.diff(np.array(losslst)))
-                print(np.average(np.diff(np.array(losslst))), 0.01*np.average(np.array(losslst)))
+                print(abs(np.average(np.diff(np.array(losslst)))), 0.01*np.average(np.array(losslst)))
             if len(losslst) > 5 and abs(np.average(np.diff(np.array(losslst[-5:])))) < 0.01*np.average(np.array(losslst[-5:])):
                 LR = LR/10
                 optimizer = optim.Adam(net.parameters(), lr=LR)
