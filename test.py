@@ -1,4 +1,4 @@
-from generation_creation import paralalala
+from paralleliser import fitness_func
 from CNN_Class import random_split, CustomDataset
 import torch
 
@@ -24,8 +24,8 @@ def poep():
     genome2 = [6, [69, 135, 201, 267, 333, 400], [2, 2, 2, 2, 2, 2], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1],
                [2, 2, 2, 2, 2, 2], 7, [200, 173, 146, 120, 93, 66, 40]]
     genomes = [genome1, genome2, genome2, genome1,genome2]
-
-    result = paralalala(genomes,train_dataset,test_dataset)
+    results = [None,None,None,None,None]
+    result = fitness_func(genomes,train_dataset,test_dataset,results)
     print(result)
 
 if __name__ == '__main__':
