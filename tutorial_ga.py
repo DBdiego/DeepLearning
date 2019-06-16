@@ -5,7 +5,6 @@ from external.sga.operators import *
 from external.sga.gene import *
 from external.sga.chromosome import *
 import matplotlib.pyplot as plt
-from generation_creation import paralalala
 from CNN_Class import random_split, CustomDataset
 import torch
 
