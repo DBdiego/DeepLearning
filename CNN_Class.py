@@ -42,8 +42,8 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 10*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 10
-        LR = 1E-3
+        BATCH_SIZE = 15
+        LR = 1E-4
         MOMENTUM = 0.6
         CONVERGENCE = 0.0001  # Not sure if this is a good value (smaller change than 0.1%)
         MIN_EPOCH = 10  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
@@ -184,6 +184,7 @@ class CNN:
                          'end_time'   : datetime.datetime.now(),
                          'accuracy'   : self.accuracy          ,
                          'epochs'     : epoch                  ,
+                         'loss_log'   : losslst                ,
                          'test_imgs'  : total                  })
 
         Add_to_Log(log_dict, './Logs/GPU_Logs/Logs_Cuda_'+str(gpu_index)+'.txt')
