@@ -105,7 +105,7 @@ class CNN:
                 try:
                     rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
                 except:
-                    print(losslst[-5:])
+                    print('losslst: ', losslst[-5:])
                     rule = CONVERGENCE/10 #making the following if-statement true and breaking the loop
 
                     
@@ -138,9 +138,9 @@ class CNN:
                 # print statistics
                 running_loss += loss.item()
                 
-                every_x_minibatches = 200 # print every X mini-batches
+                every_x_minibatches = 100 # print every X mini-batches
                 if i % every_x_minibatches == (every_x_minibatches-1):  
-                    print(f'\t N{network_index}:   [{epoch}, {i + 1}] loss: {np.round(running_loss / every_x_minibatches, 4)}')
+                    print(f'\t N{network_index}:   [{epoch}, {i + 1}] avg. loss: {np.round(running_loss / every_x_minibatches, 4)}')
                     #print(outputs, labels)
                     running_loss_epoch += running_loss
                     running_loss = 0.0
