@@ -172,7 +172,7 @@ class CNN:
                 labels = labels.to(device)#.cuda()
                 outputs = net(images)
                 a, predicted = torch.max(outputs.data, 1)
-                print(a, predicted)
+                print(outputs.data, a, predicted)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
