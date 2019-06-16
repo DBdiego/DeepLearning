@@ -55,7 +55,7 @@ class BatchPopulation(Population):
 
         if len(kwargs['archive'].index.tolist()) > 0:
             print(np.array(kwargs['archive'].index.tolist())/len(result))
-            generation_index = int(np.array(kwargs['archive'].index.tolist())/len(result)) + 1
+            generation_index = list(np.array(kwargs['archive'].index.tolist())%len(result)).count(0)
         else:
             generation_index = 0
             
