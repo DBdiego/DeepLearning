@@ -25,7 +25,7 @@ NUM_GENERATIONS = 20
 def load_data():
 
     print('Importing data: ...')
-    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=3299)
+    dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
     print('Importing data: DONE\n')
 
     I = int(RATIO_TRAINING * len(dataset))
