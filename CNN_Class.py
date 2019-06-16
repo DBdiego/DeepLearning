@@ -156,6 +156,7 @@ class CNN:
             self.losslst = losslst
 
             if len(losslst) > 5:
+                print(losslst[-5:], np.diff(np.array(losslst)))
                 print(abs(np.average(np.diff(np.array(losslst)))), 0.01*np.average(np.array(losslst)))
             if len(losslst) > 5 and abs(np.average(np.diff(np.array(losslst[-5:])))) < 0.01*np.average(np.array(losslst[-5:])):
                 LR = LR/10
