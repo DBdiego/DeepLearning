@@ -167,12 +167,13 @@ class CNN:
         total = 0
         with torch.no_grad():
             for data in testloader:
+                print(data)
                 images, labels = data
                 images = images.to(device)#.cuda()
                 labels = labels.to(device)#.cuda()
                 outputs = net(images)
                 a, predicted = torch.max(outputs.data, 1)
-                print(outputs.data, a, predicted)
+                #print(outputs.data, a, predicted)
                 total += labels.size(0)
                 correct += (predicted == labels).sum().item()
 
