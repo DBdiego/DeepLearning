@@ -41,12 +41,12 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 15*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 10*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 40
-        LR = 1*1E-3
+        LR = 5*1E-4
         MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
-        MIN_EPOCH = 6  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
+        MIN_EPOCH = int(1e3) # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
         WEIGHT_DECAY = 1e-5
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
@@ -102,8 +102,10 @@ class CNN:
             epoch = epoch + 1
             running_loss_epoch = 0.0  # reset running loss per epoch
             running_loss       = 0.0  # reset running loss per batch
-            
+
+            '''
             if epoch > MIN_EPOCH:  # minimum number of epochs
+                
                 try:
                     rule = abs(np.mean(np.diff(losslst[-5:]))) / losslst[-5:][0]
                 except:
@@ -115,6 +117,7 @@ class CNN:
                     self.losslst = losslst
                     self.realtime = time.time() - starttime
                     break
+            '''
                 
             for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
@@ -123,9 +126,9 @@ class CNN:
                     break
             
                 inputs, labels = data
-                    
-                inputs = inputs.to(device)#cuda()
-                labels = labels.to(device)#cuda()
+                     
+                inputs = inputs.to(device) #cuda()
+                labels = labels.to(device) #cuda()
 
                 # zero the parameter gradients
                 optimizer.zero_grad()
