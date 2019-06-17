@@ -17,10 +17,25 @@ lengths      = [10000,10778] # training data, test data
 convergence  = 0.001         # Not sure if this is a good value (smaller change than 0.1%)
 minepoch     = 6             # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
+NORMALIZE = True
+IMAGE_PATH = 'database/'
+no_classes = [5,8,10,20,40]
+imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of classes above
+CLASSES_INDEX = 0 # NOTE: have to change line 18 in batch_population as well
+RATIO_TRAINING = 0.9
+RATIO_DATA = 1
+MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
+
+
+
 # Loading Data
 print('Loading Data: ...')
-dataset = CustomDataset(image_path=image_path, normalise=True, resize=(224, 224), train=True)
-train_dataset, test_dataset = random_split(dataset,lengths) # 20778
+dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
+print('Importing data: DONE\n')
+
+I = int(RATIO_TRAINING * len(dataset))
+lengths = [len(dataset) - I, I]  # train data and test data
+train_dataset, test_dataset = random_split(dataset, lengths)
 trainloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 testloader  = DataLoader(test_dataset, shuffle=False, num_workers=1)
 print('Loading Data: DONE\n')
