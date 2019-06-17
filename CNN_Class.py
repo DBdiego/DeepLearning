@@ -42,9 +42,9 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 15*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 32
-        LR = 1*1E-2
-        MOMENTUM = 0.7
+        BATCH_SIZE = 128
+        LR = 1*1E-4
+        MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
         MIN_EPOCH = 20  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
 
@@ -85,8 +85,8 @@ class CNN:
         #criterion = nn.BCEWithLogitsLoss()
         
         # with optim, can also use e.g. Adam
-        #optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
-        optimizer = optim.Adam(net.parameters(), lr=LR)
+        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+        #optimizer = optim.Adam(net.parameters(), lr=LR)
 
         # --------------------------------------
         print('\tTraining Network', network_index, 'on GPU #',gpu_index)
@@ -160,8 +160,8 @@ class CNN:
             if len(losslst) > average_of_x and abs(np.average(np.diff(np.array(losslst[-average_of_x:])))) < LR*np.average(np.array(losslst[-average_of_x:])):
                 print(f'\t N{network_index}: epoch {epoch} reducing LR from {LR} to {LR/10}')
                 LR = LR/10
-                #optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
-                optimizer = optim.Adam(net.parameters(), lr=LR)
+                optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+                #optimizer = optim.Adam(net.parameters(), lr=LR)
                 
 
             print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {running_loss_epoch/i}')
