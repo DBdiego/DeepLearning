@@ -48,6 +48,8 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
     # Set up variables and proper input layout -------------------------------------------------------
     if torch.cuda.is_available():
         num_avail_gpus = torch.cuda.device_count()
+        if num_avail_gpus > 2:
+            num_avail_gpus = 3
     else:
         num_avail_gpus = 1
 
