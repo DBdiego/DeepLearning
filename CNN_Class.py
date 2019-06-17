@@ -155,6 +155,7 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
+            '''
             # Lowering learning rate when the learning process is stagnating
             average_of_x = 7
             if len(losslst) > average_of_x and abs(np.average(np.diff(np.array(losslst[-average_of_x:])))) < LR*np.average(np.array(losslst[-average_of_x:])):
@@ -162,8 +163,9 @@ class CNN:
                 LR = LR/10
                 optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
                 #optimizer = optim.Adam(net.parameters(), lr=LR)
+            '''
                 
-
+            # Last number is average loss value per minibatch in this epoch
             print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {running_loss_epoch/i}')
 
         train_time = round(time.time()-starttime, 5)

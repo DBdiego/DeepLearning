@@ -59,7 +59,7 @@ class Net(nn.Module):
 
         # Neural net layers:
         for i in range(self.n_l_layers):
-            if i != self.n_l_layers-2:
+            if 1 or i != self.n_l_layers-2:
                 x = F.relu(getattr(self, f"fc{i}")(x))
             else:
                 x = getattr(self, f"fc{i}")(x)
