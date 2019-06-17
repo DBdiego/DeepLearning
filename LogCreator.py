@@ -31,7 +31,11 @@ def get_run_id(status = 'read_current'):
     f = open(file_path, 'r')
     lines = f.readlines()
     f.close()
-    last_id = int(lines[-1].replace('\n'))
+
+    if len(lines) == 0:
+        last_id = -1
+    else:
+        last_id = int(lines[-1].replace('\n'))
     
     if status == 'create_new':
         last_id += 1
