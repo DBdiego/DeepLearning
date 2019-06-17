@@ -155,9 +155,9 @@ class CNN:
             self.tot_epoch = epoch
             self.losslst = losslst
 
-            if len(losslst) > 5:
-                print(abs(np.average(np.diff(np.array(losslst[-5:])))), LR*np.average(np.array(losslst[-5:])))
-            if len(losslst) > 5 and abs(np.average(np.diff(np.array(losslst[-5:])))) < LR*np.average(np.array(losslst[-5:])):
+            # Lowering learning rate when the learning process is stagnating
+            average_of_x = 7
+            if len(losslst) > average_of_x and abs(np.average(np.diff(np.array(losslst[-average_of_x:])))) < LR*np.average(np.array(losslst[-average_of_x:])):
                 print(f'\t N{network_index}: epoch {epoch} reducing LR from {LR} to {LR/10}')
                 LR = LR/10
                 optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
