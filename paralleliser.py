@@ -119,7 +119,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
             j += 1
 
     # Clearing GPU logs
-    for file_name in os.listdir('./Logs/GPU_logs'):
+    for file_name in os.listdir('./Logs/GPU_Logs'):
         f = open('./Logs/GPU_Logs/'+file_name, 'w')
         f.write('')
         f.close()
