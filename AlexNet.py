@@ -119,7 +119,7 @@ total = 0
 with torch.no_grad():
     for data in testloader:
         images, labels = data
-        inputs = inputs.to(device)#cuda()
+        images = images.to(device)#cuda()
         labels = labels.to(device)#cuda()
         outputs = net(images)
         _, predicted = torch.max(outputs.data, 1)
