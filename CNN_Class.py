@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader, random_split
 
 from cnn2 import Net
 from dataloader import CustomDataset
-from LogCreator import Add_to_Log
+from LogCreator import Add_to_Log, get_run_id
 
 # torch.manual_seed(0)
 
@@ -25,8 +25,10 @@ class CNN:
                  stride_pool,
                  n_layers,
                  dim2):
-
+        
+        run_id = get_run_id()
         log_dict = {'start_time'  : datetime.datetime.now()   ,
+                    'run_id'      : run_id                    ,
                     'gpu'         : 'cuda:'+str(gpu_index)    ,
                     'generation'  : generation_index          ,
                     'network'     : 'Net_'+str(network_index) , 
