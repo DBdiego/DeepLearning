@@ -5,12 +5,13 @@ import time
 import datetime
 from LogCreator import Add_to_Log
 import os
-from LogCreator import Add_to_Log
 
 import torch.multiprocessing as mp
 
+
+
 # Runs the CNN and passes the accuracy to results in fitness_func()
-def f(cnn_class_inputs, network_index, generation_index, results):
+def train_CNN(cnn_class_inputs, network_index, generation_index, results):
     print(cnn_class_inputs[3:])
     network = CNN(  network_index        ,
                     generation_index     ,
@@ -28,8 +29,6 @@ def f(cnn_class_inputs, network_index, generation_index, results):
 
     results[network_index] = network.all_info
 
-
-
 '''
 Trains each network on a different GPU
 note: number of genomes passed has to be a multiple of number of available GPUs
@@ -42,6 +41,7 @@ Outputs:
     results:         list of accuracies of the CNN with the genomes given
 '''
 def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_HL):
+
 
     # Set up variables and proper input layout -------------------------------------------------------
     if torch.cuda.is_available():
@@ -78,7 +78,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
 
     # Creates, starts process and appends it to list processes
     def create_pocess(processes,network_index, generation_index):
-        p = mp.Process(target=f, args=(args[network_index],network_index,generation_index, results))
+        p = mp.Process(target=train_CNN, args=(args[network_index],network_index,generation_index, results))
         p.start()
         processes.append([network_index,p, datetime.datetime.now()])
 
