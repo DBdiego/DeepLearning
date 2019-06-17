@@ -85,8 +85,8 @@ class CNN:
         #criterion = nn.BCEWithLogitsLoss()
         
         # with optim, can also use e.g. Adam
-        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
-        #optimizer = optim.Adam(net.parameters(), lr=LR)
+        #optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+        optimizer = optim.Adam(net.parameters(), lr=LR)
 
         # --------------------------------------
         print('\tTraining Network', network_index, 'on GPU #',gpu_index)
@@ -160,11 +160,11 @@ class CNN:
             if len(losslst) > average_of_x and abs(np.average(np.diff(np.array(losslst[-average_of_x:])))) < LR*np.average(np.array(losslst[-average_of_x:])):
                 print(f'\t N{network_index}: epoch {epoch} reducing LR from {LR} to {LR/10}')
                 LR = LR/10
-                optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
-                #optimizer = optim.Adam(net.parameters(), lr=LR)
+                #optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+                optimizer = optim.Adam(net.parameters(), lr=LR)
                 
 
-            print(f'\t N{network_index}: epoch {epoch} loss:', running_loss_epoch, f'on {i} minibatches {running_loss_epoch/i}')
+            print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {running_loss_epoch/i}')
 
         train_time = round(time.time()-starttime, 5)
         log_dict.update({'train_time':train_time})
