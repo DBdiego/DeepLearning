@@ -47,6 +47,7 @@ class CNN:
         MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
         MIN_EPOCH = 20  # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
+        WEIGHT_DECAY = 1e-5
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
@@ -85,7 +86,7 @@ class CNN:
         #criterion = nn.BCEWithLogitsLoss()
         
         # with optim, can also use e.g. Adam
-        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
+        optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM, weigth_decay = WEIGHT_DECAY)
         #optimizer = optim.Adam(net.parameters(), lr=LR)
 
         # --------------------------------------
