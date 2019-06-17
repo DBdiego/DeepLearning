@@ -24,10 +24,11 @@ def Add_to_Log(log_dict, file_path):
 
     
 def get_run_id(status = 'read_current'):
-    if not os.path.isfile('.Logs/Run_IDs'):
-        open('.Logs/Run_IDs', 'w').close()
+    file_path = '.Logs/Run_IDs.txt'
+    if not os.path.isfile(file_path):
+        open(file_name, 'w').close()
 
-    f = open('.Logs/Run_IDs', 'r')
+    f = open(file_path, 'r')
     lines = f.readlines()
     f.close()
     last_id = int(lines[-1].replace('\n'))
