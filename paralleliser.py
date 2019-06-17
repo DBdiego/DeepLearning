@@ -115,7 +115,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
     for i in range(len(results_HL)):
         if results_HL[i] == None:
             results_HL[i] = results_final[j]['accuracy']
-            Add_to_Log(log_dict, './Logs/Logs_Generations.txt')
+            Add_to_Log(results_final[j], './Logs/Logs_Generations.txt')
             j += 1
 
     # Clearing GPU logs
@@ -123,7 +123,6 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
         f = open('./Logs/GPU_Logs/'+file_name, 'w')
         f.write('')
         f.close()
-    
     
 
     return results_HL
