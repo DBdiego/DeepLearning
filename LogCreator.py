@@ -21,6 +21,7 @@ def Add_to_Log(log_dict, file_path):
     f = open(file_path, 'a')
     f.write(str2append)
     f.close()
+
     
 def get_run_id(status = 'read_current'):
     if not os.path.isfile('.Logs/Run_IDs'):
@@ -31,7 +32,7 @@ def get_run_id(status = 'read_current'):
     f.close()
     last_id = int(lines[-1].replace('\n'))
     
-    if status == 'create_new')
+    if status == 'create_new':
         last_id += 1
         f = open(file_path, 'a')
         f.write('\n'+str(last_id))
