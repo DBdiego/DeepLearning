@@ -4,6 +4,8 @@ import torch
 import time
 import datetime
 from LogCreator import Add_to_Log
+import os
+from LogCreator import Add_to_Log
 
 import torch.multiprocessing as mp
 
@@ -106,14 +108,23 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
         print('Cycle done\n')
 
 
-
+    # Saving results
     log_dict = {}
     j = 0
     results_final = results.copy()
     for i in range(len(results_HL)):
         if results_HL[i] == None:
             results_HL[i] = results_final[j]['accuracy']
+            Add_to_Log(log_dict, './Logs/Logs_Generations.txt')
             j += 1
+
+    # Clearing GPU logs
+    for file_name in os.listdir('./Logs/GPU_logs'):
+        f = open('./Logs/GPU_logs/'+file_name, 'w')
+        f.write('')
+        f.close()
+    
+    
 
     return results_HL
 

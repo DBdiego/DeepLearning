@@ -6,6 +6,7 @@ from external.sga.gene import *
 from external.sga.chromosome import *
 import matplotlib.pyplot as plt
 from CNN_Class import random_split, CustomDataset
+from LogCreator import get_run_id
 import torch
 
 
@@ -23,6 +24,8 @@ NUM_GENERATIONS = 20
 
 
 def load_data():
+    run_ID = get_run_id(status='create_new')
+    print('RUN ID: ', run_ID)
 
     print('Importing data: ...')
     dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
