@@ -24,7 +24,7 @@ def Add_to_Log(log_dict, file_path):
 
     
 def get_run_id(status = 'read_current'):
-    file_path = '.Logs/Run_IDs.txt'
+    file_path = './Logs/Run_IDs.txt'
     if not os.path.isfile(file_path):
         open(file_path, 'w').close()
 
