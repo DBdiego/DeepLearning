@@ -41,7 +41,7 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 10*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 0.2*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 40
         LR = 5*1E-4
         MOMENTUM = 0.9
@@ -84,6 +84,7 @@ class CNN:
         except RuntimeError:
             train_the_network = False
             print('\t!!! GPU Memory Overload !!!')
+            
             # Filling Logging Information and Saving the log
             log_dict.update({'train_time' : 0,
                              'end_time'   : datetime.datetime.now(),
