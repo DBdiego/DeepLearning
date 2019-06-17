@@ -14,7 +14,7 @@ IMAGE_PATH = 'database/'
 no_classes = [5,8,10,20,40]
 imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of classes above
 CLASSES_INDEX = 0 # NOTE: have to change line 18 in batch_population as well
-RATIO_TESTING = 0.1
+RATIO_TESTING = 0.3
 RATIO_DATA = 1
 MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
@@ -29,7 +29,7 @@ def load_data():
     print('Importing data: DONE\n')
 
     I = int(RATIO_TESTING * len(dataset))
-    lengths = [len(dataset) - I, I]  # train data and test data
+    lengths = [len(dataset)-I, I]  # train data and test data
     train_dataset, test_dataset = random_split(dataset, lengths)
     return train_dataset, test_dataset
 
