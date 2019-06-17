@@ -164,7 +164,7 @@ class CNN:
                 #optimizer = optim.Adam(net.parameters(), lr=LR)
                 
 
-            print(f'\t N{network_index}: epoch {epoch} loss:', running_loss_epoch, f'on {i} minibatches {running_loss_epoch/i})
+            print(f'\t N{network_index}: epoch {epoch} loss:', running_loss_epoch, f'on {i} minibatches {running_loss_epoch/i}')
 
         train_time = round(time.time()-starttime, 5)
         log_dict.update({'train_time':train_time})
