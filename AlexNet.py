@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader, random_split
 image_path = './database/'
 
 # Parameters Geoffrey look here for parameter!!
-batch_size   = 10
+batch_size   = 40
 maxtraintime = 20*60         # seconds note that testing time is not included this takes +- 5 minutes for AlexNet at my laptop, which is almost the same as 1 epoch
 lengths      = [10000,10778] # training data, test data
 convergence  = 0.001         # Not sure if this is a good value (smaller change than 0.1%)
@@ -22,7 +22,7 @@ IMAGE_PATH = 'database/'
 no_classes = [5,8,10,20,40]
 imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of classes above
 CLASSES_INDEX = 0 # NOTE: have to change line 18 in batch_population as well
-RATIO_TRAINING = 0.9
+RATIO_TRAINING = 0.3
 RATIO_DATA = 1
 MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
@@ -104,7 +104,8 @@ while traintime < maxtraintime:
 
         
     losslst.append(running_loss_epoch)
-
+    print(f'\t AlexNet epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}')
+    
     
 print('Training: DONE')
 # --------------------------------
