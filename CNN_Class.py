@@ -42,7 +42,7 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 15*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 128
+        BATCH_SIZE = 40
         LR = 1*1E-4
         MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
@@ -167,7 +167,7 @@ class CNN:
             '''
                 
             # Last number is average loss value per minibatch in this epoch
-            print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {running_loss_epoch/i}')
+            print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/BATCH_SIZE}')
 
         train_time = round(time.time()-starttime, 5)
         log_dict.update({'train_time':train_time})
