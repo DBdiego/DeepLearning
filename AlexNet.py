@@ -40,8 +40,10 @@ trainloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=T
 testloader  = DataLoader(test_dataset, shuffle=False, num_workers=1)
 print('Loading Data: DONE\n')
 
+device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
 # Creating Network
 net = alexnet()
+net = net.to(device)
 
 import torch.optim as optim
 criterion = nn.CrossEntropyLoss()
@@ -55,6 +57,7 @@ starttime = time.time()
 traintime = time.time() - starttime
 
 #for epoch in range(2):  # loop over the dataset multiple times
+
 while traintime < maxtraintime:
     epoch = epoch + 1   
 #    pytorch_total_params = sum(p.numel() for p in net.parameters())
@@ -76,8 +79,8 @@ while traintime < maxtraintime:
         
         inputs, labels = data
         
-        inputs = inputs.to('cuda')#cuda()
-        labels = labels.to('cuda')#cuda()
+        inputs = inputs.to(device)#cuda()
+        labels = labels.to(device)#cuda()
         
         # zero the parameter gradients
         optimizer.zero_grad()
