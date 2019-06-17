@@ -57,7 +57,6 @@ traintime = time.time() - starttime
 #for epoch in range(2):  # loop over the dataset multiple times
 while traintime < maxtraintime:
     epoch = epoch + 1   
-    print('    ====== EPOCH ' + str(epoch) + ' ======')
 #    pytorch_total_params = sum(p.numel() for p in net.parameters())
 #    print(pytorch_total_params)
     running_loss_epoch = 0.0 
@@ -94,8 +93,6 @@ while traintime < maxtraintime:
         # print statistics
         running_loss += loss.item()
         if i % 100 == 99:
-            print('    --> [%d, %5d] loss: %.3f' %
-                  (epoch, i + 1, running_loss / 100))
             running_loss_epoch += running_loss
             running_loss = 0.0
             
@@ -107,7 +104,7 @@ while traintime < maxtraintime:
 
         
     losslst.append(running_loss_epoch)
-    print(f'\t AlexNet epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}')
+    print(f'\t AlexNet: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}')
     
     
 print('Training: DONE')
