@@ -1,6 +1,0 @@
-[submodule "genetic-algorithm-example"]
-	path = genetic-algorithm-example
-	url = https://github.com/ggarrett13/genetic-algorithm-example.git
-[submodule "external/simple-genetic-algorithm"]
-	path = external/simple-genetic-algorithm
-	url = https://github.com/ggarrett13/simple-genetic-algorithm.git
