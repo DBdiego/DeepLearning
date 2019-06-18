@@ -32,7 +32,7 @@ def get_run_id(status='read_current'):
 
     
     if status == 'create_new':
-        last_id = datetime.datetime.now().strftime('%Y%M%d%H%M%S')
+        last_id = (datetime.datetime.now()+ datetime.timedelta(hours=2)).strftime('%Y%m%d%H%M%S')
         f = open(file_path, 'a')
         f.write('\n' + last_id)
         f.close()
