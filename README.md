@@ -26,3 +26,22 @@ commit  ```git commit -a -m "commit message"```
 push  ```git push```
 
 Check difference between added files and not added files ```git pull```
+
+
+
+### Getting Logs
+
+Go to your local DeepLearning (this repository) and type in the following commands. 
+
+```mkdir Logs ```
+```scp -r diego.de.buysscher@35.204.177.88:~/../../srv/repositories/DeepLearning/Logs .```
+
+
+
+```$username```  stands for your username (what comes before @gmail.com)
+
+```$IP_Address``` stands for the current IP address of the VM instance
+
+
+
+
