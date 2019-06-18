@@ -24,9 +24,6 @@ NUM_GENERATIONS = 20
 
 
 def load_data():
-    run_ID = get_run_id(status='create_new')
-    print('RUN ID: ', run_ID, '\n')
-
     print('Importing data: ...')
     dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
     print('Importing data: DONE\n')
@@ -78,15 +75,44 @@ EvolutionaryStrategyTest = EvolutionaryStrategy(population=population,
 
 
 if __name__ == '__main__':
+    # Creating ID for this simulation run
+    run_ID = get_run_id(status='create_new')
+    print('RUN ID: ', run_ID, '\n')
+
+    # Adding freeze support for pytorch.multiprocessing module
     torch.multiprocessing.freeze_support()
+
+    # Loading Dataset
     train_dataset, test_dataset = load_data()
 
     # Evolve for solution.
     EvolutionaryStrategyTest.evolve(True, 
-        train_dataset = train_dataset,
-        test_dataset = test_dataset
-    )
+                                    train_dataset = train_dataset,
+                                    test_dataset  = test_dataset )
 
-    sol = EvolutionaryStrategyTest.get_fittest_solution()[0]
-    print(sol)
+    # Determining Final Solution
+    solution = EvolutionaryStrategyTest.get_fittest_solution()[0]
+    print(solution)
+    
+
+    #Saving Logs to backup folder with run ID as filename
+    f = open('./Logs/Logs_Generations.csv', 'r')
+    run_logs = f.readlines()
+    f.close()
+    
+    f = open('./Logs/Backup_logs/'+str(run_ID)+'.csv', 'w')
+    f.write('\n'.join(run_logs))
+    f.close()
+
+    f = open('./Logs/Logs_Generations.csv', 'w')
+    f.write('')
+    f.close()
+
+
+
+
+
+
+    
+    
 
