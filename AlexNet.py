@@ -102,7 +102,7 @@ while traintime < maxtraintime:
             running_loss_epoch += running_loss
             running_loss = 0.0
             
-        if epoch == 1 and i == 0:
+        if epoch == 0 and i == 0:
             batchtime = time.time() - starttime
             
         traintime = time.time() - starttime + batchtime # + batchtime estimates the time for the next batch
