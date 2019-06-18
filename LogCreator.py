@@ -7,14 +7,16 @@ def dict_to_csv(log_dict):
     line = []
     for key in log_dict:
         line.append(str(log_dict[key]))
-    return ';'.join(line)+'\n'
+    return '\n' + ';'.join(line)
 
 
 def Add_to_Log(log_dict, file_path):
 
     #Check if file exists
     if not os.path.isfile(file_path):
-        open(file_path, 'w').close()
+        f = open(file_path, 'w')
+        f.write(';'.join([key for key in log_dict.keys()]))
+        f.close()
 
     str2append = dict_to_csv(log_dict)
 

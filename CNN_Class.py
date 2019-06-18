@@ -228,9 +228,9 @@ class CNN:
                              'epochs'     : epoch                  ,
                              'loss_log'   : losslst                ,
                              'test_imgs'  : total                  ,
-                             'errors'     : ''                     })
+                             'errors'     : 'no errors'            })
 
-        Add_to_Log(log_dict, './Logs/GPU_Logs/Logs_Cuda_'+str(gpu_index)+'.txt')
+        Add_to_Log(log_dict, './Logs/GPU_Logs/Logs_Cuda_'+str(gpu_index)+'.csv')
 
         self.all_info = log_dict
 
@@ -253,99 +253,3 @@ class CNN:
 
 
 
-
-
-
-
-
-
-
-
-
-
-        #print('\t --> Finished Training')
-
-        #print('Testing Network: DONE')
-        
-        #print('===================================\n')
-
-'''
-# ---------------------------------------------------------------------
-
-# Main:
-# Those 3 variables are set in the class itself look # parameters
-# BATCH_SIZE = 10
-# LR = 0.001
-# MOMENTUM = 0.9
-
-
-# n_conv = 3
-# dim1 = [6, 16, 32]
-# kernel_conv = [3, 3, 3]
-# stride_conv = [1, 1, 1]
-# kernel_pool = [2, 2, 2]
-# stride_pool = [2, 2, 2]
-# n_layers = 3
-# dim2 = [120, 84, 40]
-# print('LOADING DATA...')
-#
-# image_path = 'database/'
-# normalise = True  # Will transform [0, 255] to [0, 1]
-# # Load data set and organise into batch size and right input for Net()
-# dataset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
-# lengths = [10000, 10778]  # train data and test data
-# train_dataset, test_dataset = random_split(dataset, lengths)  # 20778
-# trial = CNN(train_dataset,
-#             test_dataset,
-#             n_conv,
-#             dim1,
-#             kernel_conv,
-#             stride_conv,
-#             kernel_pool,
-#             stride_pool,
-#             n_layers,
-#             dim2)
-=======
-#BATCH_SIZE = 10
-#LR = 0.001
-#MOMENTUM = 0.9
-
-n_conv = 3
-dim1 = [6, 19, 32]
-kernel_conv = [3, 3, 3]
-stride_conv = [2, 2, 2]
-kernel_pool = [3, 3, 3]
-stride_pool = [2, 2, 2]
-n_layers = 10
-dim2 = [120, 111, 102, 93, 84, 75, 66, 57, 48, 40]
-
-
-print('LOADING DATA...')
-
-
-
-image_path = 'database/'
-normalise = True # Will transform [0, 255] to [0, 1]
-# Load data set and organise into batch size and right input for Net()
-dataset = CustomDataset(image_path=image_path, normalise=normalise, train=True)
-lengths = [10000,10778] #train data and test data
-train_dataset, test_dataset = random_split(dataset,lengths) # 20778
-trial = CNN(train_dataset, test_dataset,
-    n_conv,
-    dim1,
-    kernel_conv,
-    stride_conv,
-    kernel_pool,
-    stride_pool,
-    n_layers,
-    dim2)
-'''
-# important self.variables are those three:
-# print((trial.losslst)) # list of loss after each epoch
-# print(trial.realtime)
-# print(trial.accuracy)
-
-# important self.variables are those three:
-# print((trial.losslst)) # list of loss after each epoch
-# print(trial.realtime)
-# print(trial.accuracy)
