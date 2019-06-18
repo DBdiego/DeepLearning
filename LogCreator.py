@@ -23,25 +23,23 @@ def Add_to_Log(log_dict, file_path):
     f.close()
 
     
-def get_run_id(status = 'read_current'):
+def get_run_id(status='read_current'):
     file_path = './Logs/Run_IDs.txt'
     if not os.path.isfile(file_path):
         open(file_path, 'w').close()
 
-    f = open(file_path, 'r')
-    lines = f.readlines()
-    f.close()
-
-    if len(lines) == 0:
-        last_id = -1
-    else:
-        last_id = int(lines[-1].replace('\n', ''))
     
     if status == 'create_new':
-        last_id += 1
+        last_id = datetime.datetime.now().strftime('%Y%M%d%H%M%S')
         f = open(file_path, 'a')
-        f.write('\n'+str(last_id))
+        f.write('\n' + last_id)
         f.close()
+
+    else:
+        f = open(file_path, 'r')
+        lines = f.readlines()
+        f.close()
+        last_id = int(lines[-1].replace('\n', ''))
 
     return last_id
             
