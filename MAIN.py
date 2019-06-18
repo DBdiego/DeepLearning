@@ -100,7 +100,7 @@ if __name__ == '__main__':
     run_logs = f.readlines()
     f.close()
     
-    f = open('./Logs/Backup_logs/'+str(run_ID)+'.csv', 'w')
+    f = open('./Logs/Backup_Logs/'+str(run_ID)+'.csv', 'w')
     f.write('\n'.join(run_logs))
     f.close()
 
