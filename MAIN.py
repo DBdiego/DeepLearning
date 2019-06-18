@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from CNN_Class import random_split, CustomDataset
 from LogCreator import get_run_id
 import torch
+import os
 
 
 NORMALIZE     = True
@@ -96,7 +97,7 @@ if __name__ == '__main__':
     
 
     #Saving Logs to backup folder with run ID as filename
-    f = open('./Logs/'+str(run_ID)+'_Generations_Logs.csv', 'r')
+    f = open('./Logs/Generation_Logs/'+str(run_ID)+'_Generations_Logs.csv', 'r')
     run_logs = f.readlines()
     f.close()
     
@@ -104,9 +105,8 @@ if __name__ == '__main__':
     f.write('\n'.join(run_logs))
     f.close()
 
-    f = open('./Logs/'+str(run_ID)+'_Generations_Logs.csv', 'w')
-    f.write('')
-    f.close()
+    os.remove('./Logs/Generation_Logs/'+str(run_ID)+'_Generations_Logs.csv') 
+
 
 
 
