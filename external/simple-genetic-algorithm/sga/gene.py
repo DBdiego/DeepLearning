@@ -78,6 +78,12 @@ class DenaryGeneFloat(_BaseGene):
         _random = ''.join([random.choice(['0', '1']) for _ in range(self._n_bits)])
         if self.limits[0] is not None and self.limits[1] is not None:
             while not (self.limits[0] <= self.transform(_random) <= self.limits[1]):
+                print(f"""
+                LIMIT LOWER = {self.limits[0]} \n
+                TRANSFORM OUTPUT = {self.transform(_random)} \n
+                LIMIT UPPER = {self.limits[1]} \n
+                """
+                      )
                 _random = ''.join([random.choice(['0', '1']) for _ in range(self._n_bits)])
 
         elif self.limits[1] is not None and self.limits[0] is None:

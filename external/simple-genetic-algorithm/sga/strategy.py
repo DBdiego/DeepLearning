@@ -83,6 +83,8 @@ class EvolutionaryStrategy(object):
                       str(self.get_fittest_solution()),
                       ),
 
+            print(" ----------- verbose passed")
+
             if return_log:
                 log.append([self.generation_number,
                             np.round(self.get_maximum_fitness(), 3),
