@@ -225,7 +225,7 @@ class CNN:
             log_dict.update({'train_time' : train_time,
                              'end_time'   : datetime.datetime.now(),
                              'accuracy'   : self.accuracy          ,
-                             'epochs'     : epoch                  ,
+                             'num_epochs' : epoch+1                ,
                              'loss_log'   : losslst                ,
                              'test_imgs'  : total                  ,
                              'errors'     : 'no errors'            })

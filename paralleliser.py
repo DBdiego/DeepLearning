@@ -3,7 +3,7 @@ from CNN_Class import CNN, random_split, CustomDataset
 import torch
 import time
 import datetime
-from LogCreator import Add_to_Log
+from LogCreator import Add_to_Log, get_run_id
 import os
 
 import torch.multiprocessing as mp
@@ -110,12 +110,13 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
 
     # Saving results
     log_dict = {}
+    run_ID = get_run_id()
     j = 0
     results_final = results.copy()
     for i in range(len(results_HL)):
         if results_HL[i] == None:
             results_HL[i] = results_final[j]['accuracy']
-            Add_to_Log(results_final[j], './Logs/Logs_Generations.csv')
+            Add_to_Log(results_final[j], './Logs/'+str(run_ID)+'_Generations_Logs.csv')
             j += 1
 
     # Clearing GPU logs

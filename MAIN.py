@@ -96,7 +96,7 @@ if __name__ == '__main__':
     
 
     #Saving Logs to backup folder with run ID as filename
-    f = open('./Logs/Logs_Generations.csv', 'r')
+    f = open('./Logs/'+str(run_ID)+'_Generations_Logs.csv', 'r')
     run_logs = f.readlines()
     f.close()
     
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     f.write('\n'.join(run_logs))
     f.close()
 
-    f = open('./Logs/Logs_Generations.csv', 'w')
+    f = open('./Logs/'+str(run_ID)+'_Generations_Logs.csv', 'w')
     f.write('')
     f.close()
 
