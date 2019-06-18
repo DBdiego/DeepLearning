@@ -41,11 +41,16 @@ def load_data():
 ChromosomePart2 = Chromosome(
     [
         # LinearRangeGene(-1, 1, 100),  # k2
-        DenaryGeneFloat(limits=(4, 6), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # num. conv layers
-        DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size conv layers
+        DenaryGeneFloat(limits=(4, 8), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # num. conv layers
+        DenaryGeneFloat(limits=(2, 8), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size conv layers
         DenaryGeneFloat(limits=(1, 1), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride conv layers
+<<<<<<< HEAD
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size pool layers
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride pool layers
+=======
+        DenaryGeneFloat(limits=(2, 4), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size pool layers
+        DenaryGeneFloat(limits=(2, 2), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride pool layers
+>>>>>>> fe04d974ad82805d484c48ce87c4befa4993acce
         DenaryGeneFloat(limits=(3, 5), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # num .neurons FCNN layers
     ],
 )
