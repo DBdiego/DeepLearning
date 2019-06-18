@@ -16,6 +16,7 @@ def argument_input_interface(
     stride_conv = 1
     _dim1 = np.linspace(3, dim1, int(n_conv + 1)).astype(int)
     _dim1 = np.delete(_dim1, 0)
+    print(int(n_conv + 1))
     print(_dim1)
     _dim2 = np.linspace(dim2, 5, int(n_layers)).astype(int)
     _kernel_conv = [int(kernel_conv)] * int(n_conv)
