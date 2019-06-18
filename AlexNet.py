@@ -7,45 +7,48 @@ import time
 import numpy as np
 from dataloader import CustomDataset
 from torch.utils.data import DataLoader, random_split
+from LogCreator import Add_to_Log
+import datetime
 
 image_path = './database/'
 
 # Parameters Geoffrey look here for parameter!!
 batch_size   = 40
-maxtraintime = 20*60         # seconds note that testing time is not included this takes +- 5 minutes for AlexNet at my laptop, which is almost the same as 1 epoch
+maxtraintime = 2*60*60         # seconds note that testing time is not included this takes +- 5 minutes for AlexNet at my laptop, which is almost the same as 1 epoch
 lengths      = [10000,10778] # training data, test data
 convergence  = 0.001         # Not sure if this is a good value (smaller change than 0.1%)
 minepoch     = 6             # should be 6 or higher, it can have less epochs in results if the maxtraintime is exceeded.
 
-NORMALIZE = True
-IMAGE_PATH = 'database/'
-no_classes = [5,8,10,20,40]
-imgs_classes = [3299,4296,5434,10521,20778] # number of images for number of classes above
-CLASSES_INDEX = 0 # NOTE: have to change line 18 in batch_population as well
+NORMALIZE      = True
+IMAGE_PATH     = 'database/'
+no_classes     = [5,8,10,20,40]
+imgs_classes   = [3299,4296,5434,10521,20778] # number of images for number of classes above
+CLASSES_INDEX  = 0 # NOTE: have to change line 18 in batch_population as well
 RATIO_TRAINING = 0.3
-RATIO_DATA = 1
-MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
+RATIO_DATA     = 1
+MAX_DATA       = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
 
 
 # Loading Data
-print('Loading Data: ...')
+print('Importing Data: ...')
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
 print('Importing data: DONE\n')
 
-I = int(RATIO_TRAINING * len(dataset))
-lengths = [len(dataset) - I, I]  # train data and test data
+len_testset = int(RATIO_TRAINING * len(dataset))
+lengths = [len(dataset) - len_testset, len_testset]  # train data and test data
 train_dataset, test_dataset = random_split(dataset, lengths)
 trainloader = DataLoader(dataset=train_dataset, batch_size=batch_size, shuffle=True)
 testloader  = DataLoader(test_dataset, shuffle=False, num_workers=1)
-print('Loading Data: DONE\n')
 
+# Checking the device that will run the network
 device = torch.device('cuda:0' if torch.cuda.is_available() else "cpu")
+
 # Creating Network
 net = alexnet()
 net = net.to(device)
 
-import torch.optim as optim
+
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
@@ -56,20 +59,20 @@ losslst = []
 starttime = time.time()
 traintime = time.time() - starttime
 
-#for epoch in range(2):  # loop over the dataset multiple times
 
 while traintime < maxtraintime:
-    epoch = epoch + 1   
-#    pytorch_total_params = sum(p.numel() for p in net.parameters())
-#    print(pytorch_total_params)
+    
+    
     running_loss_epoch = 0.0 
     running_loss = 0.0
-    
+
+    '''
     if epoch > minepoch:  # minimum number of epochs
         rule = abs(np.mean(np.diff(losslst[-5:])))/losslst[-5:][0]
         if rule < convergence:
             realtime = time.time() - starttime
             break
+    '''
             
     for i, data in enumerate(trainloader, 0):
         # get the inputs
@@ -107,13 +110,19 @@ while traintime < maxtraintime:
 
         
     losslst.append(running_loss_epoch)
-    print(f'\t AlexNet: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}')
-    
-    
+    text_to_print = f'\t AlexNet: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}'
+    print(text_to_print)
+
+    f = open('./Logs/AlexNet_Logs.txt', 'a')
+    f.write('\n' + str(datetime.datetime.now()) + text_to_print)
+    f.close()    
+    epoch += 1
+
 print('Training: DONE')
-# --------------------------------
-# Testing:
-# Whole test data set
+print('Total Training time:', realtime, '\n')
+
+
+
 correct = 0
 total = 0
 with torch.no_grad():
@@ -127,13 +136,10 @@ with torch.no_grad():
         correct += (predicted == labels).sum().item()
 
 accuracy = 100 * correct / total
-print('Accuracy of the network on the 10000 test images: %d %%' % (
-    accuracy))
-
-print('Training time:', realtime)
+print(f'Accuracy of the network on the {total} test images: {round(accuracy, 2)}%')
 
 
-#important variables are: accuracy, realtime, losslst (list of loss after each epoch)
+
 
 
 
