@@ -35,7 +35,7 @@ def argument_input_interface(
         #
         if bad:
             raise ArithmeticError
-    # print(int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2))
+
     return int(n_conv), list(_dim1), _kernel_conv, _stride_conv, _kernel_pool, _stride_pool, int(n_layers), list(_dim2)
 
 
@@ -67,8 +67,21 @@ class BatchPopulation(Population):
 
 
             else:
-                genomes.append(argument_input_interface(*self._chromosome.parameters(member)))
+                try:
+                    genome = argument_input_interface(*self._chromosome.parameters(member))
+                    genomes.append(genome)
+                    
+                except ArithmeticError:
+                    result[index] = 0                
         
         result = fitness_func(genomes, generation_index, kwargs['train_dataset'], kwargs['test_dataset'], result)
         print(result)
         return result
+
+
+
+
+
+
+
+
