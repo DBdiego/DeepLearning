@@ -27,7 +27,7 @@ class CNN:
                  dim2):
         
         run_id = get_run_id()
-        log_dict = {'start_time'  : datetime.datetime.now()   ,
+        log_dict = {'start_time'  : (datetime.datetime.now()+datetime.timedelta(hours=2))   ,
                     'run_id'      : run_id                    ,
                     'gpu'         : 'cuda:'+str(gpu_index)    ,
                     'generation'  : generation_index          ,
@@ -90,7 +90,7 @@ class CNN:
             
             # Filling Logging Information and Saving the log
             log_dict.update({'train_time' : 0,
-                             'end_time'   : datetime.datetime.now(),
+                             'end_time'   : (datetime.datetime.now()+datetime.timedelta(hours=2)),
                              'accuracy'   : 0                      ,
                              'epochs'     : 0                      ,
                              'loss_log'   : 1e4                    ,
@@ -105,7 +105,6 @@ class CNN:
             
             # with optim, can also use e.g. Adam
             optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM, weight_decay = WEIGHT_DECAY)
-            #optimizer = optim.Adam(net.parameters(), lr=LR)
 
             # --------------------------------------
             print('\tTraining Network', network_index, 'on GPU #',gpu_index)
@@ -160,7 +159,7 @@ class CNN:
 
                     # print statistics
                     running_loss += loss.item()
-                    
+
                     every_x_minibatches = 20 # print every X mini-batches
                     if i % every_x_minibatches == (every_x_minibatches-1):  
                         #print(f'\t N{network_index}:   [{epoch}, {i + 1}] avg. loss: {np.round(running_loss / every_x_minibatches, 4)}')
@@ -177,22 +176,11 @@ class CNN:
                 losslst.append(running_loss_epoch)
                 self.tot_epoch = epoch
                 self.losslst = losslst
-
-                '''
-                # Lowering learning rate when the learning process is stagnating
-                average_of_x = 7
-                if len(losslst) > average_of_x and abs(np.average(np.diff(np.array(losslst[-average_of_x:])))) < LR*np.average(np.array(losslst[-average_of_x:])):
-                    print(f'\t N{network_index}: epoch {epoch} reducing LR from {LR} to {LR/10}')
-                    LR = LR/10
-                    optimizer = optim.SGD(net.parameters(), lr=LR, momentum=MOMENTUM)
-                    #optimizer = optim.Adam(net.parameters(), lr=LR)
-                '''
                     
                 # Last number is average loss value per minibatch in this epoch
                 print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/BATCH_SIZE}')
 
             train_time = round(time.time()-starttime, 5)
-            log_dict.update({'train_time':train_time})
                 
             print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(train_time, 1))+'s)')
             print('\tTesting Network' , network_index, 'on GPU #', gpu_index)
@@ -223,7 +211,7 @@ class CNN:
             
             # Filling Logging Information and Saving the log
             log_dict.update({'train_time' : train_time,
-                             'end_time'   : datetime.datetime.now(),
+                             'end_time'   : (datetime.datetime.now()+datetime.timedelta(hours=2)),
                              'accuracy'   : self.accuracy          ,
                              'num_epochs' : epoch+1                ,
                              'loss_log'   : losslst                ,

@@ -80,8 +80,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
     def create_pocess(processes,network_index, generation_index):
         p = mp.Process(target=train_CNN, args=(args[network_index],network_index,generation_index, results))
         p.start()
-        processes.append([network_index,p, datetime.datetime.now()])
-
+        processes.append([network_index,p, (datetime.datetime.now()+datetime.timedelta(hours=2))])
         return processes
 
     log_dict = {}
