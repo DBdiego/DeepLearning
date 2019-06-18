@@ -110,7 +110,7 @@ while traintime < maxtraintime:
 
         
     losslst.append(running_loss_epoch)
-    text_to_print = f'\t AlexNet: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/batch_size}'
+    text_to_print = f'\t AlexNet: epoch {epoch} loss:'+ str(round(running_loss_epoch, 5)) + f'on {i} minibatches {(running_loss_epoch/i)/batch_size}'
     print(text_to_print)
 
     f = open('./Logs/AlexNet_Logs.txt', 'a')
