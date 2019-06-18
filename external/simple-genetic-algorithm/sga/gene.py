@@ -78,10 +78,6 @@ class DenaryGeneFloat(_BaseGene):
         _random = ''.join([random.choice(['0', '1']) for _ in range(self._n_bits)])
         if self.limits[0] is not None and self.limits[1] is not None:
             while not (self.limits[0] <= self.transform(_random) <= self.limits[1]):
-                print(f"""LIMIT LOWER = {self.limits[0]}
-                TRANSFORM OUTPUT = {self.transform(_random)}
-                LIMIT UPPER = {self.limits[1]}"""
-                      )
                 _random = ''.join([random.choice(['0', '1']) for _ in range(self._n_bits)])
 
         elif self.limits[1] is not None and self.limits[0] is None:
@@ -131,7 +127,12 @@ class DenaryGeneFloat(_BaseGene):
         mutated = _BaseGene.mutate(_gene)
         if self.limits[1] and self.limits[0]:
             while not (self.limits[0] <= self.transform(mutated) <= self.limits[1]):
+                print(f"""LIMIT LOWER = {self.limits[0]}
+                 TRANSFORM OUTPUT = {self.transform(mutated)}
+                 LIMIT UPPER = {self.limits[1]}"""
+                      )
                 mutated = _BaseGene.mutate(_gene)
+                print(f"MUTATED = {mutated}")
 
         elif self.limits[1] and not self.limits[0]:
             while not self.transform(mutated) <= self.limits[1]:
