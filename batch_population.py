@@ -6,13 +6,14 @@ import numpy as np
 def argument_input_interface(
         n_conv,
         kernel_conv,
-        stride_conv,
+        #stride_conv,
         kernel_pool,
         stride_pool,
         n_layers,
         dim1=300,
         dim2=3000
 ):
+    stride_conv = 1
     _dim1 = np.linspace(3, dim1, int(n_conv + 1)).astype(int)
     _dim1 = np.delete(_dim1, 0)
     _dim2 = np.linspace(dim2, 5, int(n_layers)).astype(int)
