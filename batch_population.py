@@ -69,7 +69,6 @@ class BatchPopulation(Population):
 
             else:
                 try:
-                    print(*self._chromosome.parameters(member))
                     genome = argument_input_interface(*self._chromosome.parameters(member))
                     genomes.append(genome)
                     
