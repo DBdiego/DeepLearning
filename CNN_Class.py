@@ -39,7 +39,8 @@ class CNN:
                     'kernel_pool' : kernel_pool               ,
                     'stride_pool' : stride_pool               ,
                     'n_layers'    : n_layers                  ,
-                    'dim2'        : dim2                      } 
+                    'dim2'        : dim2                      }
+        
 
         # --------------------------------------
         # Parameters:
@@ -169,6 +170,7 @@ class CNN:
 
                     if epoch == 1 and i == 0:
                         batchtime = time.time() - starttime
+                        
                     traintime = time.time() - starttime + batchtime  # + batchtime estimates the time for the next batch
                     self.realtime = time.time() - starttime
                     
@@ -204,10 +206,12 @@ class CNN:
                 for data in testloader:
                     
                     images, labels = data
+                    
                     images = images.to(device)#.cuda()
                     labels = labels.to(device)#.cuda()
                     outputs = net(images)
                     a, predicted = torch.max(outputs.data, 1)
+                    
                     total += labels.size(0)
                     correct += (predicted == labels).sum().item()
 

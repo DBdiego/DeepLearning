@@ -103,7 +103,7 @@ def fitness_func(genomes, generation_index,train_dataset, test_dataset, results_
             network_id = processes[i][0]
             p.join()
         
-            print('\tNetwork',network_id,'done')
+            print('\tNetwork',network_id,'DONE')
 
         print('Cycle done\n')
 
