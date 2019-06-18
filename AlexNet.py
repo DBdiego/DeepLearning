@@ -33,7 +33,7 @@ MAX_DATA       = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 # Loading Data
 print('Importing Data: ...')
 dataset = CustomDataset(image_path=IMAGE_PATH, normalise=NORMALIZE, maxx=MAX_DATA, tot_imgs=imgs_classes[CLASSES_INDEX])
-print('Importing data: DONE\n')
+print('Importing Data: DONE\n')
 
 len_testset = int(RATIO_TRAINING * len(dataset))
 lengths = [len(dataset) - len_testset, len_testset]  # train data and test data
@@ -110,7 +110,7 @@ while traintime < maxtraintime:
 
         
     losslst.append(running_loss_epoch)
-    text_to_print = f'\t AlexNet: epoch {epoch} loss:'+ str(round(running_loss_epoch, 5)) + f'on {i} minibatches {(running_loss_epoch/i)/batch_size}'
+    text_to_print = f'\t AlexNet: epoch {epoch} loss:'+ str(round(running_loss_epoch, 5)) + f' on {i} minibatches {(running_loss_epoch/i)/batch_size}'
     print(text_to_print)
 
     f = open('./Logs/AlexNet_Logs.txt', 'a')
