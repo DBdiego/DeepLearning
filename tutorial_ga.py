@@ -45,7 +45,7 @@ ChromosomePart2 = Chromosome(
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size conv layers
         DenaryGeneFloat(limits=(1, 1), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride conv layers
         DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # kernel size pool layers
-        DenaryGeneFloat(limits=(2, 2), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride pool layers
+        DenaryGeneFloat(limits=(2, 3), n_bits_exponent=2, n_bits_fraction=None, signed=False),  # stride pool layers
         DenaryGeneFloat(limits=(3, 5), n_bits_exponent=3, n_bits_fraction=None, signed=False),  # num .neurons FCNN layers
     ],
 )
