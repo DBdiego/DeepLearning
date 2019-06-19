@@ -4,43 +4,24 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 
-from Plotters.GPU_Usage_Plotter import GPU_Usage
+from Plotters.GPU_Usage_Plotter  import gpu_usage
+from Plotters.Generation_Fitness import generation_fitness
 
-'''
-Columns in logs:  start_time
-                  run_id
-                  gpu
-                  generation
-                  network
-                  n_conv
-                  dim1
-                  kernel_conv
-                  stride_conv
-                  kernel_pool
-                  stride_pool
-                  n_layers
-                  dim2
-                  train_time
-                  end_time
-                  accuracy
-                  num_epochs
-                  loss_log
-                  test_imgs
-                  errors
-'''
 
-file_name = '20190619012051_Generations_Logs.csv'# '20190619010243.csv'
-logs = pd.read_csv('./Logs/Generation_Logs/'+file_name, sep=';')
-#logs = pd.read_csv('./Logs/Backup_Logs/'+file_name, sep=';')
+run_id = '20190619030718'
 
-columns = logs.columns
+file_name_all_logs = f'{run_id}.csv'
+file_name_enn_logs = f'{run_id}_ENN_fitness.csv'
+
+all_logs = pd.read_csv('./Logs/Backup_Logs/'     + file_name_all_logs, sep=';')
+enn_logs = pd.read_csv('./Logs/Generation_Logs/' + file_name_enn_logs, sep=';')
 
 
 # Fitness vs Generations
-#Generation_Fitness(logs, show=1, save=1)
+generation_fitness(enn_logs, show=0, save=1)
 
 # GPU Usage over time
-GPU_Usage(logs, show=1, save=1)
+gpu_usage(all_logs, show=1, save=1)
 
 
 

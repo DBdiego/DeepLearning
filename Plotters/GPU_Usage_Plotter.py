@@ -31,7 +31,7 @@ def to_datetime(input_string):
     datetime_element = datetime.datetime.strptime(input_string, '%Y-%m-%d %H:%M:%S.%f')
     return datetime_element
     
-def GPU_Usage(logs, show=False, save=False):
+def gpu_usage(logs, show=False, save=False):
 
 
     fig = plt.figure(figsize=(10, 8))

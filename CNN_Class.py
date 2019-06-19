@@ -82,10 +82,12 @@ class CNN:
 
         try: 
             net.to(device)
-            train_the_network = True
+            train_the_network = 0 #True
+            test_the_network  = 1
             
         except RuntimeError:
-            train_the_network = False
+            train_the_network = 0
+            test_the_network  = 0
             print('\t!!! GPU Memory Overload !!!')
             
             # Filling Logging Information and Saving the log
@@ -183,13 +185,13 @@ class CNN:
             train_time = round(time.time()-starttime, 5)
                 
             print('\tTraining Network', network_index, 'on GPU #', gpu_index,'DONE ('+str(round(train_time, 1))+'s)')
-            print('\tTesting Network' , network_index, 'on GPU #', gpu_index)
-
-            # --------------------------------
+            
+            
             # Testing:
-            # Whole test data set
+        if test_the_network:
+            print('\tTesting Network' , network_index, 'on GPU #', gpu_index)
             correct = 0
-            total = 0
+            total   = 0
             with torch.no_grad():
                 for data in testloader:
                     
