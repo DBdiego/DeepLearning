@@ -34,6 +34,10 @@ def alexnet_loss(logs, show=False, save=False):
     ax.legend(loc='upper right')
     ax.set_ylabel('Loss ')
     ax.set_xlabel('Epochs')
+    
+    plt.grid(ls = '--', alpha = 0.7, zorder = 0)   
+    plt.subplots_adjust(left=0.10, bottom=0.10, right=0.97, top=0.90, wspace=0.1, hspace=0.4)
+
     if save:
         run_ID = '20190618102448'#logs.iloc[0]['run_id']
         plt.savefig(f'./Plots/{run_ID}_AlexNet_Loss.pdf')
