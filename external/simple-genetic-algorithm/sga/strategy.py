@@ -107,7 +107,7 @@ class EvolutionaryStrategy(object):
                                                                      self.get_fittest_chromosome()[0],
                                                                      np.round(self.get_fittest_solution()[0], 4)]
                                         ])
-                print(os.getcwd())
+                
                 f = open(f'./Logs/Generation_Logs/{kwargs["run_id"]}_ENN_fitness.csv', 'a')
                 f.write(str2append+'\n')
                 f.close()
