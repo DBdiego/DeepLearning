@@ -86,12 +86,27 @@ class EvolutionaryStrategy(object):
             print(" ----------- verbose passed")
 
             if return_log:
-                log.append([self.generation_number,
-                            np.round(self.get_maximum_fitness(), 3),
-                            np.round(self.get_minimum_fitness(), 3),
-                            np.round(self.get_average_fitness(), 3),
+                log.append([kwargs['run_id'],
+                            self.generation_number,
+                            np.round(self.get_maximum_fitness(), 4),
+                            np.round(self.get_minimum_fitness(), 4),
+                            np.round(self.get_average_fitness(), 4),
                             self.get_fittest_chromosome()[0],
-                            np.round(self.get_fittest_solution()[0], 3)])
+                            np.round(self.get_fittest_solution()[0], 4)])
+
+                # Intermediate log in case vm shuts down
+                str2append = ';'.join([str(element) for element in [kwargs['run_id'],
+                                                                    self.generation_number,
+                                                                    np.round(self.get_maximum_fitness(), 4),
+                                                                    np.round(self.get_minimum_fitness(), 4),
+                                                                    np.round(self.get_average_fitness(), 4),
+                                                                    self.get_fittest_chromosome()[0],
+                                                                    np.round(self.get_fittest_solution()[0], 4)]
+                                       ])
+                f = open('../../Logs/Generation_Logs/{kwargs["run_id"]}_ENN_fitness.csv', 'a')
+                f.write(str2append+'\n')
+                f.close()
+
 
             self._archive = self._archive.append(pd.DataFrame({
                 "fitness": self.population.fitness,
@@ -123,7 +138,7 @@ class EvolutionaryStrategy(object):
         if return_log:
             df = pd.DataFrame(log,
                               columns=
-                              """Generation,Maximum Fitness,Minimum Fitness,Average Fitness,Chromosome,Best Solution""".split(
+                              """run_id,Generation,Maximum Fitness,Minimum Fitness,Average Fitness,Chromosome,Best Solution""".split(
                                   ","))
 
             df = df.set_index("Generation")

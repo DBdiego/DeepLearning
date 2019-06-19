@@ -87,9 +87,11 @@ if __name__ == '__main__':
     train_dataset, test_dataset = load_data()
 
     # Evolve for solution.
-    EvolutionaryStrategyTest.evolve(True, 
-                                    train_dataset = train_dataset,
-                                    test_dataset  = test_dataset )
+    ENN_log = EvolutionaryStrategyTest.evolve(verbose    = True ,
+                                              return_log = True ,
+                                              train_dataset = train_dataset,
+                                              test_dataset  = test_dataset ,
+                                              run_id = run_ID)
 
     # Determining Final Solution
     solution = EvolutionaryStrategyTest.get_fittest_solution()[0]

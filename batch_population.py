@@ -1,6 +1,7 @@
 from external.sga.population import *
 from paralleliser import fitness_func 
 import numpy as np
+from LogCreator import get_run_id
 
 
 def argument_input_interface(
@@ -76,7 +77,11 @@ class BatchPopulation(Population):
                     result[index] = 0                
         
         result = fitness_func(genomes, generation_index, kwargs['train_dataset'], kwargs['test_dataset'], result)
-        print(result)
+        
+        #Saving a backup of the archive
+        run_id = get_run_id()
+        kwargs["archive"].to_csv(f'./Logs/Backup_Logs/{run_id}_Archive.csv', sep=';')
+        
         return result
 
 
