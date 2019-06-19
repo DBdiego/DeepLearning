@@ -78,7 +78,7 @@ def gpu_usage(logs, show=False, save=False):
     
     if save:
         run_ID = logs.iloc[0]['run_id']
-        plt.savefig(f'./Plots/GPU_Usage_{run_ID}.pdf')
+        plt.savefig(f'./Plots/{run_ID}_GPU_Usage.pdf')
 
     if show:
         plt.show()

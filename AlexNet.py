@@ -7,7 +7,7 @@ import time
 import numpy as np
 from dataloader import CustomDataset
 from torch.utils.data import DataLoader, random_split
-from LogCreator import Add_to_Log
+from LogCreator import Add_to_Log, get_run_id
 import datetime
 
 image_path = './database/'
@@ -28,6 +28,9 @@ RATIO_TRAINING = 0.3
 RATIO_DATA     = 1
 MAX_DATA       = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]#41556
 
+
+run_id = get_run_id(status='create_new')
+print('Run ID:', run_id)
 
 
 # Loading Data
@@ -58,7 +61,7 @@ epoch = 0
 losslst = []
 starttime = time.time()
 traintime = time.time() - starttime
-
+log_dict = {}
 
 while traintime < maxtraintime:
     
@@ -112,11 +115,9 @@ while traintime < maxtraintime:
     losslst.append(running_loss_epoch)
     text_to_print = f'\t AlexNet: epoch {epoch} loss:'+ str(round(running_loss_epoch, 5)) + f' on {i} minibatches {(running_loss_epoch/i)/batch_size}'
     print(text_to_print)
-
-    f = open('./Logs/AlexNet_Logs.txt', 'a')
-    f.write('\n' + str(datetime.datetime.now()) + text_to_print)
-    f.close()    
+ 
     epoch += 1
+
 
 print('Training: DONE')
 print('Total Training time:', realtime, '\n')
@@ -136,6 +137,16 @@ with torch.no_grad():
         correct += (predicted == labels).sum().item()
 
 accuracy = 100 * correct / total
+
+
+log_dict = {'run_id'  : run_id ,
+            'epoch'   : epoch  ,
+            'losslst' : losslst, 
+            'accuracy': accuracy}
+
+Add_to_Log(epoch_dict, './Logs/AlexNet_Logs.csv')
+
+
 print(f'Accuracy of the network on the {total} test images: {round(accuracy, 2)}%')
 
 

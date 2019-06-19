@@ -31,7 +31,6 @@ def generation_fitness(logs, show=False, save=False):
         avg_fits.append(logs.iloc[i]['Average Fitness'])
         max_fits.append(logs.iloc[i]['Maximum Fitness'])
 
-    print(min_fits)
     ax.plot(range(num_generations), min_fits, c = 'r', label='Minimum Fitness')
     ax.plot(range(num_generations), avg_fits, c = 'b', label='Average Fitness')
     ax.plot(range(num_generations), max_fits, c = 'g', label='Maximum Fitness')
@@ -43,7 +42,7 @@ def generation_fitness(logs, show=False, save=False):
     ax.set_xlabel('Generations')
     if save:
         run_ID = logs.iloc[0]['Run ID']
-        plt.savefig(f'./Plots/Genertaion_Fitness_{run_ID}.pdf')
+        plt.savefig(f'./Plots/{run_ID}_Genertaion_Fitness.pdf')
 
     if show:
         plt.show()
