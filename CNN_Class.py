@@ -100,6 +100,8 @@ class CNN:
                              'errors'     : 'GPU Memory Overload'  })
             
 
+        starttime = time.time()
+        traintime = time.time() - starttime
         if train_the_network:
             # Loss function
             criterion = nn.CrossEntropyLoss()
@@ -112,8 +114,7 @@ class CNN:
             print('\tTraining Network', network_index, 'on GPU #',gpu_index)
             # Training:
             losslst = []
-            starttime = time.time()
-            traintime = time.time() - starttime
+
             epoch = 0
 
             # for epoch in range(nr_epochs):  # loop over the dataset multiple times
