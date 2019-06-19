@@ -103,6 +103,8 @@ class CNN:
         starttime = time.time()
         traintime = time.time() - starttime
         train_time = 0
+        losslst = []
+        epoch = 0
         if train_the_network:
             # Loss function
             criterion = nn.CrossEntropyLoss()
@@ -114,9 +116,7 @@ class CNN:
             # --------------------------------------
             print('\tTraining Network', network_index, 'on GPU #',gpu_index)
             # Training:
-            losslst = []
 
-            epoch = 0
 
             # for epoch in range(nr_epochs):  # loop over the dataset multiple times
             while traintime < MAXTRAINTIME:
