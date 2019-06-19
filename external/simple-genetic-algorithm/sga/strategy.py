@@ -105,7 +105,7 @@ class EvolutionaryStrategy(object):
                                                                     np.round(self.get_fittest_solution()[0], 4)]
                                        ])
                 print(os.getcwd())
-                f = open('../../../Logs/Generation_Logs/{kwargs["run_id"]}_ENN_fitness.csv', 'a')
+                f = open('./Logs/Generation_Logs/{kwargs["run_id"]}_ENN_fitness.csv', 'a')
                 f.write(str2append+'\n')
                 f.close()
 
