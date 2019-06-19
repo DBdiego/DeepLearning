@@ -29,8 +29,9 @@ Columns in logs:  start_time
                   errors
 '''
 
-file_name = '20190619010243.csv'
-logs = pd.read_csv('./Logs/Backup_Logs/'+file_name, sep=';')
+file_name = '20190619012051_Generations_Logs.csv'# '20190619010243.csv'
+logs = pd.read_csv('./Logs/Generation_Logs/'+file_name, sep=';')
+#logs = pd.read_csv('./Logs/Backup_Logs/'+file_name, sep=';')
 
 columns = logs.columns
 
@@ -39,11 +40,8 @@ columns = logs.columns
 #Generation_Fitness(logs, show=1, save=1)
 
 # GPU Usage over time
-#GPU_Usage(logs, show=0, save=1)
+GPU_Usage(logs, show=1, save=1)
 
-f = open('./tit.txt', 'a')
-f.write('')
-f.close()
 
 
 
