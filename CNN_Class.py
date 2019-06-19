@@ -102,6 +102,7 @@ class CNN:
 
         starttime = time.time()
         traintime = time.time() - starttime
+        train_time = 0
         if train_the_network:
             # Loss function
             criterion = nn.CrossEntropyLoss()
