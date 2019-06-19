@@ -96,14 +96,17 @@ class EvolutionaryStrategy(object):
                             np.round(self.get_fittest_solution()[0], 4)])
 
                 # Intermediate log in case vm shuts down
-                str2append = ';'.join([str(element) for element in [kwargs['run_id'],
-                                                                    self.generation_number,
-                                                                    np.round(self.get_maximum_fitness(), 4),
-                                                                    np.round(self.get_minimum_fitness(), 4),
-                                                                    np.round(self.get_average_fitness(), 4),
-                                                                    self.get_fittest_chromosome()[0],
-                                                                    np.round(self.get_fittest_solution()[0], 4)]
-                                       ])
+                str2append=''
+                if self.generation_number == 0:
+                    str2append = 'Run ID;Generation;Maximum Fitness;Minimum Fitness;Average Fitness;Chromosome;Best Solution\n'
+                str2append += ';'.join([str(element) for element in [kwargs['run_id'],
+                                                                     self.generation_number,
+                                                                     np.round(self.get_maximum_fitness(), 4),
+                                                                     np.round(self.get_minimum_fitness(), 4),
+                                                                     np.round(self.get_average_fitness(), 4),
+                                                                     self.get_fittest_chromosome()[0],
+                                                                     np.round(self.get_fittest_solution()[0], 4)]
+                                        ])
                 print(os.getcwd())
                 f = open(f'./Logs/Generation_Logs/{kwargs["run_id"]}_ENN_fitness.csv', 'a')
                 f.write(str2append+'\n')
@@ -111,9 +114,9 @@ class EvolutionaryStrategy(object):
 
 
             self._archive = self._archive.append(pd.DataFrame({
-                "fitness": self.population.fitness,
-                "chromosome": self.population.contestants,
-                "generation": [self.generation_number] * len(self.population.contestants)
+                "fitness"    : self.population.fitness,
+                "chromosome" : self.population.contestants,
+                "generation" : [self.generation_number] * len(self.population.contestants)
             })).drop_duplicates()
 
             # Make children from first initial generation of (16)
