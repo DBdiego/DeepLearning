@@ -22,7 +22,7 @@ class Net(nn.Module):
         dim1.insert(0, 3)
         self.dim1 = dim1
 
-        final_dim = 224 # decreases in size with each convolution and pooling layer
+        final_dim = 50 # decreases in size with each convolution and pooling layer
         super(Net, self).__init__()
 
         # Defining convolution layers

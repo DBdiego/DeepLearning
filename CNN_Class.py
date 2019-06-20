@@ -44,7 +44,7 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 3*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 20*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 40
         LR = 5*1E-4
         MOMENTUM = 0.9
@@ -72,7 +72,7 @@ class CNN:
         # CNN:
         use_gpu = torch.cuda.is_available()
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
-
+        print(net)
         if use_gpu:
             net = net.cuda()
             if 0 and torch.cuda.device_count() > 1:
@@ -82,7 +82,7 @@ class CNN:
 
         try: 
             net.to(device)
-            train_the_network = 0 #True
+            train_the_network = 1 #True
             test_the_network  = 1
             
         except RuntimeError:
