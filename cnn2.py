@@ -15,7 +15,7 @@ kernel_pool:  int array with kernel size for each pool layer
 stride_pool:  int array with stride for each pool layer
 n_l_layers:   int, number of linear layers
 dim2:         int array with number of nodes for every linear layer
-
+'''
 class Net(nn.Module):
     def __init__(self, n_c_layers, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_l_layers, dim2):
         # first input channel is 3, followed by dim1:
@@ -64,9 +64,9 @@ class Net(nn.Module):
             else:
                 x = getattr(self, f"fc{i}")(x)
         return x
+
+
 '''
-
-
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -92,3 +92,4 @@ class Net(nn.Module):
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+'''
