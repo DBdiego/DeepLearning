@@ -146,10 +146,11 @@ class CNN:
                     if traintime > MAXTRAINTIME:
                         break
                 
-                    inputs, labels = data
+                    inputs, labelss = data
                     lst_tmp = []
-                    for i in range(len(labels)):
-                        lst_tmp.append([labels[i]])
+                    print(labelss)
+                    for i in range(len(labelss)):
+                        lst_tmp.append([labelss[i]])
                     labels = torch.tensor(lst_tmp)
                     print(labels)
                     inputs = inputs.to(device) #cuda()
