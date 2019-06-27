@@ -50,14 +50,14 @@ if __name__ == '__main__':
 
 
 
-    n_conv = 3
-    dim1 = [16,32,64]
-    kernel_conv = [3,3,3]
-    stride_conv = [1,1,1]
-    kernel_pool = [2,2,2]
-    stride_pool = [2,2,2]
+    n_conv = 2
+    dim1 = [6,16]
+    kernel_conv = [3,3]
+    stride_conv = [1,1]
+    kernel_pool = [2,2]
+    stride_pool = [2,2]
     n_layers = 3
-    dim2 = [500,500,5]
+    dim2 = [120,84,5]
 
 
     CNN(network_index, generation_index, gpu_index, train_dataset, test_dataset,

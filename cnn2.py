@@ -64,3 +64,32 @@ class Net(nn.Module):
             else:
                 x = getattr(self, f"fc{i}")(x)
         return x
+
+
+'''
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.final_dim = 50
+        self.final_dim = int((self.final_dim - 3 + 2 * 1) / 1 + 1)
+        self.final_dim = int((self.final_dim - 2 + 2 * 0) / 2 + 1)
+        self.final_dim = int((self.final_dim - 3 + 2 * 1) / 1 + 1)
+        self.final_dim = int((self.final_dim - 2 + 2 * 0) / 2 + 1)
+        self.conv1 = nn.Conv2d(3, 6, 3,padding=1)  # (in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, groups=1, bias=True, padding_mode='zeros')
+        self.conv2 = nn.Conv2d(6, 16, 3, padding=1)
+        self.pool = nn.MaxPool2d(2, 2)  # (kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=False)
+        self.pool = nn.MaxPool2d(2, 2)
+        self.fc1 = nn.Linear(16 * self.final_dim * self.final_dim,
+                             120)  # (in_features, out_features, bias=True), 7x7 is image size after conv & pooling...
+        self.fc2 = nn.Linear(120, 84)
+        self.fc3 = nn.Linear(84, 5)  # 10 outputs (classes above)
+
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, 16 * self.final_dim * self.final_dim)  # image to tensor structure ?
+        x = F.relu(self.fc1(x))
+        x = F.relu(self.fc2(x))
+        x = self.fc3(x)
+        return x
+'''

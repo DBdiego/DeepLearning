@@ -44,7 +44,7 @@ class CNN:
 
         # --------------------------------------
         # Parameters:
-        MAXTRAINTIME = 1*60*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
+        MAXTRAINTIME = 2*60*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
         BATCH_SIZE = 40
         LR = 5*1E-4
         MOMENTUM = 0.9
@@ -70,6 +70,7 @@ class CNN:
         #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
+
         use_gpu = torch.cuda.is_available()
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         #print(net)
@@ -139,7 +140,7 @@ class CNN:
                         self.realtime = time.time() - starttime
                         break
                 '''
-                    
+                dist_lst = [0, 0, 0, 0, 0]
                 for i, data in enumerate(trainloader, 0):  # for every batch, start at 0
 
                     # get the inputs and labels
@@ -147,7 +148,8 @@ class CNN:
                         break
                 
                     inputs, labels = data
-                         
+                    for j in range(len(labels)):
+                        dist_lst[labels[j].cpu().numpy()] += 1
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
@@ -165,7 +167,7 @@ class CNN:
                     running_loss += loss.item()
 
                     every_x_minibatches = 20 # print every X mini-batches
-                    if i % every_x_minibatches == (every_x_minibatches-1):  
+                    if i % every_x_minibatches == (every_x_minibatches-1):
                         #print(f'\t N{network_index}:   [{epoch}, {i + 1}] avg. loss: {np.round(running_loss / every_x_minibatches, 4)}')
                         #print(outputs, labels)
                         running_loss_epoch += running_loss
@@ -176,12 +178,15 @@ class CNN:
                         
                     traintime = time.time() - starttime + batchtime  # + batchtime estimates the time for the next batch
                     self.realtime = time.time() - starttime
-                    
+
                 losslst.append(running_loss_epoch)
                 self.tot_epoch = epoch
                 self.losslst = losslst
-                    
+
                 # Last number is average loss value per minibatch in this epoch
+                #print(outputs[0])
+                #print(labels[0].cpu().numpy())
+                print(dist_lst)
                 print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/BATCH_SIZE}')
 
             train_time = round(time.time()-starttime, 5)
