@@ -148,8 +148,8 @@ class CNN:
                         break
                 
                     inputs, labels = data
-                    #for i in range(len(labels)):
-                    #    master_lst[labels[i]] += 1
+                    for i in range(len(labels)):
+                        master_lst[labels[i].cpu().numpy()] += 1
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
@@ -184,8 +184,9 @@ class CNN:
                 self.losslst = losslst
 
                 # Last number is average loss value per minibatch in this epoch
-                print(outputs[0])
-                print(labels[0].cpu().numpy())
+                #print(outputs[0])
+                #print(labels[0].cpu().numpy())
+                print(master_lst)
                 print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/BATCH_SIZE}')
 
             train_time = round(time.time()-starttime, 5)
