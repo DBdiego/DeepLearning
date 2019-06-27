@@ -70,7 +70,6 @@ class CNN:
         #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
-        master_lst = [0,0,0,0,0]
         use_gpu = torch.cuda.is_available()
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         #print(net)
@@ -148,8 +147,7 @@ class CNN:
                         break
                 
                     inputs, labels = data
-                    for i in range(len(labels)):
-                        master_lst[labels[i]] += 1
+                    
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
@@ -182,8 +180,7 @@ class CNN:
                 losslst.append(running_loss_epoch)
                 self.tot_epoch = epoch
                 self.losslst = losslst
-                print(master_lst)
-                    
+
                 # Last number is average loss value per minibatch in this epoch
                 print(outputs[0])
                 print(labels[0])
