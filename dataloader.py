@@ -45,6 +45,10 @@ class CustomDataset(Dataset):
 
         # extracting labels from image names -------------------
         labels = np.array([self.cars.index(re.match(r"(^\D+)", img)[0]) for img in imgs_red])
+        dist_lst = [0, 0, 0, 0, 0]
+        for i in range(len(labels)):
+            dist_lst[labels[i]] += 1
+        print(dist_lst)
         labels = torch.from_numpy(np.concatenate((labels, labels)))
         self.labels = labels.type(torch.long)  # outputs of network are also torch.long type...
         self.length = np.shape(self.images)[0]
