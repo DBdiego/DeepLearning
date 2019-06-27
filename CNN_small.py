@@ -31,7 +31,7 @@ if __name__ == '__main__':
     imgs_classes = [3299, 4296, 5434, 10521, 20778]  # number of images for number of classes above
     CLASSES_INDEX = 0  # NOTE: have to change line 18 in batch_population as well
     RATIO_TESTING = 0.3
-    RATIO_DATA = 0.5
+    RATIO_DATA = 1
     MAX_DATA = RATIO_DATA * 2 * imgs_classes[CLASSES_INDEX]  # 41556
 
 
