@@ -69,9 +69,9 @@ class CNN:
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
-        dataiter = iter(trainloader)
-        images, labels = dataiter.next()
-        imshow(torchvision.utils.make_grid(images))
+        #dataiter = iter(trainloader)
+        #images, labels = dataiter.next()
+        #imshow(torchvision.utils.make_grid(images))
         #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
