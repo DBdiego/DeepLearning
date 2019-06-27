@@ -71,7 +71,7 @@ class CNN:
         # --------------------------------------
         # CNN:
         use_gpu = torch.cuda.is_available()
-        net = Net()#n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
+        net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         #print(net)
         if use_gpu:
             net = net.cuda()
