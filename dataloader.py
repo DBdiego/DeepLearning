@@ -34,7 +34,7 @@ class CustomDataset(Dataset):
         # Transforms: resize t0 224, torch tensor, normalise
         self.transform = transforms.Compose([ transforms.Resize(resize),
                                               transforms.ToTensor(),
-                                              transforms.Normalize((127, 127, 127),(127, 127, 127))])
+                                              transforms.Normalize((0, 0, 0), (255, 255, 255))])
 
         # Load images from image to np array -------------------
         images_og = np.array(
