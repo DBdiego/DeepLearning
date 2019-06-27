@@ -182,7 +182,7 @@ class CNN:
                 self.losslst = losslst
                     
                 # Last number is average loss value per minibatch in this epoch
-                print(outputs)
+                print(outputs[0])
                 print(f'\t N{network_index}: epoch {epoch} loss:', round(running_loss_epoch, 5), f'on {i} minibatches {(running_loss_epoch/i)/BATCH_SIZE}')
 
             train_time = round(time.time()-starttime, 5)
