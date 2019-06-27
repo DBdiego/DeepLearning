@@ -4,6 +4,7 @@ import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
+import torchvision
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, random_split
@@ -45,7 +46,7 @@ class CNN:
         # --------------------------------------
         # Parameters:
         MAXTRAINTIME = 2*60*60  # seconds, not sure if this is a good time. Note that testing time is not included, this is (often) slightly less than 1 epoch time.
-        BATCH_SIZE = 40
+        BATCH_SIZE = 1
         LR = 5*1E-4
         MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
@@ -64,9 +65,13 @@ class CNN:
         # Display image
         def imshow(img):
             npimg = img.numpy()
+            print(npimg.shape)
             plt.imshow(np.transpose(npimg, (1, 2, 0)))
             plt.show()
 
+        dataiter = iter(trainloader)
+        images, labels = dataiter.next()
+        imshow(torchvision.utils.make_grid(images))
         #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
