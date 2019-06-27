@@ -151,6 +151,7 @@ class CNN:
                     for i in range(len(labels)):
                         lst_tmp.append([labels[i]])
                     labels = torch.tensor(lst_tmp)
+                    print(labels)
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
