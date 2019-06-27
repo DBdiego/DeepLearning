@@ -79,7 +79,7 @@ class CNN:
         use_gpu = torch.cuda.is_available()
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         #print(net)
-        if use_gpu:
+        if 0 and use_gpu:
             net = net.cuda()
             if 0 and torch.cuda.device_count() > 1:
                 net = nn.DataParallel(net)
