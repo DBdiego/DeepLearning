@@ -51,13 +51,13 @@ if __name__ == '__main__':
 
 
     n_conv = 3
-    dim1 = [6,12,24]
+    dim1 = [6,9,12]
     kernel_conv = [3,3,3]
     stride_conv = [1,1,1]
     kernel_pool = [2,2,2]
     stride_pool = [2,2,2]
     n_layers = 3
-    dim2 = [200,100,5]
+    dim2 = [100,50,5]
 
 
     CNN(network_index, generation_index, gpu_index, train_dataset, test_dataset,
