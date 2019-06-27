@@ -70,6 +70,7 @@ class CNN:
         #print('\n=========== NEW NETWORK ===========')
         # --------------------------------------
         # CNN:
+        master_lst = [0,0,0,0,0]
         use_gpu = torch.cuda.is_available()
         net = Net(n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2)
         #print(net)
@@ -147,7 +148,8 @@ class CNN:
                         break
                 
                     inputs, labels = data
-                    
+                    for i in range(len(labels)):
+                        master_lst[labels[i]] += 1
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
