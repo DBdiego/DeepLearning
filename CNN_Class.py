@@ -105,7 +105,6 @@ class CNN:
         train_time = 0
         losslst = []
         epoch = 0
-        master_lst = [0,0,0,0,0]
         if train_the_network:
             # Loss function
             criterion = nn.CrossEntropyLoss()
@@ -148,8 +147,6 @@ class CNN:
                         break
                 
                     inputs, labels = data
-                    for i in range(len(labels)):
-                        master_lst[labels[i]] += 1
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
 
@@ -178,7 +175,7 @@ class CNN:
                         
                     traintime = time.time() - starttime + batchtime  # + batchtime estimates the time for the next batch
                     self.realtime = time.time() - starttime
-                print(master_lst)
+
                 losslst.append(running_loss_epoch)
                 self.tot_epoch = epoch
                 self.losslst = losslst
