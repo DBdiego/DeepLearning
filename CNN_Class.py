@@ -50,7 +50,7 @@ class CNN:
         MOMENTUM = 0.9
         CONVERGENCE = 1E-5  # Not sure if this is a good value (smaller change than 0.001%)
         MIN_EPOCH = int(1e3) # should be 6 or higher, it can have less epochs in results if the MAXTRAINTIME is exceeded.
-        WEIGHT_DECAY = 1e-5
+        WEIGHT_DECAY = 1e-2
 
         #print([n_conv, dim1, kernel_conv, stride_conv, kernel_pool, stride_pool, n_layers, dim2])
         # --------------------------------------
