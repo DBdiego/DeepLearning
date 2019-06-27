@@ -149,6 +149,8 @@ class CNN:
                 
                     inputs, labels = data
                     for i in range(len(labels)):
+                        print(labels[i].cpu().numpy())
+                        print(labels[i].cpu().numpy()[0])
                         master_lst[labels[i].cpu().numpy()] += 1
                     inputs = inputs.to(device) #cuda()
                     labels = labels.to(device) #cuda()
