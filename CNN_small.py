@@ -50,12 +50,12 @@ if __name__ == '__main__':
 
 
 
-    n_conv = 2
-    dim1 = [6,12]
-    kernel_conv = [3,3]
-    stride_conv = [1,1]
-    kernel_pool = [2,2]
-    stride_pool = [2,2]
+    n_conv = 3
+    dim1 = [6,9,12]
+    kernel_conv = [3,3,3]
+    stride_conv = [1,1,1]
+    kernel_pool = [2,2,2]
+    stride_pool = [2,2,2]
     n_layers = 3
     dim2 = [100,50,5]
 
