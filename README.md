@@ -43,5 +43,11 @@ Go to your local DeepLearning (this repository) and type in the following comman
 ```$IP_Address``` stands for the current IP address of the VM instance
 
 
+### Running programs
 
+Run MAIN.py to start the Evolutionary Algorithm (main code)
+Run AlexNet.py to run AlexNet with the same dataset
+
+### dataset
+The dataset used can be found in the database folder
 
